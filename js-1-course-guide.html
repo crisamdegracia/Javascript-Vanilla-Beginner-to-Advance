@@ -37,9 +37,21 @@ JavaScript by: Jonas Schedtmann</pre
 				<pre><code>
 Variable - is a container which store a value and use it over and over again
 				</code></pre>
+<h5>Operator Precedence</h5>
+<pre><code>
 
-				<h5>Data Types</h5>
-				<pre><code>
+	x = y = ( 3 + 5) * 4 - 6 ; = 26
+	1st - y = 26
+	2nd - x = 26
+	- Because its Assigment Precedence right-to-left
+</code></pre>
+<h5>Operators short</h5>
+<pre><code>
+x = x *2   =  x *= 2;   same
+
+</code></pre>
+	<h5>Data Types</h5>
+	<pre><code>
 					<ul>
 						<li>Number - numbers</li>
 						<li>String - text</li>
@@ -49,14 +61,94 @@ Variable - is a container which store a value and use it over and over again
 					</ul>
 				</code></pre>
 			</div>
-				<h3>Tricks</h3>
+<h3>Tricks</h3>
 			<div>
 				<pre><code>
 					Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tenetur facere sapiente cumque, a, at tempora quaerat voluptas obcaecati amet animi nisi et beatae quisquam repellat maxime ipsum nobis delectus pariatur!
 				</code></pre>
 			</div>
+<h3>F2V6 - 6. Variable Mutation and Type Coercion</h3>
+<div></div>
+<h3>f2v11 -  if else</h3>
+<div></div>
+<h3>f2v13. The Ternary Operator and Switch Statements</h3>
+<div>
+	<pre>
 
-			Vid 8 palang . nothing to note pa
+		<code>
+			
+BREAK - we use break so after evaluating 1 case with true value,
+- it will stop evaluating others
+DEFAULT - if nothing is correct. the default will execute
+
+We can use multiple 
+'case' with same value
+
+case 'teacher':
+case 'instructor':
+			YOUR FUNCTION HERE
+			break;
+
+		</code>
+		<code>
+const day = 'friday';
+
+switch (day) {
+	case 'monday': // day === 'monday'
+	console.log('Plan course structure');
+	console.log('Go to coding meetup');
+	break;
+	case 'tuesday':
+	console.log('Prepare theory videos');
+	break;
+	case 'wednesday':
+	case 'thursday':
+	console.log('Write code examples');
+	break;
+	case 'friday':
+	console.log('Record videos');
+	break;
+	case 'saturday':
+	case 'sunday':
+	console.log('Enjoy the weekend :D');
+	break;
+	default:
+	console.log('Not a valid day!');
+}
+
+if (day === 'monday') {
+	console.log('Plan course structure');
+	console.log('Go to coding meetup');
+} else if (day === 'tuesday') {
+	console.log('Prepare theory videos');
+} else if (day === 'wednesday' || day === 'thursday') {
+	console.log('Write code examples');
+} else if (day === 'friday') {
+	console.log('Record videos');
+} else if (day === 'saturday' || day === 'sunday') {
+	console.log('Enjoy the weekend :D');
+} else {
+	console.log('Not a valid day!');
+}
+
+		</code>
+
+		<code>
+switch (true) {
+	case age < 13:
+		console.log(firstName + ' is a boy');
+		break;
+	case age >= 13 && age < 20:
+		console.log(firstName + ' is a teenager.');
+		break;
+	default:
+	console.log(firstname + ' is a man. ');
+}
+		</code>
+	</pre>
+</div>
+
+vid 17
 			</section>
 		</main>
 	</body>
