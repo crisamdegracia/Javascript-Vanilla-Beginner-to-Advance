@@ -4,25 +4,35 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<script src="./course-guide-assets/jquery-v3.5.1.min.js"></script>
+		<link rel="stylesheet" href="./course-guide-assets/css/skeleton.css" />
 		<link
 			rel="stylesheet"
-			href="./course-guide-assets/css/skeleton.css"
+			href="./course-guide-assets/jquery-ui-1.12.1/jquery-ui.min.css"
 		/>
-		<link rel="stylesheet" href="./course-guide-assets/jquery-ui-1.12.1/jquery-ui.min.css" />
 		<title>The Complete JavaScript Course 2020: From Zero to Expert!</title>
 	</head>
+	<style>
+		h4 {
+			color: cornflowerblue;
+			font-size: 2rem;
+		}
+		.c {
+			background-color: #222;
+			padding-bottom: 1rem;
+		}
+	</style>
 	<body>
 		<header>
 			<div
 				class="header__container header__container--js container text-center u-max-full-width"
 			>
-				<h1 class="header__heading m-0">Javascript From zero to ninja</h1>
+				<h1 class="header__heading m-0">
+					Javascript From zero to ninja
+				</h1>
 				<p class="m-0">
 					A journey to be great in JS
 					<span>
-						<pre class="m-0">
-JavaScript by: Jonas Schedtmann</pre
-						>
+						<pre class="m-0">JavaScript by: Jonas Schedtmann</pre>
 					</span>
 				</p>
 			</div>
@@ -30,9 +40,46 @@ JavaScript by: Jonas Schedtmann</pre
 
 		<main class="custom__container">
 			<section class="section--right-panel mt-40" id="accordion">
-			<h3>Functions and Methods</h3>
-			<div>
-				<pre>
+				<h3>This keyword</h3>
+				<div>
+					<pre>
+					<code>
+						
+var john = {
+	fName : 'John',
+	lastName: 'Smith',
+	birthYear: 1990,
+	family: ['jane', 'Mark', 'Bob', 'Emily'],
+	job : 'teacher',
+	isMarried: false,
+
+
+
+	calAge: function(birthYear) { 
+		return 2018 - birthYear;
+	}
+	 <p class="c">no 'this' keyword</p>
+	calAge: function() { 
+		return 2018 - this.birthYear;
+	} <p class="c">with 'this' keyword</p>
+	calAge: function() {
+		this.age =  2018 - this.birthYear; 
+	} <p class="c"> with 'this' keyword  and we create object on the fly  -> this.age
+		we need to call john.calcAge() 1st before it  can produce a value.
+	</p>
+}
+<p class="c">
+if the property is inside the method, we can use the 'this' keyword to set and read the property
+
+
+</p> 
+
+					</code>
+				</pre>
+				</div>
+				<h3>Functions and Methods</h3>
+				<div>
+					<pre>
 
 .push() - create at the end of an Arrays
 .unshift() - create at the beginning
@@ -42,37 +89,37 @@ JavaScript by: Jonas Schedtmann</pre
 .indexOf() - will return the position of the argument
 - that we pass in inside of the array
 - if the indexOf(value or position) is not present in the array it will return -1
-				</pre>
-<code>
-	.indexOf() - example
-
-	john.indexOf(1990); // now it will tell us which position in the
-	john array is 1990
-</code>
-
-			</div>
+				</pre
+					>
+					<code>
+						.indexOf() - example var john = ['Mr','single', 1990,
+						'manila'] john.indexOf(1990); // now it will tell us
+						which position in the john array is 1990 - now its the
+						[2] or 3rd slot.
+					</code>
+				</div>
 				<h3>Tracks</h3>
-			
-			<div>
-				<h5>sweet</h5>
-				<pre><code>
+
+				<div>
+					<h5>sweet</h5>
+					<pre><code>
 Variable - is a container which store a value and use it over and over again
 				</code></pre>
-<h5>Operator Precedence</h5>
-<pre><code>
+					<h5>Operator Precedence</h5>
+					<pre><code>
 
 	x = y = ( 3 + 5) * 4 - 6 ; = 26
 	1st - y = 26
 	2nd - x = 26
 	- Because its Assigment Precedence right-to-left
 </code></pre>
-<h5>Operators short</h5>
-<pre><code>
+					<h5>Operators short</h5>
+					<pre><code>
 x = x *2   =  x *= 2;   same
 
 </code></pre>
-	<h5>Data Types</h5>
-	<pre><code>
+					<h5>Data Types</h5>
+					<pre><code>
 					<ul>
 						<li>Number - numbers</li>
 						<li>String - text</li>
@@ -81,20 +128,20 @@ x = x *2   =  x *= 2;   same
 						<li>Null - Also mean non-existent</li>
 					</ul>
 				</code></pre>
-			</div>
-<h3>Tricks</h3>
-			<div>
-				<pre><code>
+				</div>
+				<h3>Tricks</h3>
+				<div>
+					<pre><code>
 					Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tenetur facere sapiente cumque, a, at tempora quaerat voluptas obcaecati amet animi nisi et beatae quisquam repellat maxime ipsum nobis delectus pariatur!
 				</code></pre>
-			</div>
-<h3>F2V6 - 6. Variable Mutation and Type Coercion</h3>
-<div></div>
-<h3>f2v11 -  if else</h3>
-<div></div>
-<h3>f2v13. The Ternary Operator and Switch Statements</h3>
-<div>
-	<pre>
+				</div>
+				<h3>F2V6 - 6. Variable Mutation and Type Coercion</h3>
+				<div></div>
+				<h3>f2v11 - if else</h3>
+				<div></div>
+				<h3>f2v13. The Ternary Operator and Switch Statements</h3>
+				<div>
+					<pre>
 
 		<code>
 			
@@ -168,11 +215,11 @@ switch (true) {
 }
 		</code>
 	</pre>
-</div>
+				</div>
 
-<h3>f2v18. Function Statements and Expressions</h3>
-<div>
-<pre>
+				<h3>f2v18. Function Statements and Expressions</h3>
+				<div>
+					<pre>
 	<h5>Statements</h5>
 - performs action and does not return immediate result
 - ex, while loop
@@ -196,13 +243,132 @@ var WhatIDo = function(job, firstName){
 }
 	</code>
 </pre>
-</div>
+				</div>
 
-<h3>f1919. Arrays</h3>
-<div>
+				<h3>f1919. Arrays</h3>
+				<div></div>
+				<h3>f2v22. Objects and Properties</h3>
+				<div>
+					<h5>2 Declaration of objects.</h5>
+					<pre>
+		<h4>Object Literal</h4>
+		<code>
+var john = {
+	fName : 'John',
+	lastName: 'Smith',
+	birthYear: 1990,
+	family: ['jane', 'Mark', 'Bob', 'Emily'],
+	job : 'teacher',
+	isMarried: false,
+}
+		</code>
+	</pre>
 
-</div>
-</section>
+					<pre>
+		<h4>New Object syntax</h4>
+		<code>
+var jane = new object();
+jane.firstName = 'jane';
+jane.birthYear = 1968;
+jane['lastName'] = 'smith';    // same result
+
+		</code>
+	</pre>
+				</div>
+
+				<h3>f2v23. Objects and Methods</h3>
+				<div>
+					<pre>
+		<code>
+
+var john = {
+	fName : 'John',
+	lastName: 'Smith',
+	birthYear: 1990,
+	family: ['jane', 'Mark', 'Bob', 'Emily'],
+	job : 'teacher',
+	isMarried: false,
+	calAge: function(birthYear){
+		return 2018 - birthYear;
+	}
+}
+
+john.age = john.calcAge(); // we create an object on the fly
+		</code>
+	</pre>
+				</div>
+
+				<h3>f2v26. Loops and Iteration</h3>
+				<div>
+					<pre>
+						<h4>For Loop</h4>
+						<code>
+for( var i = 0; i < john.length ; i++ ){
+	console.log(john[1])
+}
+<p class="c">
+	1st - initial value of the counter
+	2nd - condition
+	3rd - iteration after
+</p>
+
+						</code>
+					</pre>
+					<h4>while loop</h4>
+					<pre>
+						<code>
+var i = 0
+while( i < john.length){
+	console.log(john[i]);
+	i++
+}
+						</code>
+					</pre>
+
+					<h4> Continue and Break Statements</h4>
+				<pre>
+					<code>
+var john = ['smith', 'single',1990, 'designer', false];
+for( var i = 0; i < john.length ; i++ ){
+	if(typeof john[i] !== 'string') continue;
+	<p class="c">
+so if this is false it will continue to the next statement which is the console.log
+nalito ko dito talga. kasi nga TRUE ung 	
+</p>
+	console.log(john[i])
+}
+
+					</code>
+				</pre>
+
+				<pre>
+
+
+<code>
+var john = ['smith', 'single',1990, 'designer', false];
+for( var i = 0; i < john.length ; i++ ){
+	if(typeof john[i] !== 'string') break;
+	console.log(john[i])
+}
+	<p class="c">
+	// if the  if(typeof john[i] !== 'string') ;
+	// encounters a not a string then it will stop or break the loop
+	</p>
+
+
+					</code>
+				</pre>
+
+				<pre> <h4> reverse output</h4>
+					<code>
+						
+for ( var i = john.length - 1; i >= 0  ; i--){
+	console.log(john[i]);
+}
+					</code>
+				</pre>
+				</div>
+			</section>
 		</main>
 	</body>
 	<script src="./course-guide-assets/jquery-ui-1.12.1/jquery-ui.min.js"></script>
