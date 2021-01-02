@@ -259,82 +259,87 @@ var john = {
 	_allTips: [],
 	_totalAmount: [],
 	calcTip: function () {
-		
-		for( var i = 0; i < this.bills.length; i++){
-		
-			if(this.bills[i] <= 50){
-				console.log( 'less than 50')
-				console.log('bill number: ' + [i + 1] + " amount:  $" +this.bills[i]);
-				this.tip = this.bills[i] * 0.20;
-				console.log('Tip :  $' +this.tip)
-				console.log('---------------');
+		for (var i = 0; i < this.bills.length; i++) {
+			if (this.bills[i] <= 50) {
+				console.log("less than 50");
+				console.log(
+					"bill number: " + [i + 1] + " amount:  $" + this.bills[i]
+				);
+				this.tip = this.bills[i] * 0.2;
+				console.log("Tip :  $" + this.tip);
+				console.log("---------------");
 
-			
 				this._allTips.push(this.tip);
 				this._totalAmount.push(this.bills[i] + this.tip);
-
 			}
-			
-			if(this.bills[i] > 50 && this.bills[i] <= 200){
-				console.log('between 50 - 200 ');
-				console.log('bill number: ' + [i + 1] + ", amount:  $" +this.bills[i]);
+
+			if (this.bills[i] > 50 && this.bills[i] <= 200) {
+				console.log("between 50 - 200 ");
+				console.log(
+					"bill number: " + [i + 1] + ", amount:  $" + this.bills[i]
+				);
 				this.tip = this.bills[i] * 0.15;
-				console.log('Tip :  $' +this.tip)
-				console.log('---------------');
-
-
-				this._allTips.push(this.tip);
-				this._totalAmount.push(this.bills[i] + this.tip);
-
-
-			}
-			
-			if(this.bills[i] > 200){
-				console.log('greater than 200');
-				console.log('bill number: ' + [i + 1] + ", amount:  $" +this.bills[i]);
-				this.tip = this.bills[i] * 0.10;
-				console.log('Tip :  $' +this.tip)
-				console.log('---------------');
+				console.log("Tip :  $" + this.tip);
+				console.log("---------------");
 
 				this._allTips.push(this.tip);
 				this._totalAmount.push(this.bills[i] + this.tip);
-
 			}
-		// console.log('Bill + Tip = : ' + this._totalAmount + ' ---');
-		// console.log('All tips = : ' + this._allTips);	
-		
-	}
 
-	for( var i = 0; i < this._allTips.length; i++){
-		console.log('Tip: ' + this._allTips[i]);
-	
-	}
-	for( var i = 0; i < this._allTips.length; i++){
-		console.log('Tip + Bill :' + this._totalAmount[i]);
-	}
-	console.log('--------------');
-},
+			if (this.bills[i] > 200) {
+				console.log("greater than 200");
+				console.log(
+					"bill number: " + [i + 1] + ", amount:  $" + this.bills[i]
+				);
+				this.tip = this.bills[i] * 0.1;
+				console.log("Tip :  $" + this.tip);
+				console.log("---------------");
+
+				this._allTips.push(this.tip);
+				this._totalAmount.push(this.bills[i] + this.tip);
+			}
+			// console.log('Bill + Tip = : ' + this._totalAmount + ' ---');
+			// console.log('All tips = : ' + this._allTips);
+		}
+
+		for (var i = 0; i < this._allTips.length; i++) {
+			console.log("Tip: " + this._allTips[i]);
+		}
+		for (var i = 0; i < this._allTips.length; i++) {
+			console.log("Tip + Bill :" + this._totalAmount[i]);
+		}
+		console.log("--------------");
+	},
 };
-
 
 // john.calcTip(44);
 console.log(john.calcTip());
 
-
 // -------------------------------------------------------
 
 var mark = {
+	bills: [77, 375, 110, 45],
+	aveTip: [],
+	markTipBill: [],
+};
 
-	bills : []
+function markTipCalculator() {
+	for (var i = 0; i < mark.bills.length; i++) {
+		if (mark.bills[i] <= 100) {
+			this.tip = (mark.bills[i] * 0.2) / mark.bills.length;
+			mark.aveTip.push(tip);
+			console.log('MARK-------- less than 100 '+ tip);
+		} else if (mark.bills[i] > 100 && mark.bills[i] <= 300) {
+			this.tip = (mark.bills[i] * 0.1) / mark.bills.length;
+			mark.aveTip.push(tip);
+			console.log('MARK-------- between 100 - 300 '+ tip);
+		} else if (mark.bills[i] > 300) {
+			this.tip = (mark.bills[i] * 0.25) / mark.bills.length;
+			mark.aveTip.push(tip);
 
-
+			console.log('MARK-------- greater than 300 '+ tip);
+		}
+	}
 }
 
-
-
-
-
-
-
-
-
+markTipCalculator()

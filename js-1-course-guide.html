@@ -20,6 +20,15 @@
 			background-color: #222;
 			padding-bottom: 1rem;
 		}
+
+		.folderEnd-1 {
+			background-color: #b123aa;
+			color: #ddd;
+		}
+		.folderEnd-2 {
+			background-color: #1aaaaa;
+			color: #ddd;
+		}
 	</style>
 	<body>
 		<header>
@@ -325,8 +334,8 @@ while( i < john.length){
 						</code>
 					</pre>
 
-					<h4> Continue and Break Statements</h4>
-				<pre>
+					<h4>Continue and Break Statements</h4>
+					<pre>
 					<code>
 var john = ['smith', 'single',1990, 'designer', false];
 for( var i = 0; i < john.length ; i++ ){
@@ -341,7 +350,7 @@ nalito ko dito talga. kasi nga TRUE ung
 					</code>
 				</pre>
 
-				<pre>
+					<pre>
 
 
 <code>
@@ -359,7 +368,7 @@ for( var i = 0; i < john.length ; i++ ){
 					</code>
 				</pre>
 
-				<pre> <h4> reverse output</h4>
+					<pre> <h4> reverse output</h4>
 					<code>
 						
 for ( var i = john.length - 1; i >= 0  ; i--){
@@ -368,6 +377,151 @@ for ( var i = john.length - 1; i >= 0  ; i--){
 					</code>
 				</pre>
 				</div>
+
+				<h3 class="folderEnd-1">
+					f3 3. How JavaScript Works Behind the Scenes
+				</h3>
+				<div>
+					<img
+						src="./course-guide-assets/img/JS-img-1.jpg"
+						alt=""
+						class="img-size"
+					/>
+				</div>
+
+				<h3>
+					f3v5. Execution Contexts in Detail Creation and Execution
+					Phases and Hoisting
+				</h3>
+				<div>
+					<img src="./course-guide-assets/img/js-img-2.jpg" alt="" />
+					<pre>
+						<code>
+							- functions and variables hoisted in Javascript means they are  available before execution phase starts
+						</code>
+					</pre>
+				</div>
+
+				<h3>f3v6. Hoisting in Practice</h3>
+				<div>
+					<pre>
+						<code>
+<h4>hoisting for function - is only working on function Expression</h4>
+calculateAge(year){      
+	console.log(2018 - year);
+}<p class="c">function Expression</p>
+
+var retirement = function(year){      
+	console.log(65 -  (2016 - year))
+} <p class="c">function Declaration </p> 
+						</code>
+					</pre>
+
+					<pre>
+						<h4>Hoisting in variables</h4>
+						<code>
+console.log(age)
+var age = 23;
+
+function foo(){
+	var age = 44;
+	console.log(age);
+}
+
+foo()
+console.log(age);
+
+<p class="c">
+	result is :    44; and 23;
+	because - var age = 23 is declared globally
+		- while ung foo() var age is declared inside function
+
+		explaination -
+					 - var age = 23;  declared in the global execution
+					 - while on var foo - creates their own execution
+</p>	
+
+						</code>
+					</pre>
+				</div>
+
+				<h3>f3v7. Scoping and the Scope Chain</h3>
+				<div>
+					<img src="/course-guide-assets/img/js-img-3.jpg" alt="" />
+					<pre>
+				<code>
+					
+				</code>
+			</pre>
+				</div>
+
+				<h3>f2v8 - 9 The 'this' Keyword</h3>
+				<div>
+					<pre>
+					<code>
+'this' keyword on function Expression
+gives us the window object.
+
+function foo(){}
+					</code>
+						</pre>
+					<pre>
+							<code>
+'this' keyword gives us the object that we defined inside the object
+in function declaration
+
+var foo = {}					
+							</code>
+						</pre>
+
+
+						<pre>
+							<code>
+var john = {
+	name: 'John',
+	yearOfBirth: 1990,
+	calcAge: function (){
+		console.log(this)    <- gives us the john object
+
+
+		function innerFunction(){
+			console.log(this)   <-   gives us the window object
+		}
+		innerFunction()
+	}
+}
+john.calcAge()
+							</code>
+						</pre>
+
+						<h4>Method Borrowing</h4>
+						<pre>
+							<code>
+var mike = {
+	name : 'mike',
+	byear: 1968
+}
+
+mike.calcAge = john.calcAge;
+
+ginamit natin ung method ni john. dun sa kabila.
+-now ung 'this' keyword na e, is pointing na dito kay Mike!
+							</code>
+						</pre>
+				</div>
+
+<h3 class="folderEnd-2">f4v</h3>
+<div>
+	
+</div>
+
+
+
+
+
+
+
+
 			</section>
 		</main>
 	</body>
