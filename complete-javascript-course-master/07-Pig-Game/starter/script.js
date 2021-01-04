@@ -17,7 +17,7 @@ var scores, roundScore, activePlayer;
 scores = [0, 0];
 roundScore = 0;
 activePlayer = 0;
-
+var diceDOM = document.querySelector('.dice');
 //Hide the Dice in the middle
 document.querySelector('.dice').style.display = 'none';
 
@@ -25,14 +25,21 @@ document.querySelector('.dice').style.display = 'none';
 document.getElementById('score--0').textContent = '0';
 document.getElementById('score--1').textContent = '0';
 
+
+
+
 // EVENT Roll
 document.querySelector('.btn--roll').addEventListener('click', function () {
+ 
+  
   //1. Random number
   //Math.floor - is to remove the decimals
   var dice = Math.floor(Math.random() * 6) + 1;
+  var currentScore = document.querySelector('#current--' + activePlayer);
 
+  var player = document.querySelector('#current--' + activePlayer);
   //2. Display The result
-  var diceDOM = document.querySelector('.dice');
+ 
   diceDOM.style.display = 'block';
 
   //changing the dice from image 1 - 6
@@ -40,8 +47,14 @@ document.querySelector('.btn--roll').addEventListener('click', function () {
 
   //3. Update the round score IF the rolled number was NOT a 1
   if (dice !== 1) {
-    //show the Dice in the middle
 
+    if( scores[activePlayer] >= 100){
+      console.log('winner!');
+      winner();
+    }
+
+    //show the Dice in the middle
+    console.log(roundScore);
     diceDOM.style.display = 'block';
 
     //roundScore = roundScore + dice;
@@ -53,16 +66,13 @@ document.querySelector('.btn--roll').addEventListener('click', function () {
       '#current--' + activePlayer
     ).textContent = roundScore;
 
-    //else if the dice is 1
-    //1. if active player is === 0 { set active player to 1 : else 0}
-    //2. set the round score to 0
-    //3. select the current active player then display the roundscore
-    //4. after a new round we set the score to 0;
-    //5. toggles the background
-    //6. Hides the Dice and start again.
+
+
   } else {
    nextPlayer();
   }
+
+
 });
 
 //HOLD event
@@ -74,15 +84,33 @@ document.querySelector('.btn--hold').addEventListener('click', function () {
   document.querySelector('#score--' + activePlayer).textContent =
     scores[activePlayer];
 
+    if( scores[activePlayer] >= 100){
+      console.log('winner!');
+      winner();
+    }
+	
 
-	nextPlayer();
-
+    nextPlayer();
   //Check if the player won the game
 });
 
 
+
+
+    //else if the dice is 1
+    //1. if active player is === 0 { set active player to 1 : else 0}
+    //2. set the round score to 0
+    //3. select the current active player then display the roundscore
+    //4. after a new round we set the score to 0;
+    //5. toggles the background
+    //6. Hides the Dice and start again.
 function nextPlayer(){
-	
+
+ 
+  if( scores[activePlayer] >= 100){
+    console.log('winner!');
+    winner();
+  }
   //1.
   activePlayer === 0 ? (activePlayer = 1) : (activePlayer = 0);
 
@@ -103,4 +131,11 @@ function nextPlayer(){
   //6.
   diceDOM.style.display = 'none';
 
+}
+
+function winner(){
+
+    diceDOM.style.display = 'none';
+    document.getElementById('score--' + activePlayer).textContent = 'WINNER!';
+  
 }
