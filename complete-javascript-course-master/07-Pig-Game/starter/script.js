@@ -12,30 +12,29 @@ Game Rules
 
 */
 
-var scores, roundScore, activePlayer;
+var scores, roundScore, activePlayer, gamePlaying;
 
-scores = [0, 0];
-roundScore = 0;
-activePlayer = 0;
+init();
+
+//gamePlaying - is the state variable. it tells TRUE or FALSE
+// STATE variable tell us the condition of a system
+
 var diceDOM = document.querySelector('.dice');
-//Hide the Dice in the middle
-document.querySelector('.dice').style.display = 'none';
-
-//upper score
-document.getElementById('score--0').textContent = '0';
-document.getElementById('score--1').textContent = '0';
-
 
 
 
 // EVENT Roll
 document.querySelector('.btn--roll').addEventListener('click', function () {
  
-  
+
+  //if the game is TRUE or FALSE - default True on init() set to false on winner. 
+
+ if(gamePlaying){
+
   //1. Random number
   //Math.floor - is to remove the decimals
   var dice = Math.floor(Math.random() * 6) + 1;
-  var currentScore = document.querySelector('#current--' + activePlayer);
+  // var currentScore = document.querySelector('#current--' + activePlayer);
 
   var player = document.querySelector('#current--' + activePlayer);
   //2. Display The result
@@ -49,7 +48,6 @@ document.querySelector('.btn--roll').addEventListener('click', function () {
   if (dice !== 1) {
 
     if( scores[activePlayer] >= 100){
-      console.log('winner!');
       winner();
     }
 
@@ -73,10 +71,19 @@ document.querySelector('.btn--roll').addEventListener('click', function () {
   }
 
 
+ }
+
+
 });
 
 //HOLD event
 document.querySelector('.btn--hold').addEventListener('click', function () {
+
+//if the game is TRUE or FALSE - default True on init() set to false on winner. 
+
+
+if(gamePlaying){
+
   //add CURRENT score to GLOBAL score
   scores[activePlayer] += roundScore;
 
@@ -84,17 +91,26 @@ document.querySelector('.btn--hold').addEventListener('click', function () {
   document.querySelector('#score--' + activePlayer).textContent =
     scores[activePlayer];
 
-    if( scores[activePlayer] >= 100){
-      console.log('winner!');
+
+
+
+    //Check if the player won the game
+    if( scores[activePlayer] >= 20){
       winner();
+
+      gamePlaying = false;
+    } else {
+
+      nextPlayer();
     }
 	
 
-    nextPlayer();
-  //Check if the player won the game
+}
+
+  
 });
 
-
+document.querySelector('.btn--new').addEventListener('click', init);
 
 
     //else if the dice is 1
@@ -106,11 +122,6 @@ document.querySelector('.btn--hold').addEventListener('click', function () {
     //6. Hides the Dice and start again.
 function nextPlayer(){
 
- 
-  if( scores[activePlayer] >= 100){
-    console.log('winner!');
-    winner();
-  }
   //1.
   activePlayer === 0 ? (activePlayer = 1) : (activePlayer = 0);
 
@@ -133,9 +144,56 @@ function nextPlayer(){
 
 }
 
+
+
+
+
 function winner(){
 
     diceDOM.style.display = 'none';
-    document.getElementById('score--' + activePlayer).textContent = 'WINNER!';
-  
+    document.getElementById('name--' + activePlayer).textContent = 'WINNER!';
+    document.querySelector('.player--' + activePlayer).classList.add('player--winner');
+    document.querySelector('.player--' + activePlayer).classList.remove('player--active');
+    
+    
+    
+    document.querySelector('.btn--new').style.display = 'block';
+
+    // pwede ren itago kung my nanalo na. or we just disabled the buttons when someone wins.
+    // document.querySelector('.btn--roll').style.display = 'none';
+    // document.querySelector('.btn--hold').style.display = 'none';
+
+    
+}
+
+function init(){
+// when New Game btn clicked, score reset to zero.
+scores = [0,0];
+activePlayer = 0;
+roundScore = 0;
+gamePlaying = true;
+
+//
+document.querySelector('.btn--new').style.display = 'none';
+document.querySelector('.btn--roll').style.display = 'block';
+document.querySelector('.btn--hold').style.display = 'block';
+
+
+
+//upper score
+document.getElementById('score--0').textContent = '0';
+document.getElementById('score--1').textContent = '0';
+//lower score
+document.getElementById('current--0').textContent = '0';
+document.getElementById('current--1').textContent = '0';
+
+//
+document.getElementById('name--0').textContent = 'Player 1';
+document.getElementById('name--1').textContent = 'Player 2';
+
+document.querySelector('.player--0').classList.remove('player--winner');
+document.querySelector('.player--1').classList.remove('player--winner');
+document.querySelector('.player--0').classList.add('player--active');
+
+
 }
