@@ -12,7 +12,7 @@ Game Rules
 
 */
 
-var scores, roundScore, activePlayer, gamePlaying;
+var scores, roundScore, activePlayer, gamePlaying, prevRoll;
 
 init();
 
@@ -26,19 +26,20 @@ var diceDOM = document.querySelector('.dice');
 // EVENT Roll
 document.querySelector('.btn--roll').addEventListener('click', function () {
  
-
   //if the game is TRUE or FALSE - default True on init() set to false on winner. 
 
  if(gamePlaying){
+
+
 
   //1. Random number
   //Math.floor - is to remove the decimals
   var dice = Math.floor(Math.random() * 6) + 1;
   // var currentScore = document.querySelector('#current--' + activePlayer);
-
+ 
   var player = document.querySelector('#current--' + activePlayer);
   //2. Display The result
- 
+  
   diceDOM.style.display = 'block';
 
   //changing the dice from image 1 - 6
@@ -49,10 +50,10 @@ document.querySelector('.btn--roll').addEventListener('click', function () {
 
     if( scores[activePlayer] >= 100){
       winner();
-    }
+    } else if (prevRoll )
 
     //show the Dice in the middle
-    console.log(roundScore);
+
     diceDOM.style.display = 'block';
 
     //roundScore = roundScore + dice;
@@ -70,7 +71,8 @@ document.querySelector('.btn--roll').addEventListener('click', function () {
    nextPlayer();
   }
 
-
+  // Explain 
+  var lastDice = dice;
  }
 
 
