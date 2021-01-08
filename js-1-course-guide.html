@@ -12,6 +12,13 @@
 		<title>The Complete JavaScript Course 2020: From Zero to Expert!</title>
 	</head>
 	<style>
+		code {
+			/* overflow-wrap: break-word !important;
+			/* hyphens: auto; */
+			/* word-wrap: break-word !important; */
+			/* width: 100%; */
+			/* display: inline-block; */ 
+		}
 		h4 {
 			color: cornflowerblue;
 			font-size: 2rem;
@@ -23,11 +30,19 @@
 
 		.folderEnd-1 {
 			background-color: #b123aa;
-			color: #ddd;
+			color: #fff;
 		}
 		.folderEnd-2 {
 			background-color: #1aaaaa;
-			color: #ddd;
+			color: #fff;
+		}
+		.folderEnd-3 {
+			background-color: #bbc123;
+			color: #fff;
+		}
+
+		.img {
+			width: 50%;
 		}
 	</style>
 	<body>
@@ -111,10 +126,104 @@ Math.random() - gives random number
 Anonymous functions - doesnt have a name and cannot be reused.
 	<code>document.querySelector('.btn--roll').addEventListener('click', function(){
 	DO something!	
-	});</code>					
-</pre
-					>
-				
+	});</code>		
+	
+
+
+</pre>
+	</div>
+
+				<h3>OBJECTS</h3>
+				<div>
+					<pre>
+
+	
+<code>
+	<h4> Difference between function constructor and object.create</h4>
+	
+	Both share personProto
+	- is that the object.create builds an object that inherits directly
+			from the one that we passed into the first argument.
+	- while function constructor - the newly created object inherits
+			from the constructor's prototype
+	</code>
+							
+<code>
+	<h4>Object.create</h4>
+	var personProto = {
+		calculateAge: function(){
+			console.log(2021 - this.yearOfBirth)
+		}
+	};
+
+
+	OBJECT.CREATE ----- Two ways
+	
+	var john = Object.create(personProto);
+	john.name = 'John';
+	john.yearOfBirth = 1990;
+	john.job = 'Teacher';
+	
+	var jane = Object.create(personProto, {
+		name: {value: 'Jane'},
+		yearOfBirth: {value: 1968},
+		job: {value: 'I.T'}
+	})
+</code>
+							
+							
+						
+<code>
+	<h4> Function constructor</h4>
+	/*
+	//Constructor
+	name starts Big letter
+	var Person = function(firstname, birthPlace, job) {
+		this.firstname = firstname;
+		this.birthPlace = birthPlace;
+		this.job = job;
+	}
+	
+	//because we use mark as new Person. we can now use the 
+	//variable we created in Person object
+	var mark = new Person('Mark', 1990, 'Designer')
+	console.log(mark.firstname)
+	
+	
+	//we create a function prototype on the fly
+	//so now mark can use it, because we create a new Person for him 
+	Person.prototype.calculateAge = function (){
+		console.log( 2021 - this.birthPlace );
+	}
+	
+	mark.calculateAge()
+</code>
+						<code>
+
+							
+<h4>Primitives vs Objects </h4>
+
+The big difference between Primitive and Objects
+	is that variables containing primitives actually hold
+	that data inside of variable itself 
+
+On objects it very different 
+	variable associated with objects DO NOT actually containing
+	the object -- but instead they contain a reference to the
+	place in memory where the objects sessionStorage, so where the
+	objects stored
+
+- AGAIN -
+a variable declared as an object
+does not have a real copy of the object 
+it points to that object! AHA!
+
+When we pass Primitive to the function it will simply copy as created 
+   we can change it as we want, it will never affect the variable on the outside
+   because it is a PRIMITIVE
+
+						</code>
+					</pre>
 				</div>
 				<h3>Tracks</h3>
 
@@ -347,9 +456,10 @@ for( var i = 0; i < john.length ; i++ ){
 
 						</code>
 					</pre>
-					<h4>while loop</h4>
+
 					<pre>
 						<code>
+							<h4>while loop</h4>
 var i = 0
 while( i < john.length){
 	console.log(john[i]);
@@ -358,9 +468,9 @@ while( i < john.length){
 						</code>
 					</pre>
 
-					<h4>Continue and Break Statements</h4>
 					<pre>
 					<code>
+						<h4>Continue and Break Statements</h4>
 var john = ['smith', 'single',1990, 'designer', false];
 for( var i = 0; i < john.length ; i++ ){
 	if(typeof john[i] !== 'string') continue;
@@ -392,9 +502,9 @@ for( var i = 0; i < john.length ; i++ ){
 					</code>
 				</pre>
 
-					<pre> <h4> reverse output</h4>
+					<pre> 
 					<code>
-						
+						<h4> reverse output</h4>
 for ( var i = john.length - 1; i >= 0  ; i--){
 	console.log(john[i]);
 }
@@ -442,8 +552,9 @@ var retirement = function(year){
 					</pre>
 
 					<pre>
-						<h4>Hoisting in variables</h4>
+						
 						<code>
+<h4>Hoisting in variables</h4>
 console.log(age)
 var age = 23;
 
@@ -517,9 +628,10 @@ john.calcAge()
 							</code>
 						</pre>
 
-					<h4>Method Borrowing</h4>
+					
 					<pre>
 							<code>
+	<h4>Method Borrowing</h4>
 var mike = {
 	name : 'mike',
 	byear: 1968
@@ -533,8 +645,87 @@ ginamit natin ung method ni john. dun sa kabila.
 						</pre>
 				</div>
 
-				<h3 class="folderEnd-2">f4v6</h3>
-				<div>Go to 12</div>
+				<h3 class="folderEnd-2">f4 on ward is a PIG GAME.</h3>
+				<div>Go to the Scrip.js file</div>
+
+				<h3 class="folderEnd-3">
+					f5v 3. Everything Is an Object Inheritance and the Prototype
+					Chain
+				</h3>
+				<div>
+					<h5>Types of Objects</h5>
+					<pre>
+						
+						<code>
+	<h4>Primitives</h4>
+numbers
+String
+Booleans
+Undefined
+Null
+						</code>
+						<code>
+	<h4>Everything else</h4>
+Arrays
+Function
+Objects
+Dates
+Wrapper for numbers, Strings, Booleans
+						</code>
+						<code>
+	<h4> Inheritance</h4>
+is when 1 object is based on another object
+ - it's when 1 object gets access to another's properties and methods
+ - inheritance works by using prototype
+ posible with prototype property that every object has
+ - every object has prototype properties
+
+Null - Has no prototype
+						</code>
+					</pre>
+
+					<pre>
+						<code>
+	<h4>Summary</h4>
+- Every JS object has a prototype property, which makes inheritance posible in JS
+- The prototyp property of an object is where we put methods and propeties that we want
+		other objects to inherit
+- The constructor prototype property is NOT the prototype of the constructor itself,
+		its the prototype of ALL instances that are created through it;
+- When certain method (or property) is called, the search starts in the object itself,
+		and if it cannot be found, the search moves on to the objects prototype.
+		This continues until the method is found: PROPERTY CHAIN.
+	</code>
+</pre>
+					<img
+						class="img-flex"
+						src="./course-guide-assets/img/js-img-4.jpg"
+						alt=""
+					/>
+				</div>
+				<h3>f5v 4. Creating Objects Function Constructors</h3>
+				<div>go to the folder 17</div>
+
+				<h3>f5v 5. The Prototype Chain in the Console</h3>
+				<div>try mo console.info() to see prototype and methods</div>
+
+				<h3>f5v 6. Creating Objects Object.create</h3>
+				<div> ung difference nilagay ko sa Function and methods sa taas</div>
+			
+			<h3>f5v 7. Primitives vs. Objects</h3>
+			<div>
+
+			</div>
+
+
+
+
+
+
+
+
+
+
 			</section>
 		</main>
 	</body>
