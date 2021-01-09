@@ -714,13 +714,66 @@ Null - Has no prototype
 			
 			<h3>f5v 7. Primitives vs. Objects</h3>
 			<div>
-
+sa 8 na. 15minute time
 			</div>
+<h3>f5v 9. First Class Functions Functions Returning Functions</h3>
+<div>
+	<h4>The starter code is in 14-OOP</h4>
+	<pre>
+		<code>
+/* 
+Functions returning function
+*/
+
+function interviewJobs(job){
+	if(job === 'designer'){
+		return function(name){
+			console.log(name + ', can you please explain that UX design is?');
+		}
+	}
+	else if( job === 'teacher'){
+		return function(name){
+			console.log('What subject do you teach ' + name + '?');
+		}
+	} else {
+		return function(name){
+			console.log('Hello ' + name + ', what do you do?');
+		}
+	}
+}
+
+// store them in variable so we can us the name on returning function
+
+var teacherQuestion = interviewJobs('teacher');
+var designerQuestion = interviewJobs('designer');
+
+teacherQuestion('John');
+designerQuestion('Mark');
 
 
+//Without storing to variable
 
+interviewQuestion('Teacher')('Grace');
 
+		</code>
+	</pre>
+</div>
 
+<h3>f5v10. Immediately Invoked Function Expressions (IIFE)</h3>
+<div>
+	<pre>
+		<code>
+(function {
+	//Body
+})();  <---- invoker
+		</code>
+	</pre>
+</div>
+
+<h3>f5v11. Closures</h3>
+<div>
+	
+</div>
 
 
 
