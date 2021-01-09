@@ -113,7 +113,7 @@ On objects it very different
 		- even after return or remove from the execution context
 		the outer function can still have an access to the function
 		and that is called CLOSURE
-	*/
+
 
 function retirement(retirementAge) {
   var a = ' years left until retirement.';
@@ -157,4 +157,61 @@ function interviewJobs(jobs){
 var interviewDesigner = interviewJobs('designer');
 interviewDesigner('John');
 var interviewTeacher = interviewJobs('teacher');
-interviewTeacher('Merry');
+interviewTeacher('Merry'); 
+	*/
+
+
+
+	var john = {
+		name: 'John',
+		age: 17,
+		job: 'Designer',
+		presentation: function(style, timeOfDay){
+			if(style === 'formal'){
+				console.log("Good " + timeOfDay + ", Ladies and gentlemen! I'm " + this.name + ', I\'m a ' + this.job + " and I'm " + this.age + " years old." );
+
+			} else if (style === 'friendly' ){
+				console.log('Hey! What\'s up? I\'m '+ this.name + ', I\'m a ' + this.job + " and I'm " + this.age + " years old. Have a nice " + timeOfDay);
+			}
+		}
+
+	};
+
+	var emily = {
+		name: 'Emily',
+		job: 'Teacher',
+		age: 22
+	}
+
+	// we will use bind method to create a function, with preset argument
+	//the preset argument is the 'friendly
+	//the 1st argument is the 'this' 
+	var johnFrendly = john.presentation.bind(john, 'friendly');
+
+	johnFrendly('lorem lorem');
+
+
+	john.presentation('formal','Morning');
+
+
+	//call() - as method borrowing - we borrowed method from john
+	john.presentation.call(emily, 'friendly', 'noon');
+
+	// apply() - this arguments accepts as array 
+	// - 2 arguments- 1st variable is 'this' and then  next is an array where all other arguments go
+
+	john.presentation.apply(emily, ['friendly', 'Darkest day']);
+
+	/* 
+
+			  not john
+	call(this(emliy), arg1, arg2) - the first argument of call method is always to set the 'this' variable
+		- it allow us to set this variable on 1st argument. so we can borrow other method
+	
+	apply() - this arguments accepts as array 
+			- 2 arguments- 1st variable is 'this' and then  next is an array where all other arguments go
+	bind() - doesnt immediatly call the function, but instead it generates a copy of a function
+			- so that we can store it somewhere
+			- useful for function with preset argument
+			- it will return a function() - so we have to store  it at function somewhere
+			*/
