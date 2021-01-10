@@ -161,7 +161,9 @@ interviewTeacher('Merry');
 	*/
 
 
+/* 
 
+Call(), apply(), bind()
 	var john = {
 		name: 'John',
 		age: 17,
@@ -202,7 +204,7 @@ interviewTeacher('Merry');
 
 	john.presentation.apply(emily, ['friendly', 'Darkest day']);
 
-	/* 
+	
 
 			  not john
 	call(this(emliy), arg1, arg2) - the first argument of call method is always to set the 'this' variable
@@ -215,3 +217,67 @@ interviewTeacher('Merry');
 			- useful for function with preset argument
 			- it will return a function() - so we have to store  it at function somewhere
 			*/
+// Coding Challenge! 
+
+// <-- IIFE tp make our code private and does not interfere other code
+// so if the programmers code has a variable question - our code will not interfere because its private
+( function(){  
+	
+function Question(question, answer, correct){
+	this.question = question;
+	this.answer = answer;
+	this.correct = correct;
+
+}
+
+// create a function using prototype to display a question
+// so we can use it below the execution
+Question.prototype.displayQuestion = function(){
+	console.log(this.question);
+
+	for(var i = 0; i < this.answer.length; i++){
+		console.log(i + ': ' + this.answer[i]);
+	}
+}
+
+
+
+Question.prototype.checkAnswer = function(ans){
+	if(ans === this.correct ){
+		console.log('Correct answer!')
+	} else {
+		console.log('Wrong answer. Please try again!');
+	}
+}
+
+
+//create new objects using constructor
+var _q1 = new Question('Is Javascript the coolest programming language in the world?',
+ ['Yes' ,'No'] , 0);
+
+ var _q2 = new Question('What is the name of the course\'s teacher?', 
+ ['John', 'Michael', 'Jonas'], 2);
+
+ var _q3 = new Question('What does best describe coding?', ['Boring', 'Hard', 'fun', 'Tedious'], 2);
+
+
+
+
+
+//store all the question in an array
+//so we can loop
+ var questions = [_q1, _q2, _q3];
+// create a random number from their question length
+// so we can randomized the question
+ var n = Math.floor(Math.random() * questions.length);
+
+ //meron tayong access sa displayQuestion kasi gumawa tayo ng prototype ung the constructor
+questions[n].displayQuestion();
+
+//asking answer from the user, when they input on the prompt
+var answer = parseInt(prompt('Please enter the correct answer.'));
+
+
+//placed here, so after they answered on the prompt the value evaluated
+questions[n].checkAnswer(answer);
+})();

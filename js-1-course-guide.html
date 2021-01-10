@@ -113,6 +113,8 @@ if the property is inside the method, we can use the 'this' keyword to set and r
 .indexOf() - will return the position of the argument
 - that we pass in inside of the array
 - if the indexOf(value or position) is not present in the array it will return -1
+
+parsInt() - convert to number
 <code>
 	.indexOf() - example var john = ['Mr','single', 1990,
 	'manila'] john.indexOf(1990); // now it will tell us
@@ -704,7 +706,47 @@ Null - Has no prototype
 					/>
 				</div>
 				<h3>f5v 4. Creating Objects Function Constructors</h3>
-				<div>go to the folder 17</div>
+				<div>go to the folder 17
+
+					<pre>
+						<code>
+// Function constructor
+
+function Question(question, answer, correct){
+
+	this.question = question;
+	this.answer = answer;
+	this.correct = correct;
+}
+
+
+
+/*
+//Constructor
+var Person = function(firstname, birthPlace, job) {
+	this.firstname = firstname;
+	this.birthPlace = birthPlace;
+	this.job = job;
+}
+
+//because we use mark as new Person. we can now use the 
+//variable we created in Person object
+var mark = new Person('Mark', 1990, 'Designer')
+console.log(mark.firstname)
+
+
+//we create a function prototype on the fly
+//so now mark can use it, because we create a new Person for him 
+Person.prototype.calculateAge = function (){
+	console.log( 2021 - this.birthPlace );
+}
+
+mark.calculateAge()
+*/
+
+						</code>
+					</pre>
+				</div>
 
 				<h3>f5v 5. The Prototype Chain in the Console</h3>
 				<div>try mo console.info() to see prototype and methods</div>
@@ -918,6 +960,86 @@ john.presentation.apply(emily, ['friendly', 'Darkest day']);
 	</code>
 </pre>
 </div>
+
+<h3>GOOD EXAMPLE OF CODING f5v 14. Coding Challenge 7 Solution, Part 1</h3>
+<div>
+	<pre>
+		<code>
+// Coding Challenge! 
+
+// <-- IIFE tp make our code private and does not interfere other code
+// so if the programmers code has a variable question - our code will not interfere because its private
+( function(){  
+	
+function Question(question, answer, correct){
+	this.question = question;
+	this.answer = answer;
+	this.correct = correct;
+
+}
+
+// create a function using prototype to display a question
+// so we can use it below the execution
+Question.prototype.displayQuestion = function(){
+	console.log(this.question);
+
+	for(var i = 0; i < this.answer.length; i++){
+		console.log(i + ': ' + this.answer[i]);
+	}
+}
+
+
+
+Question.prototype.checkAnswer = function(ans){
+	if(ans === this.correct ){
+		console.log('Correct answer!')
+	} else {
+		console.log('Wrong answer. Please try again!');
+	}
+}
+
+
+//create new objects using constructor
+var _q1 = new Question('Is Javascript the coolest programming language in the world?',
+	['Yes' ,'No'] , 0);
+
+	var _q2 = new Question('What is the name of the course\'s teacher?', 
+	['John', 'Michael', 'Jonas'], 2);
+
+	var _q3 = new Question('What does best describe coding?', ['Boring', 'Hard', 'fun', 'Tedious'], 2);
+
+
+
+
+
+//store all the question in an array
+//so we can loop
+	var questions = [_q1, _q2, _q3];
+// create a random number from their question length
+// so we can randomized the question
+	var n = Math.floor(Math.random() * questions.length);
+
+	//meron tayong access sa displayQuestion kasi gumawa tayo ng prototype ung the constructor
+questions[n].displayQuestion();
+
+//asking answer from the user, when they input on the prompt
+var answer = parseInt(prompt('Please enter the correct answer.'));
+
+
+//placed here, so after they answered on the prompt the value evaluated
+questions[n].checkAnswer(answer);
+})();
+		</code>
+	</pre>
+</div>
+<h3>f5v 15. Coding Challenge 7 Solution, Part 2</h3>
+<div>
+	
+</div>
+
+
+
+
 
 
 			</section>
