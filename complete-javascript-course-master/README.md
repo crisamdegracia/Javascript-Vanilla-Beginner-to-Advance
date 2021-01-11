@@ -14,14 +14,15 @@ Use starter code to start each section, and **final code to compare it with your
 
 ### Q2: I'm looking for the old course version (v1) files. Where can I find them?
 
-**A:** They are in this same repo, but in the [v1 branch](https://github.com/jonasschmedtmann/complete-javascript-course/tree/v1). So just go to [v1](https://github.com/jonasschmedtmann/complete-javascript-course/tree/v1), and download the code from there.
+**A:** They are in this same repo, but in the [v1 branch](https://github.com/jonasschmedtmann/complete-javascript-course/tree/v1). So just go to [v1](httpii .
+s://github.com/jonasschmedtmann/complete-javascript-course/tree/v1), and download the code from there.
 
 ### Q3: I'm stuck! Where do I get help?
 
 **A:** Have you actually tried to fix the problem on your own? Have you compared your code to the final code? If you failed fixing your problem, please **post a detailed description of the problem to the Q&A area of that video over at Udemy**, along with a [codepen](https://codepen.io/pen/) containing your code. You will get help there. Please don't send me a personal message or email to fix coding problems.
 
 ### Q4: What VSCode theme are you using?
-
+s
 **A:** I use Monokai Pro for all my coding and course production. It's a paid theme, but you can actually use the free demo version forever 😅
 
 ### Q5: Can I see a final version of the course projects?

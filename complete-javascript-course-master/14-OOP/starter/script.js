@@ -262,8 +262,6 @@ var _q1 = new Question('Is Javascript the coolest programming language in the wo
 
 
 
-
-
 //store all the question in an array
 //so we can loop
  var questions = [_q1, _q2, _q3];

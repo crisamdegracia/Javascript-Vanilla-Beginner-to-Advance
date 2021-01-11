@@ -33,12 +33,12 @@ Summary
     5a. when the answer is correct and do nothing when the answer is wrong.
     5b. then console.log() the score on 
     5c. questions[n].checkAnswer(parseInt(answer), keepScore);
-      5ca. here we add score() as an argument. para masala dun sa check answer prototype.
+      5ca. here we add score() "keepScore" as an argument sa checkAnswer. para masala dun sa check answer prototype.
       5cb. we then use it there as a callback
       5cc. so if the this.correct === correct ( which is the 3rd argument of the object)
         5cca.  var _q1 = new Question('Is Javascript the coolest programming language in the world?',['Yes', 'No'], 0 );  <<-- zero is the 3rd. or the correct answer
       5cd. then the callback(true) or keepScore(true) or score()(true);   <- that how it reads
-    5d. then we display the score  this.displayScore(sc);
+    5d. then we we call the prototype.displayScore   to display  on line 99 this.displayScore(sc);
 
 */
 
