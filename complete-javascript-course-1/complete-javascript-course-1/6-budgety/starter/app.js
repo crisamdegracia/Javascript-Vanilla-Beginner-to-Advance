@@ -43,9 +43,145 @@ return {
 	7a. so the eventListener string value of CSS name .add__btn will be easier to change in the future
 8. Now we create a function on controller() for all of our eventlistener  -var setupEventListeners()
 	8a. we also put var DOM = UICtrl.getDOMstrings(); inside because we only want to trigger the value on event listeners
+9. We now return init() function on controller. to call all the eventListener. then finally, outside this 3 objects (budget controller,uicontroller,controller) we call it. controll.init()
+10. We need a data model to store data for expenses and income and set this up on budgetController();
+	10a. so we create a function constructor for Expense and Income
+	10b. its always better to create one data to store all our data instead of having a lot of random variables flowing around
+		10ba. so we create one big structure for everything 
+		10bb. and we call it var data {} and create all items inside it with expenses and income and total with expenses and income
+11. f6v10 - how to avoid conflicts and how to pass data from one module to another
+	11a. we create a public method in the budget controller, thats gonna allow other modules to add a new item into our data structure
+	11b. so we will create a return an object{addItem} which is gonna contain all of our public methods
+	11c. then on function body if someone calls this method
+	11d. what type? is it expenses or income., description, and value 
+	11e. now we add or create a new type (expense or income)  so if expense create new expense. else if income create new income
+		11ea. if type is exp then create, if income then create.
+			if(type === 'exp'){
+				newItem new Expense(ID, des, val);
+			} else if (type === 'inc'){
+				newItem new Income(ID, des, val);
+			}
+		11ea. then we will store them
+		data.allItems[type].push(newItem);
+			11eaa. to read this. data.allITems[inc or exp].push( allItems );
+	11f. VERY POWERFUL NABALIW NAKO DITO KAKAINTINDI
+	11g. we will also return the newItem; so the other module or methods daw will have a direct aceess to the new items
+	11h. ID explained. kung ung id daw is based on length. so ID[1,2,3,4,5]  the next id is 6 -> ID[1,2,3,4,5,6]. pero daw mag dedelet tayo ng ietm based on ID. at hindi daw pwede
+		11ha. hindi daw pwede maulit ung mga ID nayon. so ang simple solution is last ID + 1
+		11hb. how to add the ID daw - sabi nya 1st come in mind daw is to get the length of the already existing array then add 1 ( existing array length + 1)
+		11hc. the big problem with the solution in 11hb. is later on we will delete 1 item from them.
+		11hd. the ID must only exist once 
+		11he. so the solution is the LAST ID + 1  - so base on array index number, if the array has 6 in it so the last number is 5 .becoz its zero base
+		11hf. so (array.length -1) + 1 
+	11g. then we will store the new objects in variable 
+		11ga. add the item to the budget controller
+				var	budgetCtrl.addItem(input.type, input.description, input.value);
+12. f6v11 - 1, A teknik for adding big chunks of HTML into the DOM : 2, How to replace Parts of string : 3, How to do DOM manipulation using insertAdjacentHTML method
+	12a. We create addListem in budgetController for HTML chunk of code, if the type is income of expenses -- to display to the UI
+	12b. to replace the actual data with some placeholder - %id% , %value% , %description%
+	12c. kasi daw pag pumunta tayo dun sa actual data. we can replace with the actual data
+	12d. we add element in UIController to DOMStrings - incomeContainer - ExpenseContainer
+	12e. then we create var element to decide which container will we insert the chunk HTML
+			12ea. 
+			if(type === 'inc'){
+				element = DOMstring.incomeContainer;
+				html = ;
+				} else if (type === 'exp') {
+				element = DOMstring.expenseContainer;
+					html = ;
+			}
+			
+			//Replace placeholder text with actual data
+			// replace('what data to be replace' , 'the data to insert')
+			// sa 2nd newHTML na, kasi ung una na html napalitan na don dun value, so it doesnt exist na. so newHTML na sya GETS?
+			newHTML = html.replace('%id%', obj.id);
+			newHTML = newHTML.replace('%description%', obj.description);
+			newHTML = newHTML.replace('%value%', obj.value);
+			
+
+
+			// Insert the HTML into the DOM
+			// search how to use insertAdjacentHTML();
+			// beforeend -meaning it will be insert as a last child of the income__list or expense__list
+			//beforebegin  - it will be inserted as a sibling . not a child, and before the PARENT element
+			//afterend			- will be inserted as sibling but after the previous element
+			document.querySelector(element).insertAdjacentHTML('beforeend', newHTML);
+
+	12f. then we will now append it in the webpage
+	12g. then we call it on controller() 
+			12ga. 
+				//3. add the item to the ui
+				//newITEM - the argument here is the new item that created before
+				//input.type = ung ininput ng user, fresh from the input field this is
+				UICtrl.addListItem(newItem, input.type);
+
 */
 
-var budgetController = (function () {})();
+var budgetController = (function () {
+
+	// a private functions
+	// function constructor
+	var Expense = function(id, description, value){
+		this.id = id;
+		this.description = description;
+		this.value = value;
+	}
+
+	// function constructor
+	var Income = function(id, description, value){
+		this.id = id;
+		this.description = description;
+		this.value = value;
+	}
+
+	var data = {
+		allItems: {
+			exp: [],
+			inc: []
+		},
+		totals: {
+			exp: 0,
+			inc: 0
+		}
+	};
+
+
+//GRABEE!
+	return {
+		addItem: function(type, des, val){
+			var newItem,ID;
+
+			//1st we will select the last element - data.allItems[inc or exp]
+			//2nd is the last one??? - the last one is length minus 1
+			//need daw natin to to select new item
+			if( data.allItems.length > 0 ){
+				ID = data.allItems[type][data.allItems[type].length - 1].id+1;
+			} else {
+				ID = 0;
+			}
+			
+
+			// remember all of this item will be store in the data
+			if(type === 'exp'){
+				newItem = new Expense(ID, des, val);
+			} else if (type === 'inc'){
+				newItem = new Income(ID, des, val);
+			} 
+
+			if(newItem) {
+				data.allItems[type].push(newItem);
+
+			}
+			//after storing them push it to the data 
+			//return new element
+			return newItem;
+		}
+	}
+
+
+})();	// BUDGET Controller
+
+
 
 //These Controller dont know each other. REALLY? LOL
 
@@ -57,6 +193,8 @@ var UIController = (function () {
 		inputDescription: ".add__description",
 		inputValue: ".add__value",
 		inputBtn: ".add__btn",
+		incomeContainer: ".income__list",
+		expenseContainer: ".expenses__list"
 	};
 
 	return {
@@ -72,13 +210,48 @@ var UIController = (function () {
 			};
 		},
 
+		//obj is the same ibject that we created using the function constructor and then passed to our app controller in the last lecture
+		addListItem: function(obj, type){
+			var html,newHTML,element;
+			//Create HTML string wiht place holder text
+
+			if(type === 'inc'){
+				element = DOMstring.incomeContainer;
+				html = '<div class="item clearfix" id="income-%id%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>';
+			} else if (type === 'exp') {
+				element = DOMstring.expenseContainer;
+				html = '<div class="item clearfix" id="expense-%id%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__percentage">21%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>';
+			}
+			
+			//Replace placeholder text with actual data
+			// replace('what data to be replace' , 'the data to insert')
+			// sa 2nd newHTML na, kasi ung una na html napalitan na don dun value, so it doesnt exist na. so newHTML na sya GETS?
+			newHTML = html.replace('%id%', obj.id);
+			newHTML = newHTML.replace('%description%', obj.description);
+			newHTML = newHTML.replace('%value%', obj.value);
+			
+
+
+			// Insert the HTML into the DOM
+			// search how to use insertAdjacentHTML();
+			// beforeend -meaning it will be insert as a last child of the income__list or expense__list
+			//beforebegin  - it will be inserted as a sibling . not a child, and before the PARENT element
+			//afterend			- will be inserted as sibling but after the previous element
+			document.querySelector(element).insertAdjacentHTML('beforeend', newHTML);
+
+		},
+
+
 		//we also made public the DOMstring which has the values of value,description, and type
 		//and let the controller() get an access to it
 		getDOMstrings: function () {
 			return DOMstring;
-		},
+		}
 	};
-})();
+})();	// UI CONTROLLER
+
+//--------------------------------------------------------------------------
+
 
 // GLOBAL APP CONTROLLER
 var controller = (function (budgetCtrl, UICtrl) {
@@ -102,24 +275,36 @@ var controller = (function (budgetCtrl, UICtrl) {
 
 	//this is a private function and not exposed to the public
 	var ctrlAddItem = function () {
-		//1.get the field input data
-		var input = UIController.getInput();
+		var newItem, input;
 
-		console.log(input);
+		//1.get the field input data
+		input = UIController.getInput();
+
+		console.log(input.type, input.description, input.value);
+
 
 		//2.add the item to the budget controller
-
+		newItem = budgetCtrl.addItem(input.type, input.description, input.value);
+		
+		
 		//3. add the item to the ui
+		//newITEM - the argument here is the new item that created before
+		//input.type = ung ininput ng user, fresh from the input field this is
+		UICtrl.addListItem(newItem, input.type);
+
 
 		//4. calculate the budget
-
+		
 		//5.display the budget on UI
 	};
-
+	
 	return {
 		init: function(){
 			console.log('Application has started');
 			setupEventListeners();
+		
+			console.log(budgetCtrl.addItem());
+			
 		}
 	}
 
