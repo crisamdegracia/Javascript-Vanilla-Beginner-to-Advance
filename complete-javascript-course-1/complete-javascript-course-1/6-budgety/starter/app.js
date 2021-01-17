@@ -114,7 +114,36 @@ return {
 				//newITEM - the argument here is the new item that created before
 				//input.type = ung ininput ng user, fresh from the input field this is
 				UICtrl.addListItem(newItem, input.type);
+13. f6v12 - Clearing Our input fields
+		- How to clear HTML fields, How to use querySelectorAll, How to convert a list to an  array, A better way to loop over an array then for loops: for each
+		13x. Clear input field - 
+		13x. use slice() to return a copy of the array - but another array
+		13a. we create a return method on UIController named. clearFields() then use querySelectorAll
+			13ab. it hold the result of the selection 
+				13aba. problem it does return a nice array. which we can the use and loop over. but it return something similar but still different.that's a list
+				13abb. solution to, convert the list to an array. so we use SLICE() 
+				13abc. call the slice() using call() - then passing the fields var into it -- so that it becomes the 'this' variable
+				13abd. where is slice method actually stored?
+					13abda. its in the array.prototype
+						13xxx. Array  - is a function contructor for all arrays
+						13xxx. so we know that all the function that we inherit from the array function constructors are in the array prototype property.
+							13xxxx. there the slice method must also be there
+				13xxxx.  fieldsArr = Array.prototype.slice.call(fields);
 
+						//pass a callback function  into this method
+						//then the callback() will be applied to each of the element in the array
+						//this anonymous function() can recieved up to 3 arguments
+						// we have automatic access to the event object -- and we can name as we wanted.
+						// current - so here we have access to the current value, -- current value of the input field of the current value being proccessed
+						// index - zero to the length minus 1 
+						//array - the entire array
+						fieldsArr.forEach(function(current, index, array ){
+							current.value = '';
+						})
+
+			13xx.. THEN BOOM! the fields are now empty when element added!
+			13xx. set to focus the first element of the array.
+						fieldsArr[0].focus();
 */
 
 var budgetController = (function () {
@@ -241,6 +270,32 @@ var UIController = (function () {
 
 		},
 
+		clearFields: function(){
+			var fields, fieldsArr;
+
+		// holds the result of the selection 					// the syntax here daw is like CSS  selecting
+		 fields = document.querySelectorAll(DOMstring.inputDescription + ', ' + DOMstring.inputValue );
+		
+		 //since it a function we can then use the CALL() method on it
+		// this will trick the slice method into thinking, that we give it an array and so it will return an array.
+		//we can now loop over and clear the fields that were selected.
+		 fieldsArr = Array.prototype.slice.call(fields);
+
+		 //pass a callback function  into this method
+		 //then the callback() will be applied to each of the element in the array
+		 //this anonymous function() can recieved up to 3 arguments
+		 // we have automatic access to the event object -- and we can name as we wanted.
+		 // current - so here we have access to the current value, -- current value of the input field of the current value being proccessed
+		 // index - zero to the length minus 1 
+		 //array - the entire array
+		 fieldsArr.forEach(function(current, index, array ){
+			current.value = '';
+		 })
+
+		 //set to focus the 1st element of the array
+		 fieldsArr[0].focus();
+		},
+
 
 		//we also made public the DOMstring which has the values of value,description, and type
 		//and let the controller() get an access to it
@@ -292,6 +347,9 @@ var controller = (function (budgetCtrl, UICtrl) {
 		//input.type = ung ininput ng user, fresh from the input field this is
 		UICtrl.addListItem(newItem, input.type);
 
+
+		//clear the fields 
+		UICtrl.clearFields();
 
 		//4. calculate the budget
 		
