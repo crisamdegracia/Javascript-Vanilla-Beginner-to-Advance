@@ -144,73 +144,111 @@ return {
 			13xx.. THEN BOOM! the fields are now empty when element added!
 			13xx. set to focus the first element of the array.
 						fieldsArr[0].focus();
+14. f6v13. How to convert field inputs to numbers, How to prevent false input
+  14a. we create updateBudget() in controller module
+  14b. its value will be on getInput() - value : farseFloat() -  on budgetControl
+  14c. PROBLEM. when user keep click add button, it will add empty listing on the fields
+  14d. SOLUTION:  
+		14da. these methods will only execute the input value is not empty.
+		 if (!isNaN(input.value) && input.description !== "" && input.value > 0) {
+
+			  newItem = budgetCtrl()
+			  UICtrl.addListITem(newItem, input.type);
+			  UICtrl.clearFields()
+			  updateBudget()
+			}
+15. f6v14 - How and Why to create simple reusable function with only one purpose, How to sum all elements of an array using the forEach method
+   15a. we create calculateBudget: on budgetController
+   15b. we also create var calculateTotal = function(type)
+	15c. so all item are store daw ing data.allItems{[]}
+		15ca. 1st thing we need to do is create sum variable - which store the sum
+
 */
 
 var budgetController = (function () {
-
 	// a private functions
 	// function constructor
-	var Expense = function(id, description, value){
+	var Expense = function (id, description, value) {
 		this.id = id;
 		this.description = description;
 		this.value = value;
-	}
+	};
 
 	// function constructor
-	var Income = function(id, description, value){
+	var Income = function (id, description, value) {
 		this.id = id;
 		this.description = description;
 		this.value = value;
+	};
+
+	//this will be stored in global data structure
+	var calculateTotal = function(type){
+		var sum = 0;
+
+		data.allItems[type].forEach(function(cur){
+			//sum = previous sum + the current value
+			sum += cur.value;
+
+		});
+
+		data.total[type] = sum;
+
 	}
 
 	var data = {
 		allItems: {
 			exp: [],
-			inc: []
+			inc: [],
 		},
 		totals: {
 			exp: 0,
-			inc: 0
-		}
+			inc: 0,
+		},
 	};
 
-
-//GRABEE!
+	//GRABEE!
 	return {
-		addItem: function(type, des, val){
-			var newItem,ID;
+		addItem: function (type, des, val) {
+			var newItem, ID;
 
 			//1st we will select the last element - data.allItems[inc or exp]
 			//2nd is the last one??? - the last one is length minus 1
 			//need daw natin to to select new item
-			if( data.allItems.length > 0 ){
-				ID = data.allItems[type][data.allItems[type].length - 1].id+1;
+			if (data.allItems.length > 0) {
+				ID = data.allItems[type][data.allItems[type].length - 1].id + 1;
 			} else {
 				ID = 0;
 			}
-			
 
 			// remember all of this item will be store in the data
-			if(type === 'exp'){
+			if (type === "exp") {
 				newItem = new Expense(ID, des, val);
-			} else if (type === 'inc'){
+			} else if (type === "inc") {
 				newItem = new Income(ID, des, val);
-			} 
-
-			if(newItem) {
-				data.allItems[type].push(newItem);
-
 			}
-			//after storing them push it to the data 
+
+			if (newItem) {
+				data.allItems[type].push(newItem);
+			}
+			//after storing them push it to the data
 			//return new element
 			return newItem;
+		},
+
+		//calculate the sum of all income and expenses
+		// total income and total expenses
+		calculateBudget: function(){
+
+			//calculate total income and expenses
+
+			//calculate the budget: income - expenses
+
+			//calculate the percentage of income that we spent
+
+
 		}
-	}
-
-
-})();	// BUDGET Controller
-
-
+	};
+})(); // BUDGET Controller
 
 //These Controller dont know each other. REALLY? LOL
 
@@ -223,7 +261,7 @@ var UIController = (function () {
 		inputValue: ".add__value",
 		inputBtn: ".add__btn",
 		incomeContainer: ".income__list",
-		expenseContainer: ".expenses__list"
+		expenseContainer: ".expenses__list",
 	};
 
 	return {
@@ -235,83 +273,85 @@ var UIController = (function () {
 				type: document.querySelector(DOMstring.inputType).value, ////income or expenses
 				description: document.querySelector(DOMstring.inputDescription)
 					.value,
-				value: document.querySelector(DOMstring.inputValue).value,
+				value: parseFloat(
+					document.querySelector(DOMstring.inputValue).value
+				),
 			};
 		},
 
 		//obj is the same ibject that we created using the function constructor and then passed to our app controller in the last lecture
-		addListItem: function(obj, type){
-			var html,newHTML,element;
+		addListItem: function (obj, type) {
+			var html, newHTML, element;
 			//Create HTML string wiht place holder text
 
-			if(type === 'inc'){
+			if (type === "inc") {
 				element = DOMstring.incomeContainer;
-				html = '<div class="item clearfix" id="income-%id%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>';
-			} else if (type === 'exp') {
+				html =
+					'<div class="item clearfix" id="income-%id%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>';
+			} else if (type === "exp") {
 				element = DOMstring.expenseContainer;
-				html = '<div class="item clearfix" id="expense-%id%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__percentage">21%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>';
+				html =
+					'<div class="item clearfix" id="expense-%id%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__percentage">21%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>';
 			}
-			
+
 			//Replace placeholder text with actual data
 			// replace('what data to be replace' , 'the data to insert')
 			// sa 2nd newHTML na, kasi ung una na html napalitan na don dun value, so it doesnt exist na. so newHTML na sya GETS?
-			newHTML = html.replace('%id%', obj.id);
-			newHTML = newHTML.replace('%description%', obj.description);
-			newHTML = newHTML.replace('%value%', obj.value);
-			
-
+			newHTML = html.replace("%id%", obj.id);
+			newHTML = newHTML.replace("%description%", obj.description);
+			newHTML = newHTML.replace("%value%", obj.value);
 
 			// Insert the HTML into the DOM
 			// search how to use insertAdjacentHTML();
 			// beforeend -meaning it will be insert as a last child of the income__list or expense__list
 			//beforebegin  - it will be inserted as a sibling . not a child, and before the PARENT element
 			//afterend			- will be inserted as sibling but after the previous element
-			document.querySelector(element).insertAdjacentHTML('beforeend', newHTML);
-
+			document
+				.querySelector(element)
+				.insertAdjacentHTML("beforeend", newHTML);
 		},
 
-		clearFields: function(){
+		clearFields: function () {
 			var fields, fieldsArr;
 
-		// holds the result of the selection 					// the syntax here daw is like CSS  selecting
-		 fields = document.querySelectorAll(DOMstring.inputDescription + ', ' + DOMstring.inputValue );
-		
-		 //since it a function we can then use the CALL() method on it
-		// this will trick the slice method into thinking, that we give it an array and so it will return an array.
-		//we can now loop over and clear the fields that were selected.
-		 fieldsArr = Array.prototype.slice.call(fields);
+			// holds the result of the selection 					// the syntax here daw is like CSS  selecting
+			fields = document.querySelectorAll(
+				DOMstring.inputDescription + ", " + DOMstring.inputValue
+			);
 
-		 //pass a callback function  into this method
-		 //then the callback() will be applied to each of the element in the array
-		 //this anonymous function() can recieved up to 3 arguments
-		 // we have automatic access to the event object -- and we can name as we wanted.
-		 // current - so here we have access to the current value, -- current value of the input field of the current value being proccessed
-		 // index - zero to the length minus 1 
-		 //array - the entire array
-		 fieldsArr.forEach(function(current, index, array ){
-			current.value = '';
-		 })
+			//since it a function we can then use the CALL() method on it
+			// this will trick the slice method into thinking, that we give it an array and so it will return an array.
+			//we can now loop over and clear the fields that were selected.
+			fieldsArr = Array.prototype.slice.call(fields);
 
-		 //set to focus the 1st element of the array
-		 fieldsArr[0].focus();
+			//pass a callback function  into this method
+			//then the callback() will be applied to each of the element in the array
+			//this anonymous function() can recieved up to 3 arguments
+			// we have automatic access to the event object -- and we can name as we wanted.
+			// current - so here we have access to the current value, -- current value of the input field of the current value being proccessed
+			// index - zero to the length minus 1
+			//array - the entire array
+			fieldsArr.forEach(function (current, index, array) {
+				current.value = "";
+			});
+
+			//set to focus the 1st element of the array
+			fieldsArr[0].focus();
 		},
-
 
 		//we also made public the DOMstring which has the values of value,description, and type
 		//and let the controller() get an access to it
 		getDOMstrings: function () {
 			return DOMstring;
-		}
+		},
 	};
-})();	// UI CONTROLLER
+})(); // UI CONTROLLER
 
 //--------------------------------------------------------------------------
-
 
 // GLOBAL APP CONTROLLER
 var controller = (function (budgetCtrl, UICtrl) {
 	var setupEventListeners = function () {
-
 		//this is also inside becoz we only need it in eventListener
 		var DOM = UICtrl.getDOMstrings();
 		//when add button clicks
@@ -328,6 +368,12 @@ var controller = (function (budgetCtrl, UICtrl) {
 		});
 	};
 
+	var updateBudget = function () {
+		//1. calculate the budget
+		//2.return the budget
+		//3.display the budget on UI
+	};
+
 	//this is a private function and not exposed to the public
 	var ctrlAddItem = function () {
 		var newItem, input;
@@ -338,36 +384,35 @@ var controller = (function (budgetCtrl, UICtrl) {
 		console.log(input.type, input.description, input.value);
 
 
-		//2.add the item to the budget controller
-		newItem = budgetCtrl.addItem(input.type, input.description, input.value);
-		
-		
-		//3. add the item to the ui
-		//newITEM - the argument here is the new item that created before
-		//input.type = ung ininput ng user, fresh from the input field this is
-		UICtrl.addListItem(newItem, input.type);
+		if (!isNaN(input.value) && input.description !== "" && input.value > 0) {
+			//2.add the item to the budget controller
+			newItem = budgetCtrl.addItem(
+				input.type,
+				input.description,
+				input.value
+			);
 
+			//3. add the item to the ui
+			//newITEM - the argument here is the new item that created before
+			//input.type = ung ininput ng user, fresh from the input field this is
+			UICtrl.addListItem(newItem, input.type);
 
-		//clear the fields 
-		UICtrl.clearFields();
+			//clear the fields
+			UICtrl.clearFields();
 
-		//4. calculate the budget
-		
-		//5.display the budget on UI
-	};
-	
-	return {
-		init: function(){
-			console.log('Application has started');
-			setupEventListeners();
-		
-			console.log(budgetCtrl.addItem());
-			
+			//5. Calculate and update budget
+			updateBudget();
 		}
-	}
+	};
 
+	return {
+		init: function () {
+			console.log("Application has started");
+			setupEventListeners();
+
+			console.log(budgetCtrl.addItem());
+		},
+	};
 })(budgetController, UIController);
 
-
 controller.init();
-
