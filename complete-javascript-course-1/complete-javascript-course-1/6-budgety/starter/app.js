@@ -160,8 +160,41 @@ return {
 15. f6v14 - How and Why to create simple reusable function with only one purpose, How to sum all elements of an array using the forEach method
    15a. we create calculateBudget: on budgetController
    15b. we also create var calculateTotal = function(type)
-	15c. so all item are store daw ing data.allItems{[]}
+	15c. so all item are store daw in data.allItems{[]}
 		15ca. 1st thing we need to do is create sum variable - which store the sum
+	15d. we create a global object on budget controller data.budget
+	15e. we now call it on  controller() - so para gumana
+			var updateBudget = function () {
+	
+				budgetCtrl.calculateBudget(); }
+				--------------------
+
+					calculateBudget: function(){
+
+			calculateTotal('exp');
+			calculateTotal('inc');
+
+			data.budget = data.totals.inc - data.totals.exp
+
+			data.percentage = Math.round(( data.totals.exp / data.totals.inc ) * 100);
+
+			//Expense = 100 and income 200, spent 50% = 100/200 = 0.5 * 100
+
+	15f. then we return a function
+		getBudget: function(){
+			return {
+				budget: data.budget,
+				totalInc: data.totals.inc,
+				totalExp: data.totals.exp,
+				percentage: percentage
+			}
+		}
+		},
+
+16. f6v15 - Updating the budget UIController : Practice DOM manipulation by updating the budget and total values.
+  16a. we create    displayBudget: function(obj){ - to display on front-end
+
+
 
 */
 
@@ -182,18 +215,16 @@ var budgetController = (function () {
 	};
 
 	//this will be stored in global data structure
-	var calculateTotal = function(type){
+	var calculateTotal = function (type) {
 		var sum = 0;
 
-		data.allItems[type].forEach(function(cur){
+		data.allItems[type].forEach(function (cur) {
 			//sum = previous sum + the current value
 			sum += cur.value;
-
 		});
 
-		data.total[type] = sum;
-
-	}
+		data.totals[type] = sum;
+	};
 
 	var data = {
 		allItems: {
@@ -204,6 +235,8 @@ var budgetController = (function () {
 			exp: 0,
 			inc: 0,
 		},
+		budget: 0,
+		percentage: -1,
 	};
 
 	//GRABEE!
@@ -237,16 +270,34 @@ var budgetController = (function () {
 
 		//calculate the sum of all income and expenses
 		// total income and total expenses
-		calculateBudget: function(){
-
+		calculateBudget: function () {
 			//calculate total income and expenses
+			calculateTotal("exp");
+			calculateTotal("inc");
 
 			//calculate the budget: income - expenses
+			data.budget = data.totals.inc - data.totals.exp;
 
-			//calculate the percentage of income that we spent
+			if (data.totals.inc > 0) {
+				//calculate the percentage of income that we spent
+				data.percentage = Math.round(
+					(data.totals.exp / data.totals.inc) * 100
+				);
+			} else {
+				data.percentage = -1;
+			}
 
+			//Expense = 100 and income 200, spent 50% = 100/200 = 0.5 * 100
+		},
 
-		}
+		getBudget: function () {
+			return {
+				budget: data.budget,
+				totalInc: data.totals.inc,
+				totalExp: data.totals.exp,
+				percentage: data.percentage,
+			};
+		},
 	};
 })(); // BUDGET Controller
 
@@ -262,6 +313,10 @@ var UIController = (function () {
 		inputBtn: ".add__btn",
 		incomeContainer: ".income__list",
 		expenseContainer: ".expenses__list",
+		budgetLabel: ".budget__value",
+		incomeLabel: ".budget__income--value",
+		expenseLabel: ".budget__expense--value",
+		percentageLabel: ".budget__expenses--percentage"
 	};
 
 	return {
@@ -339,6 +394,11 @@ var UIController = (function () {
 			fieldsArr[0].focus();
 		},
 
+
+		displayBudget: function(obj){
+
+		},
+
 		//we also made public the DOMstring which has the values of value,description, and type
 		//and let the controller() get an access to it
 		getDOMstrings: function () {
@@ -370,7 +430,13 @@ var controller = (function (budgetCtrl, UICtrl) {
 
 	var updateBudget = function () {
 		//1. calculate the budget
+		budgetCtrl.calculateBudget();
 		//2.return the budget
+
+		var budget = budgetCtrl.getBudget();
+
+		console.log(budget);
+
 		//3.display the budget on UI
 	};
 
@@ -383,8 +449,11 @@ var controller = (function (budgetCtrl, UICtrl) {
 
 		console.log(input.type, input.description, input.value);
 
-
-		if (!isNaN(input.value) && input.description !== "" && input.value > 0) {
+		if (
+			!isNaN(input.value) &&
+			input.description !== "" &&
+			input.value > 0
+		) {
 			//2.add the item to the budget controller
 			newItem = budgetCtrl.addItem(
 				input.type,
