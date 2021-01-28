@@ -192,11 +192,56 @@ return {
 		},
 
 16. f6v15 - Updating the budget UIController : Practice DOM manipulation by updating the budget and total values.
-  16a. we create    displayBudget: function(obj){ - to display on front-end
+  16a. we create    displayBudget: function(obj){ on UIController - to display on front-end
+  16b. create strings -> 
+  	    budgetLabel: ".budget__value",
+		incomeLabel: ".budget__income--value",
+		expenseLabel: ".budget__expenses--value",
+		percentageLabel: ".budget__expenses--percentage"
+  16c. then create this
+			document.querySelector(DOMstring.budgetLabel).textContent = obj.budget;
+			document.querySelector(DOMstring.incomeLabel).textContent = obj.totalInc;
+			document.querySelector(DOMstring.expenseLabel).textContent = obj.totalExp;
+			document.querySelector(DOMstring.percentageLabel).textContent = obj.percentage;
+  16d. then call it on controller()
+	 -> UICtrl.displayBudget(budget);
+	 16a. now the UI on front end changes! WOW!
+  16e. PROBLEM. when adding only expenses. the ui giving us -1 value. that we dont want.
+  16f. Solution  - we put the obj.percentage on if else statement - else kung walang laman show nothing
+	
+			if(obj.percentage > 0 ){
+				document.querySelector(DOMstring.percentageLabel).textContent = obj.percentage + '%';
+			} else {
+				document.querySelector(DOMstring.percentageLabel).textContent = '';
+			}
+  16g. then we change the init(). so when the application started the value on fronend UI is zero
+				//we want everything to reset to zero
+			// pass the object and change the value to zero
+			// percentage is same as the value above
+			UICtrl.displayBudget({
+				budget: 0,
+				totalInc: 0,
+				totalExp: 0,
+				percentage: -1,
+			});
+17. f6v17 - Event delegation - 
+			Event Bubbling - when the event is fired or triggered on some DOM element,
+				- example. the button was pressed . 
+				- then the exact same event is also triggered on all of the parent elements
+				- again, the event only from btn but then it will also be fired on all the parent element
+				- it will also fire on the paragraph
+				- to the section the main element and actually all the way up to the DOM tree until 
+				- the HTML element which is the root
+				- that is why its called event bubling
+				Event Bubling - kung pag press daw ng button it will take effec	
+18. f6v18 - Setting up the DELETE EVENT Listener using EVENT DELEGATION
+    - How to use event delegation in practice | How to use IDs in HTML tp connect the UI wiht datamodel | How to use the parentNode property for DOM traversing
 
+	18a. we create event handle on controller()
 
+	document.querySelector(DOMstring.container)
 
-*/
+	*/
 
 var budgetController = (function () {
 	// a private functions
@@ -315,8 +360,9 @@ var UIController = (function () {
 		expenseContainer: ".expenses__list",
 		budgetLabel: ".budget__value",
 		incomeLabel: ".budget__income--value",
-		expenseLabel: ".budget__expense--value",
-		percentageLabel: ".budget__expenses--percentage"
+		expenseLabel: ".budget__expenses--value",
+		percentageLabel: ".budget__expenses--percentage",
+		container: ".container"
 	};
 
 	return {
@@ -397,6 +443,20 @@ var UIController = (function () {
 
 		displayBudget: function(obj){
 
+			//hindi daw ung HTML papalitan, ung content lang
+			document.querySelector(DOMstring.budgetLabel).textContent = obj.budget;
+			document.querySelector(DOMstring.incomeLabel).textContent = obj.totalInc;
+			document.querySelector(DOMstring.expenseLabel).textContent = obj.totalExp;
+			// document.querySelector(DOMstring.percentageLabel).textContent = obj.percentage;
+			
+
+
+			if(obj.percentage > 0 ){
+				document.querySelector(DOMstring.percentageLabel).textContent = obj.percentage + '%';
+			} else {
+				document.querySelector(DOMstring.percentageLabel).textContent = '---';
+
+			}
 		},
 
 		//we also made public the DOMstring which has the values of value,description, and type
@@ -426,6 +486,8 @@ var controller = (function (budgetCtrl, UICtrl) {
 				ctrlAddItem();
 			}
 		});
+
+		document.querySelector(DOM.container).addEventListener('click', ctrlDeleteItem)
 	};
 
 	var updateBudget = function () {
@@ -435,9 +497,8 @@ var controller = (function (budgetCtrl, UICtrl) {
 
 		var budget = budgetCtrl.getBudget();
 
-		console.log(budget);
-
 		//3.display the budget on UI
+		UICtrl.displayBudget(budget);
 	};
 
 	//this is a private function and not exposed to the public
@@ -474,9 +535,22 @@ var controller = (function (budgetCtrl, UICtrl) {
 		}
 	};
 
+	var  ctrlDeleteItem = function(event){
+		//   6:00 minutes
+	};
+
 	return {
 		init: function () {
 			console.log("Application has started");
+			//we want everything to reset to zero
+			// pass the object and change the value to zero
+			// percentage is same as the value above
+			UICtrl.displayBudget({
+				budget: 0,
+				totalInc: 0,
+				totalExp: 0,
+				percentage: -1,
+			});
 			setupEventListeners();
 
 			console.log(budgetCtrl.addItem());
