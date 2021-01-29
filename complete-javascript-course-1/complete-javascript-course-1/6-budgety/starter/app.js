@@ -240,7 +240,25 @@ return {
 	18a. we create event handle on controller()
 
 	document.querySelector(DOMstring.container)
+	18b. 	console.log(event.target.parentNode);   <- ung parent ung ibbgay na result
+				console.log(event.target.parentNode.parentNode.parentNode.parentNode); 
+				- pwede daw mas maraming beses til mareach mo ung desired mo na parent element
+				itemID = console.log(event.target.parentNode.parentNode.parentNode.parentNode.id = it gives us the ID atrributes
+				   - tapos ilagay natin sa variable
 
+					// so gagana daw kung merong ID ung kin-click na element kaya nag set ng if statement
+		if(itemID){
+				//inc-1
+				// then it will be splited like this (   ['inc', '1']  )
+				splitID = itemID.split('-');
+				//eto ung na split sa splitID nilagay sa variable
+				type = splitID[0]; // inc or exp	
+				ID = splitID[1];
+
+		}
+
+	19. f6v19 - Deleting an Item from our Budget Controller
+		- another method to loop an array: map; | How to remove elements from an array using splice method.
 	*/
 
 var budgetController = (function () {
@@ -313,6 +331,40 @@ var budgetController = (function () {
 			return newItem;
 		},
 
+		//to be called by budgetController
+		deleteItem : function(type, id){
+			var ids, index;
+	// id = 6 
+	//data.allItems[type][id]
+	// ids = [1, 2, 3, 6, 8];
+	//index = 3 
+			
+		//diferrence of map and foreach - map returns a brandnew array 
+
+		 ids = data.allItems[type].map(function(current){
+			return current.id
+		});
+
+		//after executing the map() we wud endup with this array ids = [1, 2, 3, 6, 8];
+		//it will return the index number of the element of the array the we put here which is the (id);
+		index = ids.indexOf(id);
+
+		//will delete
+		if(index !== -1 ){
+ 
+			//while slice - use to create a copy 
+			//splice - to remove elements 
+			//1st arg, when we start deleting
+			//2nd the number of elements we want to delete
+			data.allItems[type].splice(index, 1);
+		}
+
+
+
+		},
+
+
+
 		//calculate the sum of all income and expenses
 		// total income and total expenses
 		calculateBudget: function () {
@@ -334,6 +386,7 @@ var budgetController = (function () {
 
 			//Expense = 100 and income 200, spent 50% = 100/200 = 0.5 * 100
 		},
+
 
 		getBudget: function () {
 			return {
@@ -388,11 +441,11 @@ var UIController = (function () {
 			if (type === "inc") {
 				element = DOMstring.incomeContainer;
 				html =
-					'<div class="item clearfix" id="income-%id%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>';
+					'<div class="item clearfix" id="inc-%id%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>';
 			} else if (type === "exp") {
 				element = DOMstring.expenseContainer;
 				html =
-					'<div class="item clearfix" id="expense-%id%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__percentage">21%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>';
+					'<div class="item clearfix" id="exp-%id%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__percentage">21%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>';
 			}
 
 			//Replace placeholder text with actual data
@@ -536,7 +589,27 @@ var controller = (function (budgetCtrl, UICtrl) {
 	};
 
 	var  ctrlDeleteItem = function(event){
-		//   6:00 minutes
+		var itemID, splitID, type, ID;
+
+		itemID = event.target.parentNode.parentNode.parentNode.parentNode.id;
+
+		if(itemID){
+				//inc-1
+				// then it will be splited like this (   ['inc', '1']  )
+				splitID = itemID.split('-');
+				//eto ung na split sa splitID nilagay sa variable
+				type = splitID[0]; // inc or exp	
+				ID = splitID[1];
+
+
+				//1. delete item from the data structure
+				budgetCtrl.deleteItem(type);
+
+				
+				//2. then delete from the UI
+
+				//3. update and show the new budget
+		}
 	};
 
 	return {
@@ -550,6 +623,10 @@ var controller = (function (budgetCtrl, UICtrl) {
 				totalInc: 0,
 				totalExp: 0,
 				percentage: -1,
+
+
+
+
 			});
 			setupEventListeners();
 
