@@ -253,13 +253,42 @@ return {
 				splitID = itemID.split('-');
 				//eto ung na split sa splitID nilagay sa variable
 				type = splitID[0]; // inc or exp	
-				ID = splitID[1];
+				ID = parseInt(splitID[1]); tapos iconvert natin sa integer
 
 		}
 
-	19. f6v19 - Deleting an Item from our Budget Controller
+19. f6v19 - Deleting an Item from our Budget Controller
 		- another method to loop an array: map; | How to remove elements from an array using splice method.
-	*/
+		- hindi ko na input dito
+		- pero nag start un sa pag create natin ng 
+			deleteItem : function(type, id){
+			var ids, index;
+
+			then to be called sa controller
+	
+
+20. f6v20 - Deleting an Item from the Ui
+	- More DOM manipulation, how to remove an element from the DOM
+	20a. we create on UIController  deleteListITem() 
+			deleteListItem: function(){
+			
+			var el = document.getElementById(selectorID);
+
+			el.parentNode.removeChild(el);
+
+
+		}
+	20b. now we call it on controller()
+		-inside ctrlDeleteItem, then call updatebudget() so the UI will be updated
+
+
+21. f6v22 Updating the percentages Controller
+		- Reinforcing the concepts and techniques we have learned so far.
+	21a. we create updatePercentages on controller(); 
+
+	21b. then we add it inside ctrlAddItem() - to calculate and update the percentages
+
+		*/
 
 var budgetController = (function () {
 	// a private functions
@@ -448,6 +477,7 @@ var UIController = (function () {
 					'<div class="item clearfix" id="exp-%id%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__percentage">21%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>';
 			}
 
+
 			//Replace placeholder text with actual data
 			// replace('what data to be replace' , 'the data to insert')
 			// sa 2nd newHTML na, kasi ung una na html napalitan na don dun value, so it doesnt exist na. so newHTML na sya GETS?
@@ -463,6 +493,17 @@ var UIController = (function () {
 			document
 				.querySelector(element)
 				.insertAdjacentHTML("beforeend", newHTML);
+		},
+
+		deleteListItem: function(selectorID){
+			//to remove child method so we must know the parent element
+			// document.getElementById(selectorID).parentNode.removeChild();
+
+			var el = document.getElementById(selectorID);
+
+			el.parentNode.removeChild(el);
+
+
 		},
 
 		clearFields: function () {
@@ -554,6 +595,16 @@ var controller = (function (budgetCtrl, UICtrl) {
 		UICtrl.displayBudget(budget);
 	};
 
+	var updatePercentages = function(){
+
+	//1. Calculate percentages
+	
+	//2. Read percentages from the budget controller
+
+	//3. Update the UI with the new percentages
+
+	};
+
 	//this is a private function and not exposed to the public
 	var ctrlAddItem = function () {
 		var newItem, input;
@@ -585,6 +636,9 @@ var controller = (function (budgetCtrl, UICtrl) {
 
 			//5. Calculate and update budget
 			updateBudget();
+
+			//6. Calculate and update percentages
+			updatePercentages();
 		}
 	};
 
@@ -599,16 +653,19 @@ var controller = (function (budgetCtrl, UICtrl) {
 				splitID = itemID.split('-');
 				//eto ung na split sa splitID nilagay sa variable
 				type = splitID[0]; // inc or exp	
-				ID = splitID[1];
+				ID = parseInt(splitID[1]);
 
 
 				//1. delete item from the data structure
-				budgetCtrl.deleteItem(type);
+				budgetCtrl.deleteItem(type, ID);
 
-				
+
 				//2. then delete from the UI
+			UICtrl.deleteListItem(itemID);
+
 
 				//3. update and show the new budget
+				updateBudget();
 		}
 	};
 
