@@ -305,6 +305,17 @@ return {
   - we get frontend CSS .item__percentages
   23a. var fields = document.querySelectorAll(DOMstring.expensesPercLabel)
 	   23aa. it will return a list and actually called nodeList
+	   23ab. the nodeList doesnot have forEach method
+	   23c. we then create now our own forEach. just check that out	
+	   24c. now gumana na ung percentage
+	   
+24. f6v25 - Formatting our Budget Numbers String Manipulation
+  - How to use different string methods to manipulate strings
+ 24a. we create formatNumber() in UIController()	
+  Math.abs() - absolute number
+	.toFixed() - a method of number prototype
+		- becoz string number also have methods
+  
 		*/
 
 var budgetController = (function () {
@@ -613,7 +624,56 @@ var UIController = (function () {
 
 
 		displayPercentages: function(percentages){
-			var fields = document.querySelectorAll(DOMstring.expensesPercLabel)
+			var fields = document.querySelectorAll(DOMstring.expensePercLabel);
+			
+			//we will create our own forEach() 
+			var nodeListForEach = function(list, callback){
+				for(var i=0; i < list.length; i++ ){
+
+					//when we call nodeListForEach(), we will pass a callback function into it
+					//the callback function parameter is the nodeListForEach we created
+					
+					callback(list[i], i);
+				}
+			};
+			
+			nodeListForEach(fields, function(current, index ){
+				
+				if(percentages[index] > 0 ){
+					
+					current.textContent = percentages[index] + '%';
+				} else {
+					
+					current.textContent = '----';
+					
+				}
+
+			});
+			
+		},
+
+		//if expense we want to prepen minus sign, if income plus sign
+		formatNumber: function(num, type){
+			var numSplit;
+/* 
++ or - before number
+exactly 2 decimal points
+comma separating the thousands
+
+example. -> 2310.4567 -> + 2,310.46 -  we give comma and round them
+			- 2000 -> 2,000.00
+			Math.abs - Math absolute - removes the sign of the number
+			*/
+			num = Math.abs();
+			//toFixed(2) - example  - (2).toFixed(2) -->> 2.00
+			num = num.toFixed(2);
+
+			numSplit = num.split('.');
+
+			int = numSplit[0]
+
+			dec = numSplit[1]
+
 		},
 
 		//we also made public the DOMstring which has the values of value,description, and type
@@ -666,7 +726,7 @@ var controller = (function (budgetCtrl, UICtrl) {
 	var percentages = budgetCtrl.getPercentages();
 
 	//3. Update the UI with the new percentages
-	console.log(percentages);
+	 UICtrl.displayPercentages(percentages);
 	};
 
 	//this is a private function and not exposed to the public
@@ -676,7 +736,7 @@ var controller = (function (budgetCtrl, UICtrl) {
 		//1.get the field input data
 		input = UIController.getInput();
 
-		console.log(input.type, input.description, input.value);
+		// console.log(input.type, input.description, input.value);
 
 		if (
 			!isNaN(input.value) &&
