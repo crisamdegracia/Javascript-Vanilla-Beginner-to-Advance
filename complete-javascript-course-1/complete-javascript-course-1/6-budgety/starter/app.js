@@ -288,6 +288,23 @@ return {
 
 	21b. then we add it inside ctrlAddItem() - to calculate and update the percentages
 
+22. f6v23. Updating the percentages budget controller
+  - How to make our budget controller interact with Expense prototype.
+  22a. add method to our budgetController()
+
+  22b. we create prototype then create property percentage = -1  // to hold the value of the prototype function
+	  Expense.prototype.calcPercentage = function(totalIncome){
+  23. just read the code okay?
+  24. we create a prototype to calculate it then we create a prototype to return it. bat kaya hindi nalang calculate and return no?
+
+	};
+23. f6v24. Updadting the oercentages UI Controller
+  - How to create our own forEach function but for nodeList instead of arrays.
+
+  - add new method in UIController()  displayPercentages(percentages)
+  - we get frontend CSS .item__percentages
+  23a. var fields = document.querySelectorAll(DOMstring.expensesPercLabel)
+	   23aa. it will return a list and actually called nodeList
 		*/
 
 var budgetController = (function () {
@@ -297,7 +314,20 @@ var budgetController = (function () {
 		this.id = id;
 		this.description = description;
 		this.value = value;
+		this.percentage = -1;
 	};
+
+	Expense.prototype.calcPercentage = function(totalIncome){
+		if(totalIncome > 0 ) {
+			this.percentage = Math.round( (this.value / totalIncome ) * 100 );
+		} else {
+			this.percentage = -1;
+		}
+	};
+
+	Expense.prototype.getPercentage = function(){
+		return this.percentage; 
+	}
 
 	// function constructor
 	var Income = function (id, description, value) {
@@ -416,7 +446,34 @@ var budgetController = (function () {
 			//Expense = 100 and income 200, spent 50% = 100/200 = 0.5 * 100
 		},
 
+		calculatePercentages: function(){
+			/* how wud it work
+			a=20, b=10, c=40 | income = 100 | a=20%/100 = 20% | b=10/100=10% | c=40/100= 40%
+			*/
+			//now  we can the method that we just wrote for each of the elements in the array in our data structure
 
+			//what we want to happen to each element
+			//what we want to happen to each is to call the calcPercentage method
+			// this will calculate percentage for each and every expense that we have in our project
+			data.allItems.exp.forEach(function(cur){
+				cur.calcPercentage(data.totals.inc);
+			});
+
+		},
+		//we need to loop over all of our expenses
+		// map returns something and stores it in a variable while forEach does not
+		getPercentages: function(){
+
+			
+			var allPerc = data.allItems.exp.map(function(cur){ //imagin daw we have 5 arrays in exp or in our expenses array
+				//it will return what we stored in allPerc variable
+				return cur.getPercentage();  // so this daw we get called 5 times /for each of the element
+
+				//return it then store it daw
+			})
+
+			return allPerc;
+		},
 		getBudget: function () {
 			return {
 				budget: data.budget,
@@ -444,7 +501,8 @@ var UIController = (function () {
 		incomeLabel: ".budget__income--value",
 		expenseLabel: ".budget__expenses--value",
 		percentageLabel: ".budget__expenses--percentage",
-		container: ".container"
+		container: ".container",
+		expensePercLabel: ".item__percentage"
 	};
 
 	return {
@@ -553,6 +611,11 @@ var UIController = (function () {
 			}
 		},
 
+
+		displayPercentages: function(percentages){
+			var fields = document.querySelectorAll(DOMstring.expensesPercLabel)
+		},
+
 		//we also made public the DOMstring which has the values of value,description, and type
 		//and let the controller() get an access to it
 		getDOMstrings: function () {
@@ -598,11 +661,12 @@ var controller = (function (budgetCtrl, UICtrl) {
 	var updatePercentages = function(){
 
 	//1. Calculate percentages
-	
+	budgetCtrl.calculatePercentages();
 	//2. Read percentages from the budget controller
+	var percentages = budgetCtrl.getPercentages();
 
 	//3. Update the UI with the new percentages
-
+	console.log(percentages);
 	};
 
 	//this is a private function and not exposed to the public
