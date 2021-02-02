@@ -312,11 +312,32 @@ return {
 24. f6v25 - Formatting our Budget Numbers String Manipulation
   - How to use different string methods to manipulate strings
  24a. we create formatNumber() in UIController()	
-  Math.abs() - absolute number
+  Math.abs() - absolute number - absolute simply removes the sign of the number
 	.toFixed() - a method of number prototype
 		- becoz string number also have methods
-  
-		*/
+  24b. int = int.substr(0, int.length -3 ) + ',' + int.substr(int.length - 3, int.length )
+	 - that is WTF
+	 - newHTML = newHTML.replace("%value%",this.formatNumber obj.value);
+  24c. we wil also change the UI in the TOP
+ 	document.querySelector(DOMstring.budgetLabel).textContent = formatNumber(obj.budget, type) ;
+	document.querySelector(DOMstring.incomeLabel).textContent = formatNumber(obj.totalInc, 'inc' );
+	document.querySelector(DOMstring.expenseLabel).textContent = formatNumber(obj.totalExp, 'exp');
+					
+25. f6v26 Displaying the current Month and YEar
+  - How to get current data by using the Date object constructor
+  25a. we create displayMonth() on CtrlBudget()
+  25b. we create DOMString dateLabel
+  25c every new Date() constructor has getFulYear and just check it.
+
+26. f6v27 - Finishing Touches Improving the UX
+	- when to Use Change Events
+
+	- created eventListener('change' , ) in controller()
+	- then created the function changedType() in UIController
+	- then we change the position of 	
+	
+	ALL DONE!
+	*/
 
 var budgetController = (function () {
 	// a private functions
@@ -328,17 +349,17 @@ var budgetController = (function () {
 		this.percentage = -1;
 	};
 
-	Expense.prototype.calcPercentage = function(totalIncome){
-		if(totalIncome > 0 ) {
-			this.percentage = Math.round( (this.value / totalIncome ) * 100 );
+	Expense.prototype.calcPercentage = function (totalIncome) {
+		if (totalIncome > 0) {
+			this.percentage = Math.round((this.value / totalIncome) * 100);
 		} else {
 			this.percentage = -1;
 		}
 	};
 
-	Expense.prototype.getPercentage = function(){
-		return this.percentage; 
-	}
+	Expense.prototype.getPercentage = function () {
+		return this.percentage;
+	};
 
 	// function constructor
 	var Income = function (id, description, value) {
@@ -402,38 +423,32 @@ var budgetController = (function () {
 		},
 
 		//to be called by budgetController
-		deleteItem : function(type, id){
+		deleteItem: function (type, id) {
 			var ids, index;
-	// id = 6 
-	//data.allItems[type][id]
-	// ids = [1, 2, 3, 6, 8];
-	//index = 3 
-			
-		//diferrence of map and foreach - map returns a brandnew array 
+			// id = 6
+			//data.allItems[type][id]
+			// ids = [1, 2, 3, 6, 8];
+			//index = 3
 
-		 ids = data.allItems[type].map(function(current){
-			return current.id
-		});
+			//diferrence of map and foreach - map returns a brandnew array
 
-		//after executing the map() we wud endup with this array ids = [1, 2, 3, 6, 8];
-		//it will return the index number of the element of the array the we put here which is the (id);
-		index = ids.indexOf(id);
+			ids = data.allItems[type].map(function (current) {
+				return current.id;
+			});
 
-		//will delete
-		if(index !== -1 ){
- 
-			//while slice - use to create a copy 
-			//splice - to remove elements 
-			//1st arg, when we start deleting
-			//2nd the number of elements we want to delete
-			data.allItems[type].splice(index, 1);
-		}
+			//after executing the map() we wud endup with this array ids = [1, 2, 3, 6, 8];
+			//it will return the index number of the element of the array the we put here which is the (id);
+			index = ids.indexOf(id);
 
-
-
+			//will delete
+			if (index !== -1) {
+				//while slice - use to create a copy
+				//splice - to remove elements
+				//1st arg, when we start deleting
+				//2nd the number of elements we want to delete
+				data.allItems[type].splice(index, 1);
+			}
 		},
-
-
 
 		//calculate the sum of all income and expenses
 		// total income and total expenses
@@ -457,7 +472,7 @@ var budgetController = (function () {
 			//Expense = 100 and income 200, spent 50% = 100/200 = 0.5 * 100
 		},
 
-		calculatePercentages: function(){
+		calculatePercentages: function () {
 			/* how wud it work
 			a=20, b=10, c=40 | income = 100 | a=20%/100 = 20% | b=10/100=10% | c=40/100= 40%
 			*/
@@ -466,22 +481,20 @@ var budgetController = (function () {
 			//what we want to happen to each element
 			//what we want to happen to each is to call the calcPercentage method
 			// this will calculate percentage for each and every expense that we have in our project
-			data.allItems.exp.forEach(function(cur){
+			data.allItems.exp.forEach(function (cur) {
 				cur.calcPercentage(data.totals.inc);
 			});
-
 		},
 		//we need to loop over all of our expenses
 		// map returns something and stores it in a variable while forEach does not
-		getPercentages: function(){
-
-			
-			var allPerc = data.allItems.exp.map(function(cur){ //imagin daw we have 5 arrays in exp or in our expenses array
+		getPercentages: function () {
+			var allPerc = data.allItems.exp.map(function (cur) {
+				//imagin daw we have 5 arrays in exp or in our expenses array
 				//it will return what we stored in allPerc variable
-				return cur.getPercentage();  // so this daw we get called 5 times /for each of the element
+				return cur.getPercentage(); // so this daw we get called 5 times /for each of the element
 
 				//return it then store it daw
-			})
+			});
 
 			return allPerc;
 		},
@@ -513,8 +526,59 @@ var UIController = (function () {
 		expenseLabel: ".budget__expenses--value",
 		percentageLabel: ".budget__expenses--percentage",
 		container: ".container",
-		expensePercLabel: ".item__percentage"
+		expensePercLabel: ".item__percentage",
+		dateLabel: ".budget__title--month",
 	};
+	//lahat ng nasa return is public function
+	//kaya nasa labas ng return to is kasi private function
+	//if expense we want to prepen minus sign, if income plus sign
+	var formatNumber = function (num, type) {
+		var numSplit, int, dec, type;
+		/* 
++ or - before number
+exactly 2 decimal points
+comma separating the thousands
+
+example. -> 2310.4567 -> + 2,310.46 -  we give comma and round them
+		- 2000 -> 2,000.00
+		Math.abs - Math absolute - removes the sign of the number
+		*/
+		num = Math.abs(num);
+		//toFixed(2) - example  - (2).toFixed(2) -->> 2.00
+		num = num.toFixed(2);
+
+		//then split 2.00 - >> [2, 00]
+		numSplit = num.split(".");
+		//now we store them separately
+		int = numSplit[0];
+
+		//to add a comma if we have a thousand
+		if (int.length > 3) {
+			//1st arg wher we want to start, 2nd how many character we want
+			//(0,1) gives us the 1st part of the number
+			int =
+				int.substr(0, int.length - 3) +
+				"," +
+				int.substr(int.length - 3, 3); //input 2310, output 2,310
+		}
+		dec = numSplit[1];
+
+		// if the type is exp else inc then output the sign, int + decimals
+		return (type === "exp" ? "-" : "+") + " " + int + "." + dec;
+	};
+
+
+
+		//we will create our own forEach()
+		var nodeListForEach = function (list, callback) {
+			for (var i = 0; i < list.length; i++) {
+				//when we call nodeListForEach(), we will pass a callback function into it
+				//the callback function parameter is the nodeListForEach we created
+
+				callback(list[i], i);
+			}
+		};
+
 
 	return {
 		getInput: function () {
@@ -546,13 +610,13 @@ var UIController = (function () {
 					'<div class="item clearfix" id="exp-%id%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__percentage">21%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>';
 			}
 
-
 			//Replace placeholder text with actual data
 			// replace('what data to be replace' , 'the data to insert')
 			// sa 2nd newHTML na, kasi ung una na html napalitan na don dun value, so it doesnt exist na. so newHTML na sya GETS?
 			newHTML = html.replace("%id%", obj.id);
 			newHTML = newHTML.replace("%description%", obj.description);
-			newHTML = newHTML.replace("%value%", obj.value);
+			newHTML = newHTML.replace("%value%", formatNumber(obj.value, type)); // pinalitan sa f6v25 16: 30
+			// now when we hit the job.value with the type. they will be formated
 
 			// Insert the HTML into the DOM
 			// search how to use insertAdjacentHTML();
@@ -564,15 +628,13 @@ var UIController = (function () {
 				.insertAdjacentHTML("beforeend", newHTML);
 		},
 
-		deleteListItem: function(selectorID){
+		deleteListItem: function (selectorID) {
 			//to remove child method so we must know the parent element
 			// document.getElementById(selectorID).parentNode.removeChild();
 
 			var el = document.getElementById(selectorID);
 
 			el.parentNode.removeChild(el);
-
-
 		},
 
 		clearFields: function () {
@@ -603,77 +665,78 @@ var UIController = (function () {
 			fieldsArr[0].focus();
 		},
 
-
-		displayBudget: function(obj){
+		displayBudget: function (obj) {
+			obj.budget > 0 ? (type = "inc") : (type = "exp");
 
 			//hindi daw ung HTML papalitan, ung content lang
-			document.querySelector(DOMstring.budgetLabel).textContent = obj.budget;
-			document.querySelector(DOMstring.incomeLabel).textContent = obj.totalInc;
-			document.querySelector(DOMstring.expenseLabel).textContent = obj.totalExp;
+			document.querySelector(
+				DOMstring.budgetLabel
+			).textContent = formatNumber(obj.budget, type);
+			document.querySelector(
+				DOMstring.incomeLabel
+			).textContent = formatNumber(obj.totalInc, "inc");
+			document.querySelector(
+				DOMstring.expenseLabel
+			).textContent = formatNumber(obj.totalExp, "exp");
 			// document.querySelector(DOMstring.percentageLabel).textContent = obj.percentage;
-			
 
-
-			if(obj.percentage > 0 ){
-				document.querySelector(DOMstring.percentageLabel).textContent = obj.percentage + '%';
+			if (obj.percentage > 0) {
+				document.querySelector(DOMstring.percentageLabel).textContent =
+					obj.percentage + "%";
 			} else {
-				document.querySelector(DOMstring.percentageLabel).textContent = '---';
-
+				document.querySelector(DOMstring.percentageLabel).textContent =
+					"---";
 			}
 		},
 
-
-		displayPercentages: function(percentages){
+		displayPercentages: function (percentages) {
 			var fields = document.querySelectorAll(DOMstring.expensePercLabel);
-			
-			//we will create our own forEach() 
-			var nodeListForEach = function(list, callback){
-				for(var i=0; i < list.length; i++ ){
 
-					//when we call nodeListForEach(), we will pass a callback function into it
-					//the callback function parameter is the nodeListForEach we created
-					
-					callback(list[i], i);
-				}
-			};
-			
-			nodeListForEach(fields, function(current, index ){
-				
-				if(percentages[index] > 0 ){
-					
-					current.textContent = percentages[index] + '%';
+		
+			nodeListForEach(fields, function (current, index) {
+				if (percentages[index] > 0) {
+					current.textContent = percentages[index] + "%";
 				} else {
-					
-					current.textContent = '----';
-					
+					current.textContent = "----";
 				}
-
 			});
-			
 		},
 
-		//if expense we want to prepen minus sign, if income plus sign
-		formatNumber: function(num, type){
-			var numSplit;
-/* 
-+ or - before number
-exactly 2 decimal points
-comma separating the thousands
+		displayMonth: function () {
+			var now, month, year;
 
-example. -> 2310.4567 -> + 2,310.46 -  we give comma and round them
-			- 2000 -> 2,000.00
-			Math.abs - Math absolute - removes the sign of the number
-			*/
-			num = Math.abs();
-			//toFixed(2) - example  - (2).toFixed(2) -->> 2.00
-			num = num.toFixed(2);
+			now = new Date();
+			months = [
+				"January",
+				"February",
+				"March",
+				"April",
+				"May",
+				"June",
+				"July",
+				"August",
+				"Septembe",
+				"November",
+				"December",
+			];
+			month = now.getMonth();
+			year = now.getFullYear();
+			document.querySelector(DOMstring.dateLabel).textContent =
+				months[month] + " " + year;
+		},
 
-			numSplit = num.split('.');
+		changedType: function () {
+			var fields = document.querySelectorAll(
+				DOMstring.inputType+ ',' +
+				DOMstring.inputDescription + ',' +
+				DOMstring.inputValue);
+			
 
-			int = numSplit[0]
+				nodeListForEach(fields, function(cur){
+					cur.classList.toggle('red-focus');
+				});
 
-			dec = numSplit[1]
-
+				document.querySelector(DOMstring.inputBtn).classList.toggle('red')
 		},
 
 		//we also made public the DOMstring which has the values of value,description, and type
@@ -704,7 +767,13 @@ var controller = (function (budgetCtrl, UICtrl) {
 			}
 		});
 
-		document.querySelector(DOM.container).addEventListener('click', ctrlDeleteItem)
+		document
+			.querySelector(DOM.container)
+			.addEventListener("click", ctrlDeleteItem);
+
+		document
+			.querySelector(DOM.inputType)
+			.addEventListener("change", UICtrl.changedType);
 	};
 
 	var updateBudget = function () {
@@ -718,15 +787,14 @@ var controller = (function (budgetCtrl, UICtrl) {
 		UICtrl.displayBudget(budget);
 	};
 
-	var updatePercentages = function(){
+	var updatePercentages = function () {
+		//1. Calculate percentages
+		budgetCtrl.calculatePercentages();
+		//2. Read percentages from the budget controller
+		var percentages = budgetCtrl.getPercentages();
 
-	//1. Calculate percentages
-	budgetCtrl.calculatePercentages();
-	//2. Read percentages from the budget controller
-	var percentages = budgetCtrl.getPercentages();
-
-	//3. Update the UI with the new percentages
-	 UICtrl.displayPercentages(percentages);
+		//3. Update the UI with the new percentages
+		UICtrl.displayPercentages(percentages);
 	};
 
 	//this is a private function and not exposed to the public
@@ -766,36 +834,36 @@ var controller = (function (budgetCtrl, UICtrl) {
 		}
 	};
 
-	var  ctrlDeleteItem = function(event){
+	var ctrlDeleteItem = function (event) {
 		var itemID, splitID, type, ID;
 
 		itemID = event.target.parentNode.parentNode.parentNode.parentNode.id;
 
-		if(itemID){
-				//inc-1
-				// then it will be splited like this (   ['inc', '1']  )
-				splitID = itemID.split('-');
-				//eto ung na split sa splitID nilagay sa variable
-				type = splitID[0]; // inc or exp	
-				ID = parseInt(splitID[1]);
+		if (itemID) {
+			//inc-1
+			// then it will be splited like this (   ['inc', '1']  )
+			splitID = itemID.split("-");
+			//eto ung na split sa splitID nilagay sa variable
+			type = splitID[0]; // inc or exp
+			ID = parseInt(splitID[1]);
 
+			//1. delete item from the data structure
+			budgetCtrl.deleteItem(type, ID);
 
-				//1. delete item from the data structure
-				budgetCtrl.deleteItem(type, ID);
-
-
-				//2. then delete from the UI
+			//2. then delete from the UI
 			UICtrl.deleteListItem(itemID);
 
-
-				//3. update and show the new budget
-				updateBudget();
+			//3. update and show the new budget
+			updateBudget();
 		}
 	};
 
 	return {
 		init: function () {
 			console.log("Application has started");
+
+			UICtrl.displayMonth();
+
 			//we want everything to reset to zero
 			// pass the object and change the value to zero
 			// percentage is same as the value above
@@ -804,10 +872,6 @@ var controller = (function (budgetCtrl, UICtrl) {
 				totalInc: 0,
 				totalExp: 0,
 				percentage: -1,
-
-
-
-
 			});
 			setupEventListeners();
 
