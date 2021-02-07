@@ -192,7 +192,7 @@ const box66 = {
 }
 box66.clickMe();
 
-
+// Function Constructor with this keyword
 function Person(name) {
     this.name = name;
 }
@@ -204,6 +204,10 @@ Person.prototype.myFriends5 = function(friends) {
        return this.name + ' is friends with ' + el; 
     }.bind(this));
     
+    // etong bind this daw. is to create a copy of new function tapos
+    .bind(this)
+
+
     console.log(arr);
 }
 
@@ -282,30 +286,10 @@ boxesArr5.forEach(function(cur) {
 });
 
 //ES6
-const boxesArr6 = Array.from(boxes);
+const boxesArr6 = Array.from(boxes); // it will transform the nodelist  to an array
 Array.from(boxes).forEach(cur => cur.style.backgroundColor = 'dodgerblue');
 
-
-//ES5
-for(var i = 0; i < boxesArr5.length; i++) {
-    
-    if(boxesArr5[i].className === 'box blue') {
-        continue;
-    }
-    
-    boxesArr5[i].textContent = 'I changed to blue!';
-    
-}
-
-
-//ES6
-for (const cur of boxesArr6) {
-    if (cur.className.includes('blue')) {
-        continue;
-    }
-    cur.textContent = 'I changed to blue!';
-}
-
+ 
 
 
 

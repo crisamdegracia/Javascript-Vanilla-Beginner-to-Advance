@@ -17,14 +17,14 @@
 			/* hyphens: auto; */
 			/* word-wrap: break-word !important; */
 			/* width: 100%; */
-			/* display: inline-block; */ 
+			/* display: inline-block; */
 		}
 		h4 {
 			color: cornflowerblue;
 			font-size: 2rem;
 		}
 		h6 {
-			color:greenyellow;
+			color: greenyellow;
 			font-size: 1.3rem;
 		}
 		.c {
@@ -104,6 +104,111 @@ if the property is inside the method, we can use the 'this' keyword to set and r
 
 </p> 
 
+
+
+
+<code>
+	// ES5  f7v7
+	ung 'this' keyword will not work sa addEventListener() kasi my function un
+	so ang workaround is mag declare ng var self = this. 
+	
+var box5 = {
+    color: 'green',
+    position: 1,
+    clickMe: function() {
+       
+       var self = this;
+	   
+	   document.querySelector('.green').addEventListener('click', function() {
+            var str = 'This is box number ' + self.position + ' and it is ' + self.color;
+            alert(str);
+        });
+    }
+}
+//box5.clickMe();
+
+
+// ES6
+but in es6 we dont need to declare var self = this, the arrow function will
+takecare this for us
+
+const box6 = {
+    color: 'green',
+    position: 1,
+    clickMe: function() {
+        document.querySelector('.green').addEventListener('click', () => {
+            var str = 'This is box number ' + this.position + ' and it is ' + this.color;
+            alert(str);
+        });
+    }
+}
+box6.clickMe();
+
+
+// BECAREFUL!
+
+clickMe: () =>     <--- eto daw. mawawalan tayo ng this keyword sa inner.
+so bali ung this.color  and this.position  is hindi natin maacess. so bali parang 
+mag declare din tayo ng var self = this
+
+const box66 = {
+    color: 'green',
+    position: 1,
+    clickMe: () => {
+        document.querySelector('.green').addEventListener('click', () => {
+            var str = 'This is box number ' + this.position + ' and it is ' + this.color;
+            alert(str);
+        });
+    }
+}
+box66.clickMe();
+
+div
+</code>
+
+<h4>ES5</h4>
+Person.prototype.myFriends5 = function(friends) {
+    
+    var arr = friends.map(function(el) {
+       return this.name + ' is friends with ' + el; 
+    }.bind(this));
+    
+    // etong bind this daw. is to create a copy of new function tapos
+    .bind(this)
+
+
+    console.log(arr);
+}
+
+<h4>ES6</h4>
+  HERE no need to use .bind(this) the ES6 arrow function ease that for us
+
+  Person.prototype.myFriends6 = function(friends) {
+
+    var arr = friends.map(el => `${this.name} is friends with ${el}`);
+
+    console.log(arr);
+}
+
+new Person('Mike').myFriends6(friends);
+*/
+<code>
+	// ES5
+Person.prototype.myFriends5 = function(friends) {
+    
+    var arr = friends.map(function(el) {
+       return this.name + ' is friends with ' + el; 
+    }.bind(this));
+    
+    // etong bind this daw. is to create a copy of new function tapos
+	// na instead na gumawa tayo ng var self = this; 
+    .bind(this)
+
+
+    console.log(arr);
+}
+
+</code>
 					</code>
 				</pre>
 				</div>
@@ -122,6 +227,14 @@ if the property is inside the method, we can use the 'this' keyword to set and r
 
 parsInt() - convert to number
 parseFloat() - convert string to float number with decimals
+
+- ES6 - 
+startsWith() - return true or false - startsWith('S')  
+endsWith() - returns true of false - endsWith('S');
+includes() - returns true or false - if the asking letter includes in a string
+repeat( count how many ) - returns how many string - 
+
+map(current Element, current index, array itself) - 
 <code>
 	.indexOf() - example var john = ['Mr','single', 1990,
 	'manila'] john.indexOf(1990); // now it will tell us
@@ -140,7 +253,7 @@ Anonymous functions - doesnt have a name and cannot be reused.
 
 
 </pre>
-	</div>
+				</div>
 
 				<h3>OBJECTS</h3>
 				<div>
@@ -651,7 +764,6 @@ john.calcAge()
 							</code>
 						</pre>
 
-					
 					<pre>
 							<code>
 	<h4>Method Borrowing</h4>
@@ -727,7 +839,8 @@ Null - Has no prototype
 					/>
 				</div>
 				<h3>f5v 4. Creating Objects Function Constructors</h3>
-				<div>go to the folder 17
+				<div>
+					go to the folder 17
 
 					<pre>
 						<code>
@@ -773,9 +886,10 @@ mark.calculateAge()
 				<div>try mo console.info() to see prototype and methods</div>
 
 				<h3>f5v 6. Creating Objects Object.create</h3>
-				<div> ung difference nilagay ko sa Function and methods sa taas
+				<div>
+					ung difference nilagay ko sa Function and methods sa taas
 
-<pre>
+					<pre>
 	<code>
 		
 //Object.create
@@ -809,17 +923,16 @@ The difference between object.create and function constructor
 */
 	</code>
 </pre>
-
 				</div>
-			
-			<h3>f5v 7. Primitives vs. Objects</h3>
-			<div>
-sa 8 na. 15minute time
-			</div>
-<h3>f5v 9. First Class Functions Functions Returning Functions</h3>
-<div>
-	<h4>The starter code is in 14-OOP</h4>
-	<pre>
+
+				<h3>f5v 7. Primitives vs. Objects</h3>
+				<div>sa 8 na. 15minute time</div>
+				<h3>
+					f5v 9. First Class Functions Functions Returning Functions
+				</h3>
+				<div>
+					<h4>The starter code is in 14-OOP</h4>
+					<pre>
 		<code>
 /* 
 Functions returning function
@@ -857,32 +970,28 @@ interviewQuestion('Teacher')('Grace');
 
 		</code>
 	</pre>
-</div>
+				</div>
 
-<h3>f5v10. Immediately Invoked Function Expressions (IIFE)</h3>
-<div>
-	<pre>
+				<h3>f5v10. Immediately Invoked Function Expressions (IIFE)</h3>
+				<div>
+					<pre>
 		<code>
 (function {
 	//Body
 })();  <---- invoker
 		</code>
 	</pre>
-</div>
+				</div>
 
-<h3>f5v11. Closures</h3>
-<div>
-	
-/* 
-CLOSURE - an inner function has always access to the variable
-and parameters of its outer function, even after the outer function
-has returned	
-
-	- even after return or remove from the execution context
-	the outer function can still have an access to the function
-	and that is called CLOSURE
-*/
-<pre>
+				<h3>f5v11. Closures</h3>
+				<div>
+					/* CLOSURE - an inner function has always access to the
+					variable and parameters of its outer function, even after
+					the outer function has returned - even after return or
+					remove from the execution context the outer function can
+					still have an access to the function and that is called
+					CLOSURE */
+					<pre>
 	<code>
 		
 function retirement(retirementAge) {
@@ -908,12 +1017,11 @@ retirement(66)(1990);
 
 </code>
 </pre>
-</div>
+				</div>
 
-<h3>f5v12. Bind, Call and Apply</h3>
-<div>
-
-<pre>
+				<h3>f5v12. Bind, Call and Apply</h3>
+				<div>
+					<pre>
 	<code>
 		<h4>CALL, APPLY and BIND - 1st argument is 'this' <- which is the object</h4>
 var john = {
@@ -960,6 +1068,34 @@ var emily = {
 	
 	john.presentation('formal','Morning'); <- while this one has no bind()
 	
+
+	Another example <-----
+	// ES5   f7v8
+	Person.prototype.myFriends5 = function(friends) {
+		
+		var arr = friends.map(function(el) {
+		   return this.name + ' is friends with ' + el; 
+		}.bind(this));
+		
+		// etong bind this daw. is to create a copy of new function tapos
+		// na instead na gumawa tayo ng var self = this; 
+		.bind(this)
+
+		console.log(arr);
+	}
+	
+
+	
+// ES6  HERE no need to use .bind(this) the ES6 arrow function ease that for us
+Person.prototype.myFriends6 = function(friends) {
+
+    var arr = friends.map(el => `${this.name} is friends with ${el}`);
+
+    console.log(arr);
+}
+
+new Person('Mike').myFriends6(friends);
+*/
 </code>
 
 <code>
@@ -980,11 +1116,14 @@ john.presentation.apply(emily, ['friendly', 'Darkest day']);
 
 	</code>
 </pre>
-</div>
+				</div>
 
-<h3>GOOD EXAMPLE OF CODING f5v 14. Coding Challenge 7 Solution, Part 1</h3>
-<div>
-	<pre>
+				<h3>
+					GOOD EXAMPLE OF CODING f5v 14. Coding Challenge 7 Solution,
+					Part 1
+				</h3>
+				<div>
+					<pre>
 		<code>
 // Coding Challenge! 
 
@@ -1052,10 +1191,13 @@ questions[n].checkAnswer(answer);
 })();
 		</code>
 	</pre>
-</div>
-<h3 class="important">PRACTICE AND READ THIS! f5v 15. Coding Challenge 7 Solution, Part 2</h3>
-<div>
-	<pre>
+				</div>
+				<h3 class="important">
+					PRACTICE AND READ THIS! f5v 15. Coding Challenge 7 Solution,
+					Part 2
+				</h3>
+				<div>
+					<pre>
 		<code>
 
 /* 
@@ -1250,11 +1392,13 @@ var keepScore = score();
 
 		</code>
 	</pre>
-</div>
+				</div>
 
-<h3 class="folderEnd-1">f6v 4. Project Planning and Architecture Step 1</h3>
-	<div>
-		<pre>
+				<h3 class="folderEnd-1">
+					f6v 4. Project Planning and Architecture Step 1
+				</h3>
+				<div>
+					<pre>
 			<code>
 Create or draw a visual of the app, and divide it by modules
 
@@ -1281,12 +1425,11 @@ Why we need this? - We create modules becoz we want to keep pieces of code that 
 </code>
 
 		</pre>
-	</div>
+				</div>
 
-
-<h3 class="important">f6v5. Implementing the Module Pattern</h3>
-<div>
-	<pre>
+				<h3 class="important">f6v5. Implementing the Module Pattern</h3>
+				<div>
+					<pre>
 		<code>
 	<h4>Data encapsulation  --> IIFE</h4>
 - using the IIFE
@@ -1342,7 +1485,7 @@ What happen?
 		</code>
 	</pre>
 
-	<pre>
+					<pre>
 		<code>
 			
 //this variable will be IIFE that will return an object
@@ -1392,23 +1535,28 @@ return {
 <h6>I saved it on budgety folder starte in scriptTest.js</h6>
 		</code>
 	</pre>
-</div>
+				</div>
 
+				<h3>f6v16 - Project Planning and archetecture</h3>
+				<div>
+					ung mahabang listahan nasa folder 6-budgety app.js
+					<img
+						src="../Javascript-Vanilla-From-Zero-to-Hero/course-guide-assets/img/js-img-5.jpg"
+						alt=""
+						class=""
+					/>
+					<img src="./course-guide-assets/img/js-img-6.jpg" alt="" />
+				</div>
 
-<h3>f6v16 - Project Planning and archetecture</h3>
-<div>
-	ung mahabang listahan nasa folder 6-budgety app.js
-	<img src="../Javascript-Vanilla-From-Zero-to-Hero/course-guide-assets/img/js-img-5.jpg" alt="" class="">
-	<img src="./course-guide-assets/img/js-img-6.jpg" alt="">
-</div>
+				<h3>f6v17 - Event Delegation</h3>
 
-
-<h3>f6v17 - Event Delegation </h3>
-
-<div>
-	<img src="./course-guide-assets/img/js-img-7.jpg
-	" alt="">
-	<pre>
+				<div>
+					<img
+						src="./course-guide-assets/img/js-img-7.jpg
+	"
+						alt=""
+					/>
+					<pre>
 		<code>
 <h4>2 Big use cases</h4>
 1. When we have an element with lots of child elements that we are interested in.
@@ -1423,38 +1571,481 @@ return {
 THAT IS WHY WE NEED TO USE EVENT DELEGATION
 		</code>
 	</pre>
-</div>
+				</div>
+
+				<h3>f6v21 - Project Planning and Architecture</h3>
+				<div>
+					<h4>What we have finished.</h4>
+					<img src="./course-guide-assets/img/js-img-8.jpg" alt="" />
+
+					<h4>Planning</h4>
+					<img src="./course-guide-assets/img/js-img-9.jpg" alt="" />
+				</div>
+
+				<h3>f6v28 - OUR FINAL ARCHITECHURE</h3>
+				<div>
+					ALL the code comment were writtern in 6-Budgety folder
+					<img src="./course-guide-assets/img/js-img-10.jpg" alt="" />
+				</div>
+
+				<h3 class="folderEnd-1">f7v1 - Whats new in ES6 ES2015</h3>
+				<div>
+					<img src="./course-guide-assets/img/js-img-11.jpg" alt="" />
+				</div>
+
+				<h3>f7v4 - Variable Declaration with let and Const</h3>
+				<div>
+					<pre>
+					<code>
+<h4>Folder - 7-ES6</h4>	
+LET	- ung let daw is only accesible inside the block
+	- what is block? ung sa loob ng { }
+		- for example if () { sa loob neto }
+CONS and LET - are block scope. not function scope
+					</code>
+				
+				</pre>
+				</div>
+
+				<h3>f7v7. Arrow Functions Basics</h3>
+				<pre>
+		<code>
+/////////////////////////////////
+// Lecture: Arrow functions
 
 
-<h3>f6v21 - Project Planning and Architecture</h3>
-<div>
-	<h4>What we have finished.</h4>
-	<img src="./course-guide-assets/img/js-img-8.jpg" alt="">
+const years = [1990, 1965, 1982, 1937];
 
-	<h4>Planning</h4>
-	<img src="./course-guide-assets/img/js-img-9.jpg" alt="">
-</div>
-
-<h3> f6v28 - OUR FINAL ARCHITECHURE </h3>
-<div> ALL the code comment were writtern in 6-Budgety folder
-	<img src="./course-guide-assets/img/js-img-10.jpg" alt="">
-</div>
+// ES5
+var ages5 = years.map(function(el) {
+	return 2016 - el;
+});
+console.log(ages5);
 
 
-<h3 class="folderEnd-1">f7v1 - Whats new in ES6 ES2015</h3>
-<div>
-<img src="./course-guide-assets/img/js-img-11.jpg" alt="">
-</div>
+// ES6
+let ages6 = years.map(el => 2016 - el);   // Single Argument
+console.log(ages6);
 
-<h3>f7v4 - Variable Declaration with let and Const</h3>
-<div>
+ages6 = years.map((el, index) => `Age element ${index + 1}: ${2016 - el}.`);
+console.log(ages6);  
+ - more than 1 args kaya my parenthesis
+ - backticks kasi isang block lang and also walang return 
 
-	pre
-	On folder 
+
+ages6 = years.map((el, index) => {
+	const now = new Date().getFullYear();
+	const age = now - el;
+	return `Age element ${index + 1}: ${age}.`
+});
+
+  - with brackets {} and return kasi more than 1 line of code
+console.log(ages6);
+
+
+		</code>
+	</pre>
+
+				<h3>f7v8. Arrow Functions Lexical 'this' Keyword</h3>
+				<div>
+					<pre>
+					<code>
 	
-</div>
+						// ES6  HERE no need to use .bind(this) the ES6 arrow function ease that for us
+						Person.prototype.myFriends6 = function(friends) {
+						
+							var arr = friends.map(el => `${this.name} is friends with ${el}`);
+						
+							console.log(arr);
+						}
+						
+						new Person('Mike').myFriends6(friends);
+						*/
+					</code>
+				</pre>
+				</div>
+
+				<h3>f7v9 - 9. Destructuring</h3>
+
+				<div>
+					<pre>
+		<code>
+			// ES5
+var john = ['John', 26];
+//var name = john[0];
+//var age = john[1];
 
 
+// ES6
+const [name, age] = ['John', 26];
+console.log(name);
+console.log(age);
+
+const obj = {
+    firstName: 'John',
+    lastName: 'Smith'
+};
+
+const {firstName, lastName} = obj;
+console.log(firstName);
+console.log(lastName);
+
+const {firstName: a, lastName: b} = obj;
+console.log(a);
+console.log(b);
+
+
+
+function calcAgeRetirement(year) {
+    const age = new Date().getFullYear() - year;
+    return [age, 65 - age];
+}
+
+
+const [age2, retirement] = calcAgeRetirement(1990);
+console.log(age2);
+console.log(retirement);
+*/
+
+		</code>
+	</pre>
+				</div>
+
+				<h3>f7v10 10. Arrays in ES6 ES2015</h3>
+				<div>
+					<pre>
+		<code>
+			
+/*
+const boxes = document.querySelectorAll('.box');
+
+//ES5
+var boxesArr5 = Array.prototype.slice.call(boxes);
+boxesArr5.forEach(function(cur) {
+    cur.style.backgroundColor = 'dodgerblue';
+});
+
+//ES6
+const boxesArr6 = Array.from(boxes); // it will transform the nodelist  to an array
+Array.from(boxes).forEach(cur => cur.style.backgroundColor = 'dodgerblue');
+
+
+//ES5
+for(var i = 0; i < boxesArr5.length; i++) {
+    
+    if(boxesArr5[i].className === 'box blue') {
+        continue;
+    }
+    
+    boxesArr5[i].textContent = 'I changed to blue!';
+    
+}
+
+
+//ES6
+for (const cur of boxesArr6) {
+    if (cur.className.includes('blue')) {
+        continue;
+    }
+    cur.textContent = 'I changed to blue!';
+}
+
+
+
+
+//ES5
+var ages = [12, 17, 8, 21, 14, 11];
+
+var full = ages.map(function(cur) {
+    return cur >= 18;
+});
+console.log(full);
+
+console.log(full.indexOf(true));
+console.log(ages[full.indexOf(true)]);
+
+
+//ES6
+console.log(ages.findIndex(cur => cur >= 18));
+console.log(ages.find(cur => cur >= 18));
+*/
+
+
+
+
+		</code>
+
+		<code>
+
+//ES5  Continue and break
+var ages = [12, 17, 8, 21, 14, 11];
+
+var full = ages.map(function(cur) {
+    return cur >= 18;
+});
+
+for(var i = 0; i < boxesArr5.length; i++) {
+	
+	if(boxesArr5[i].className === 'box blue') {
+		continue;
+	}
+	
+	boxesArr5[i].textContent = 'I changed to blue!';
+	
+}
+
+
+//ES6
+for (const cur of boxesArr6) {
+	if (cur.className.includes('blue')) {
+		continue;
+	}
+	cur.textContent = 'I changed to blue!';
+}
+
+		</code>
+	</pre>
+				</div>
+
+				<h3>f7v11. The Spread Operator</h3>
+				<div>
+					<pre>
+		<code>
+			
+function addFourAges (a, b, c, d) {
+    return a + b + c + d;
+}
+
+var sum1 = addFourAges(18, 30, 12, 21);
+console.log(sum1);
+
+//ES5
+var ages = [18, 30, 12, 21];
+var sum2 = addFourAges.apply(null, ages);
+console.log(sum2);
+
+//ES6
+const sum3 = addFourAges(...ages);
+console.log(sum3);
+
+
+const familySmith = ['John', 'Jane', 'Mark'];
+const familyMiller = ['Mary', 'Bob', 'Ann'];
+const bigFamily = [...familySmith, 'Lily', ...familyMiller];
+console.log(bigFamily);
+
+
+const h = document.querySelector('h1');
+const boxes = document.querySelectorAll('.box');
+const all = [h, ...boxes];
+
+Array.from(all).forEach(cur => cur.style.color = 'purple');
+
+
+
+
+		</code>
+	</pre>
+				</div>
+
+				<h3>f7v12. Rest Parameters</h3>
+				<div>
+					<pre>
+		<code>
+- rest parameters allow us to pass an arbitrary number of arguments
+into a function, and to use these arguments in that function
+
+- they use the same notation with three dots
+- but rest parameteres are exact opposite of spread operator
+- because spread operator takes an array, and tranforms it into single value
+
+- while rest parameters recieve a couple of single values and transform them into array
+  when we call a function with multiple parameters
+
+
+		</code>
+		<h4>Spread operator</h4>
+		<code>
+			- is used in the function call
+		</code>
+		<h4>Rest Operator</h4>
+		<code>
+			- is used in the function declaration
+		</code>
+		<code>
+
+
+
+//ES5 - in ES5 if we want to recieve number of arguments, then simply dont define any parameters for our function
+		 - just use arguments keywords
+arguments - is a special variable that we have access to in all functions
+function isFullAge5() {
+    //console.log(arguments);  OUTPUT - [1990, 1990, 1965]  - looks array but the output is an object
+	<-- the output is an object
+    
+var argsArr = Array.prototype.slice.call(arguments); // if we want to transform it into an array
+
+    
+    argsArr.forEach(function(cur) {
+        console.log((2016 - cur) >= 18);  // output true,false,true
+    })
+}
+
+//isFullAge5(1990, 1999, 1965);
+//isFullAge5(1990, 1999, 1965, 2016, 1987);
+
+
+//ES6 - now, instead of not having any arguments we use rest parameters operator
+		- what is this going to do is, as soon we call the function, it will transform the arguments
+		- into an array, then pass it to the function
+
+function isFullAge6(...years) {
+    years.forEach(cur => console.log( (2016 - cur) >= 18));
+}
+
+
+isFullAge6(1990, 1999, 1965, 2016, 1987);
+
+
+//ES5 - 
+function isFullAge5(limit) {
+    var argsArr = Array.prototype.slice.call(arguments, 1); //slice() cut and copy
+
+    argsArr.forEach(function(cur) {
+        console.log((2016 - cur) >= limit);
+    })
+}
+
+
+//isFullAge5(16, 1990, 1999, 1965);
+isFullAge5(1990, 1999, 1965, 2016, 1987);
+
+
+//ES6 - much shorter and less complicated.
+function isFullAge6(limit, ...years) {
+    years.forEach(cur => console.log( (2016 - cur) >= limit));
+}
+
+isFullAge6(16, 1990, 1999, 1965, 2016, 1987);
+*/
+		</code>
+	</pre>
+				</div>
+
+				<h3>f7v13. Default Parameters</h3>
+				<div>
+					<pre>
+	<code>
+		We use them whenever we want one or more parameters of a function to be preset,
+		 so we want them to have a default value
+	</code>
+
+
+	<code>
+		Lecture: Default parameters
+
+/*
+// ES5
+function SmithPerson(firstName, yearOfBirth, lastName, nationality) {
+    
+    lastName === undefined ? lastName = 'Smith' : lastName = lastName;
+    nationality === undefined ? nationality = 'american' : nationality = nationality;
+    
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.yearOfBirth = yearOfBirth;
+    this.nationality = nationality;
+}
+var john = new SmithPerson('John', 1990);
+output - firstname:john,lastName:undefined,yearOfBirth:1990,nationality:undefined
+- now, what if we want to add a default value for LastName  and nationality?
+- the answer is below. pero actually nasa taas na sya. nilagay ko lang ulit dito
+lastName === undefined ? lastName = 'Smith' : lastName = lastName;
+nationality === undefined ? nationality = 'american' : nationality = nationality;
+-----------------
+
+//ES6 - so here, nasa parameter na agad sya.
+function SmithPerson(firstName, yearOfBirth, lastName = 'Smith', nationality = 'american') {
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.yearOfBirth = yearOfBirth;
+    this.nationality = nationality;
+}
+
+
+var john = new SmithPerson('John', 1990);
+var emily = new SmithPerson('Emily', 1983, 'Diaz', 'spanish');
+*/
+
+	</code>
+</pre>
+				</div>
+
+
+
+
+
+				<h3>f7v14. Maps</h3>
+				<div>
+				<pre>
+					<code>
+	- Maps() - is iterable so we can loop through them
+	- why maps() are actually better than objects to create hash maps
+	    - is becoz we can use anything as keys and they are iterable
+		- making it very easy to loop throught them and to manipulate data with them
+		- really easy to get the size 
+		- we can easily remove data from a map
+					</code>
+					<code>
+				
+const question = new Map();
+question.set('question', 'What is the official name of the latest major JavaScript version?');
+question.set(1, 'ES5');
+question.set(2, 'ES6');
+question.set(3, 'ES2015');
+question.set(4, 'ES7');
+question.set('correct', 3);
+question.set(true, 'Correct answer :D');
+question.set(false, 'Wrong, please try again!');
+
+
+- now, what if we want to retriev data from Map()?
+console.log(question.get('question'));  // we use get()
+//console.log(question.size);  <- parang length
+
+
+if(question.has(4)) { <- has to check
+    //question.delete(4);  <-- delete naman, kung gusto mag delete from map()
+    //console.log('Answer 4 is here')
+}
+
+//question.clear();  // <- to clear all or make it empty
+
+----- ForEach
+//question.forEach((value, key) => console.log(`This is ${key}, and it's set to ${value}`));
+
+
+----FOR OF
+for (let [key, value] of question.entries()) { 
+	 <-- .entries() is to return all entries of our questions map
+	 <-- [key,value] - desctructuring daw. so we can store the key and values in two separate value
+    
+	
+	 if (typeof(key) === 'number') {
+        console.log(`Answer ${key}: ${value}`);
+    }
+}
+
+const ans = parseInt(prompt('Write the correct answer'));
+console.log(question.get(ans === question.get('correct')));
+*/
+
+					</code>
+				</pre>
+				</div>
+
+
+				see you at vid 15!
 			</section>
 		</main>
 	</body>
