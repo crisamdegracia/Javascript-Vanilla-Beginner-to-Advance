@@ -2043,9 +2043,135 @@ console.log(question.get(ans === question.get('correct')));
 					</code>
 				</pre>
 				</div>
+<h3>f7v15. Classes</h3>
+<div>
+<pre>
+	<code>
+		
+//ES5
+var Person5 = function(name, yearOfBirth, job) {
+    this.name = name;
+    this.yearOfBirth = yearOfBirth;
+    this.job = job;
+}
+
+Person5.prototype.calculateAge = function() {
+    var age = new Date().getFullYear - this.yearOfBirth;
+    console.log(age);
+}
+
+var john5 = new Person5('John', 1990, 'teacher');
+
+//ES6
+class Person6 {
+    constructor (name, yearOfBirth, job) {
+        this.name = name;
+        this.yearOfBirth = yearOfBirth;
+        this.job = job;
+    }
+    
+    calculateAge() {
+        var age = new Date().getFullYear - this.yearOfBirth;
+        console.log(age);
+    }
+    
+// Static - methods that are attached to the class but not inherited by the class instances, so by object we create through the class
+//the john6 we create below cannot interit this static method. 
+//so to call this -> Person6.greeting();
+    static greeting() {
+        console.log('Hey there!');
+    }
+}
+
+const john6 = new Person6('John', 1990, 'teacher');
+
+Person6.greeting();
+
+	</code>
+</pre>
+
+</div>
+
+<h3>f7v16. Classes with Subclasses</h3>
+<div>
+	<pre>
+		<code>
+Lecture: Classes and subclasses
+ 
+
+//ES5
+
+//Super Class
+var Person5 = function(name, yearOfBirth, job) {
+	this.name = name;
+	this.yearOfBirth = yearOfBirth;
+	this.job = job;
+}
+
+Person5.prototype.calculateAge = function() {
+	var age = new Date().getFullYear() - this.yearOfBirth;
+	console.log(age);
+}
+
+// Sub class - 
+var Athlete5 = function(name, yearOfBirth, job, olymicGames, medals) {
+	Person5.call(this, name, yearOfBirth, job);
+	this.olymicGames = olymicGames;
+	this.medals = medals;
+}
+
+Athlete5.prototype = Object.create(Person5.prototype);
 
 
-				see you at vid 15!
+Athlete5.prototype.wonMedal = function() {
+	this.medals++;
+	console.log(this.medals);
+}
+
+
+var johnAthlete5 = new Athlete5('John', 1990, 'swimmer', 3, 10);
+
+johnAthlete5.calculateAge();
+johnAthlete5.wonMedal();
+
+
+//ES6
+class Person6 {
+	constructor (name, yearOfBirth, job) {
+		this.name = name;
+		this.yearOfBirth = yearOfBirth;
+		this.job = job;
+	}
+
+	calculateAge() {
+		var age = new Date().getFullYear() - this.yearOfBirth;
+		console.log(age);
+	}
+}
+
+// super() - we will call Person6 super class. unlike in ES5
+// why we call extends Person6? because it has the same parameter
+class Athlete6 extends Person6 {
+	constructor(name, yearOfBirth, job, olympicGames, medals) {
+		super(name, yearOfBirth, job);
+		this.olympicGames = olympicGames;
+		this.medals = medals;
+	}
+	
+	wonMedal() {
+		this.medals++;
+		console.log(this.medals);
+	}
+}
+
+const johnAthlete6 = new Athlete6('John', 1990, 'swimmer', 3, 10);
+
+johnAthlete6.wonMedal();
+johnAthlete6.calculateAge();
+
+		</code>
+	</pre>
+</div>
 			</section>
 		</main>
 	</body>

@@ -1,8 +1,26 @@
-{
+class Parks {
+	constructor(name, buildYear, numTrees, parkArea,){
+		this.name = name;
+		this.buildYear = buildYear;
+		this.numTrees = numTrees;
+		this.parkArea = parkArea;
+		
+	}
 
-    const a = 1;
-	let b = 2;
-	var c = 3;
+	treeDensity(){
+		
+		console.log( this.numTrees / this.parkArea )
+	}
+
+
 }
 
-console.log(c)
+class Streets extends Parks {
+	constructor(name, buildYear){
+		super(name, buildYear);
+	}
+}
+
+const density = new Parks('Parklane', 2021, 3, 44);
+
+density.treeDensity();
