@@ -672,8 +672,14 @@ const allStreets = [new Street('Ocean Avenue', 1999, 1.1, 4),
 
 function calc(arr) {
     
+    // reduce to calculate all item in array to a single value
+    // the callback (previous, current, index) => { what to do, last argument which is the '0' that wher we we start computing}
     const sum = arr.reduce((prev, cur, index) => prev + cur, 0);
     
+    // destructuring - to return an array of 2 elements
+    // we will return the sum, then we can also compute here
+    // so to compute the average 
+    //we can now use this on reportPArks
     return [sum, sum / arr.length];
     
 }
@@ -684,14 +690,22 @@ function reportParks(p) {
     console.log('-----PARKS REPORT-----');
     
     // Density
+    //we pass the park data, then called treeDensity() to console.log() 
     p.forEach(el => el.treeDensity());
     
     // Average age
+    // 1st get the ages from all arrays
     const ages = p.map(el => new Date().getFullYear() - el.buildYear);
+
+    // pektus the destructuring - 
+    // then pass here the ages
     const [totalAge, avgAge] = calc(ages);
+
     console.log(`Our ${p.length} parks have an average of ${avgAge} years.`);
     
     // Which park has more than 1000 trees
+    //map(el => el.numTrees) - this will return an array
+    //findIndex(el => el >= 1000) - to find index with >= 1000
     const i = p.map(el => el.numTrees).findIndex(el => el >= 1000);
     console.log(`${p[i].name} has more than 1000 trees.`);
     

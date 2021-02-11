@@ -227,14 +227,29 @@ Person.prototype.myFriends5 = function(friends) {
 
 parsInt() - convert to number
 parseFloat() - convert string to float number with decimals
+reduce(calback(previous,current,index)) - reduce an array to a single value 
+		 - similar to forEach() and Map(), because all of this loop through arrays.
+		 - the difference is this one loop through an array to acumulate all the values into a single value
+		 - perfect for adding all the elements in an array
+		 -the callback has access to current value, current index, and previous data 
+		 - another argument is the initial value of the accumulator, the number at which we want to start
+
+ <code>
+	Reduce example
+	for the callback function -> (pre, cur, index) => pre + cur - plus can be times,divide, or minus
+	last argument - 0 - index base
+	const sum = arr.reduce((pre, cur, index) => pre + cur, 0)
+</code>   
+setTimeout(1. callback, 2.timer, 3.an argument we can pass to the callback ) - gets monaman dba? optional lang ung pang 3rd 
 
 - ES6 - 
 startsWith() - return true or false - startsWith('S')  
 endsWith() - returns true of false - endsWith('S');
 includes() - returns true or false - if the asking letter includes in a string
 repeat( count how many ) - returns how many string - 
-
+findIndex() - 
 map(current Element, current index, array itself) - 
+ 
 <code>
 	.indexOf() - example var john = ['Mr','single', 1990,
 	'manila'] john.indexOf(1990); // now it will tell us
@@ -2172,7 +2187,79 @@ johnAthlete6.calculateAge();
 		</code>
 	</pre>
 </div>
-			</section>
+
+<h3>f7v18 - Amazing Challenge you shud review this!</h3>
+<div>
+	<pre>
+		<code>
+			got to folder 7-ES6
+		</code>
+	</pre>
+</div>
+
+<h3 class="folderEnd-2">f8v8. Asynchronous JavaScript Promises, AsyncAwait and AJAX</h3>
+<div>
+<h4>v2 - example of Asynchronous</h4>
+<pre>
+	<code>
+Go to the 8-asynchronous-JS folder on final folder
+	</code>
+</pre>
+</div>
+<h3>f8v3. Understanding Asynchronous JavaScript The Event Loop</h3>
+<div>
+	<pre>
+		<code>
+			Watch the video
+		</code>
+	</pre>
+</div>	
+
+<h3>f8v4. The Old Way Asynchronous JavaScript with Callbacks</h3>
+<div>
+	<pre>
+		<code>
+/* How it work? a simulation 
+- we geta bunch of recipe IDs from a server, then base on that, we select a recipe and then
+- we get that recipe from the server after that
+1. we create the first setTimeout() with recipeID, then log()
+2. we create the 2nd setTimeout() that recieves an argument (id)
+	-has an object {recipe} and log
+	-the argument we pass is recipeID
+3. we create the 3rd setTimeout()
+	- also reciv an argument (publisher) 
+	- we pass the recipe.publisher 
+3. 
+
+And this is CALLBACK HELL. That is why in ES6 promises was created
+when using asynchrounous JS
+*/
+function getRecipe() {
+	setTimeout(() => {
+		const recipeID = [523, 883, 432, 974];
+		console.log(recipeID);
+
+		setTimeout(id => {
+			const recipe = {title: 'Fresh tomato pasta', publisher: 'Jonas'};
+			console.log(`${id}: ${recipe.title}`);
+
+			setTimeout(publisher => {
+				const recipe2 = {title: 'Italian Pizza', publisher: 'Jonas'};
+				console.log(recipe);
+			}, 1500, recipe.publisher);
+
+		}, 1500, recipeID[2]);
+
+	}, 1500);
+}
+getRecipe();
+		</code>
+	</pre>
+</div>
+
+
+
+</section>
 		</main>
 	</body>
 	<script src="./course-guide-assets/jquery-ui-1.12.1/jquery-ui.min.js"></script>
