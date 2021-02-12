@@ -141,47 +141,123 @@ when using asynchrounous JS
     //         console.log('Error!!');
     //     });
 
-//// --------- ES8 or ES2017 -- Async / Await
 
-//1. async function 
-//2. call it getrecipeAW() below the async function
-//we just need to wait (await) to the promise above eg(getIDs) to get result of success.
-//then we can then use that value 
-//await can only be use inside the async function()
-//async function()  - it runs in the background 
+//     //-------------------------------------------------------------
+// //// --------- ES8 or ES2017 -- Async / Await
 
-        //a function mean asynchronous function
-        //the one that keep running on the background
-        async function getRecipesAW() {
+// //1. async function 
+// //2. call it getrecipeAW() below the async function
+// //we just need to wait (await) to the promise above eg(getIDs) to get result of success.
+// //then we can then use that value 
+// //await can only be use inside the async function()
+// //async function()  - it runs in the background 
 
-            //kapag daw nasa await na, mag stop daw from executing, until ung promise sa taas mafulfill nya na success
-            // so in this case we will get the IDs promise
-            // so the value daw ng await expression is the resolve value of the promise
-            // which we assigned to const IDs
-            const IDs = await getIDs;
-            console.log(IDs);
+//         //a function mean asynchronous function
+//         //the one that keep running on the background
+//         async function getRecipesAW() {
 
-            //getRecipe(IDs[2]) we await that promise to finish
-            //and after it finishes we can then log the recipe
-            const recipe = await getRecipe(IDs[2]);
-            console.log(recipe);
+//             //kapag daw nasa await na, mag stop daw from executing, until ung promise sa taas mafulfill nya na success
+//             // so in this case we will get the IDs promise
+//             // so the value daw ng await expression is the resolve value of the promise
+//             // which we assigned to const IDs
+//             const IDs = await getIDs;
+//             console.log(IDs);
+
+//             //getRecipe(IDs[2]) we await that promise to finish
+//             //and after it finishes we can then log the recipe
+//             const recipe = await getRecipe(IDs[2]);
+//             console.log(recipe);
 
 
 
-            const related = await getRelated('Jonas Schmedtmann');
-            console.log(related);
+//             const related = await getRelated('Jonas Schmedtmann');
+//             console.log(related);
 
-            //not necessary
-            //if we want to return a value from async function
-            //we then put this return
-            return recipe;
-        }
+//             //not necessary
+//             //if we want to return a value from async function
+//             //we then put this return
+//             return recipe;
+//         }
 
-        // kaya ganto daw - ung getRecipesAW() daw return a recipe (dba?) 
-        // so nireturn nya recipe. meron din itong promise. so kada promise my inheritance ng then() and catch()
-        // so kaya nagawa natin gamitan pa ng then dito() get mopa ? kaya pa?
+//         // getREcipeAW() - we call it. then we also do something
+//         // kaya ganto daw - ung getRecipesAW() daw return a recipe (dba?) 
+//         // so nireturn nya recipe. meron din itong promise. so kada promise my inheritance ng then() and catch()
+//         // so kaya nagawa natin gamitan pa ng then dito() get mopa ? kaya pa?
     
-        getRecipesAW().then(result => console.log(`${result} is the best ever!`));
+//         getRecipesAW().then(result => console.log(`${result} is the best ever!`));
+//     //-------------------------------------------------------------
+
+
+//--f8v8 - 8. Making AJAX Calls with Fetch and Promises
+/* 
+1. crossorigin.me - is aloowing us to use the so called  CORS - cross origin resource sharing
+    - CORS was developed - for the developer to make request to different domains
+    - becoz of the same origin policy we cannot access the API becoz we do not have a domain. that is why we use crossorigin.me
+2. the fetch() returns a promise
+    - so we can use then() and catch()
+3. the 1st then(result) - is the data or value from fetch();  then convert it to json()
+4. the .json() also return a promise(), so we also need to handle that
+    - so we create a new then() method
+5. now this then(data) - the result now is the JS object that we need
+*/
+
+function getWeather(woeid) {
+
+
+            fetch('https://crossorigin.me/https://www.metaweather.com/api/location/2487956/')
+            .then(result => {
+                console.log(result);
+                return result.json();
+            })
+            .then(data => {
+                // console.log(data);
+                const today = data.consolidated_weather[0];
+                console.log(`Temperatures today in ${data.title} stay between ${today.min_temp} and ${today.max_temp}.`);
+            })
+            .catch(error => console.log(error));
+        }
+        getWeather(2487956);
+        getWeather(44418);
+//---------------------------------------
+
+
+
+// ASYNC AWAIT VERSION OF ABOVE ---------------------------------------
+// 1. cons result = the value will be, is when the fetch() is a success. then its value will be stored in const result
+//2. try {} catch{} has nothing to do with async/await
+//      - try{}   - all there code will be executed 
+//      - catch{}  - is when we have an error
+async function getWeatherAW(woeid) {
+            try {
+                const result = await fetch(`https://crossorigin.me/https://www.metaweather.com/api/location/${woeid}/`);
+                const data = await result.json();
+                const tomorrow = data.consolidated_weather[1];
+                console.log(`Temperatures tomorrow in ${data.title} stay between ${tomorrow.min_temp} and ${tomorrow.max_temp}.`);
+                return data;
+            } catch(error) {
+                alert(error);
+            }
+        }
+        getWeatherAW(2487956);
+        
+        // mapagana natin ung promise na mangagaling sa getWeatherAW();
+        //1st we create let dataLondon
+        // tapos ung getWeather() my return value na promise() . so now every promise meron inheritance ng then()
+        // ang magiging value ng then(data) - is pag nag success ung getWeather() un value dun masstore sa data. nainistore din natin sa dataLondon
+        //tapos kinonsole log natin.  EASY!
+        let dataLondon;
+        getWeatherAW(44418).then(data => {
+            dataLondon = data
+            console.log(dataLondon);
+        });
+
+
+
+
+
+
+
+
 
     </script>
 </body>
