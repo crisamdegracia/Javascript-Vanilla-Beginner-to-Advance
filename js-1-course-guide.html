@@ -2257,6 +2257,136 @@ getRecipe();
 	</pre>
 </div>
 
+<h3>f8v5. From Callback Hell to Promises</h3>
+<div>
+	<pre>
+		<code>
+Promise - Object that keeps track about whether a certain event has happened already or not.
+		- determines what happens after the event has happened;
+		     - events mentioned above is, async event like a timer finishing or data coming back from AJAX call
+		- Implements the concept of a future value that we're expecting
+
+		
+			</code>
+
+			<code>
+				
+
+/* PROMISE 
+1. 1st part to redo the 1st part of traditional callback hell above
+   - promise take 2 argument resolve and reject 
+   - if succesful the resolved will call and if not the reject
+2. resolve - returns a value
+3. so the setTimeout daw is impossible to failed kaya hindi natin tatawagin ung reject()
+4. now that the 1st promise is done it only simply store the value to getIDs
+5. All PROMISE() object inherits then() and catch() method
+6. then() method allow us to add an event handler for the case that the promise
+   - is fulfilled -- which means merong result
+7. read the comment in 2ndA below - it explains the then() method
+8. read 2ndB - it xplains catch() 
+9. const getIDs - is not a function becoz we dont need to pass any data
+10. const getRecipe is a function becoz we need to pass the recipe ID. to the promise
+11. const getRelated = a recipe which is related to the author 
+12. ang teknik, parang kada promise() my isang then() for them.
+*/
+
+    ////1st --------------- 1st Promise
+        const getIDs = new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve([523, 883, 432, 974]);
+            }, 1500);
+        });
+///////--------------------
+
+
+//gets mo? ako gets ko. 
+//a function that reciv recipe ID
+//this is the 2nd setTimeout() above -converted in PROMISE()
+const getRecipe = recID => {
+	return new Promise((resolve, reject) => {
+		setTimeout(ID => {
+			const recipe = {title: 'Fresh tomato pasta', publisher: 'Jonas'};
+			resolve(`${ID}: ${recipe.title}`);
+		}, 1500, recID);
+	});
+};
+
+//the argument passed on setTimeout(cb,fn,time,argument) 
+// cb to argument - is the value we will pass for this promise
+// what? tangina anganda  ng explainiation mo ser!
+const getRelated = publisher => {
+	return new Promise((resolve, reject) => {
+		setTimeout(pub => {
+			const recipe = {title: 'Italian Pizza', publisher: 'Jonas'};
+			resolve(`${pub}: ${recipe.title}`);
+		}, 1500, publisher);
+	});
+};
+
+
+//2ndA --------------------
+// what we do here is to pass a callback() which will hanlde what we do
+//in case the promise was successful
+//the callback here can take an argument - hindi nya sinabi kung ilan
+// the argument here will be the result of our 1st promise we created above, so in that case the array[]
+// chaining -
+
+//this is handling the 1st promise above
+getIDs
+.then(IDs => {
+	console.log(IDs);
+
+	//chaining - we can return a promise from this method here
+	// then it will simply add new promise (1A) to then() method below -
+	//getRecipe 2A
+	return getRecipe(IDs[2]); // this will return a promise 
+})
+
+//this will handle the 2nd promise above
+//1A new promise then() 
+//this will hanlde the result of getRecipe()2A promise above
+//this will use the 2nd setTimeout() above.
+// ung recipe argument is from the 1st then() result
+
+.then(recipe => {
+	console.log(recipe);
+	return getRelated('Jonas Schmedtmann');
+})
+
+
+//this will handle 3rd promise above 
+.then(recipe => {
+	console.log(recipe);
+})
+
+//2ndB--explaining the catch me
+//catch method will allow us to add event handler for the case that a promise gets rejected
+// so in this case console.log() error
+.catch(error => {
+	console.log('Error!!');
+});
+
+			</code>
+	</pre>
+</div>
+
+<h3>f8v6. From Promises to AsyncAwait</h3>
+<div>
+
+	<pre>
+		<code>
+In ES8 or ES2017 - something called Async/Await
+- for the developers to consume promises
+		</code>
+		<code>
+
+		</code>
+	</pre>
+</div>
+
+
+
+
 
 
 </section>
