@@ -5,7 +5,7 @@ v6a. npm install webpack npm i webpack --save-dev
 v6b. npm i jquery  --save 
 	2a. --save not as dev dependency but as dependency
 	2b. npm uninstall jquery --save
-v6c. npm i live-server --global 
+v6c. npm i live-server --global <- meron na ung vsCode
 	3a. --global - kasi kung hindi global sa project lang sya accesible kung global lahat ng nagamit ng computer
 ----------------------------------------------
 v7a. basic webpack configuration
@@ -70,9 +70,101 @@ v7a. basic webpack configuration
 v8 - Modern setup the webpack dev server
 	1. npm i webpack-dev-server --save-dev 
 		- every time we change our code UI frontend updates without refreshing the browser by
-		- by using npm run start - check mo ung naka set don
+		- by using npm run start - check mo ung naka set don sa package.json
 	2. error, ginagamit na daw sabi.
 		- kasi nga sa VSCODE automatic narin na nag a-update.
 		- so no need na siguro.
 	3. napagana ko by changing  webpack-dev-server to webpack serve lang
 		- from stack overflow
+		- please check package.json
+	4. Copying the index.html file to our dist folder 
+		- we now use PLUG-INs
+			- plugins allow us to do complex processing of our input file, and in this case is our index.html
+		- we want to use html webpack plugin
+		- npm i html-webpack-plugin --save-dev
+		- then go to webpack.config.js
+		- plugins: []  - it recieves an array - that all the plugins we are using
+		- check it on webpack.config
+		- new HtmlWebpackPlugin() - here we will copy the index.html file -- for ready to go in production
+		- template : - starting daw ng html file - ung location
+		- we can also daw use a plugin to create new html file from scaratch automatically without providng any template
+			- pero outside daw ng scope in this tutorial
+		- kapag daw nag npm run start - hindi pa masasave sa disk ung changes, it will just stream them to server
+			- so npm run dev - para lumabas ung file
+		- now gumana na natransfer na ung index.html file sa dist folder
+	
+	--f9v9 Modern Set up babel---------------------------------------------
+	1. npm i babel-core        - containes the core functionality of the compiler
+	2. npm i babel-preset-env  - will takecare all the modern JS features
+	3. npm i babel-loader      - it need webpack to load babel files
+
+	4. the concept of loaders in webpack 
+		- it allow us to import or load all kinds of diferent files and process  them
+		- ling converting sass to css or cs6 to cs5
+	5. WEBPACK(LOADER) is->  module:{rules:[]}  - we need to specify the rules property
+		- rules:[]  - all the loader that we want
+		- {test:} - regular expression ->  we want to test all the JS files 
+				- /\.js$/   -it says it will test all the files that ended in .js files
+			- use:{loader:{ }} - then we use babel loader 
+
+	    - exclude:  /node_modules/ (regular-expression) - if we didnt do this - all the file in node_modules will apply babel
+	6. create .babelrc in the root folder
+		- preset  -  is a collection of code  transform plug-ins
+		- env , browsers  -  babel will automatically figures out whihc es6 feature is actually need to convert in order to work on the last five version of all the browser
+			- that what means in "env"
+			- we can find more on babel documentation
+	7. there are things we cant convert becoz they are not present in th es5 version
+		- so there is no way that we ccan convert them
+		- so we need to polyfill them
+	8. Polyfill - npm i babel-polyfill --save
+		- this will implement daw like a promise in ES5
+		- not a development tool
+		- but a code that will go to our final bundle
+		- not a dev dependency
+	9. add polyfill in entry[] 
+	- now its one big bundle with our es6 and index.html
+	- all the polyfill for es6 and index.js 
+
+	-------------------------------------------------------------
+	f9v10 - Planning our Project Archetecture with MVC
+
+	------------------------------------------------------
+	f9v1  - How ES6 module work
+	index.js 
+	1stteknik -	import str from "./model/Search"    <- no need for .js
+	2ndteknik -	import {add, multiply} from "./views/searchView"    <-  {add, multiply} - we can choose what to pass
+	3rdteknik - import {add as a , multiply as m, ID} from "./views/searchView"  - pwede reng gawing iba ung variable by setting 'as'
+	4thteknik - import * as searchView = "./views/searchView"
+
+
+			console.log(`This what we imported from Search.js ${str} and this is from views  ${add(ID, 2)} and ${multiply(3,5)})
+		- to call the 4th teknik
+		searchView.add(4, 5)   searchView.multiply(1,3)
+
+		Search.js 
+		export default "What a value !"
+
+
+		searchView.js
+		export const  add = (a,b) => a+b;
+		export const multiply = (c,d)=> c*d;
+--------------------------------------------------------------
+f9v13 - Making our 1st API Calls
+
+			- fetch - not working in all browser
+			- axios - a very popular HTTP request library
+				- npm i axios 
+				- no need to put the folder location
+				- it automatically returns .json file
+				- better error handling than fetch
+1. we can use try {} catch{}  for error handling		
+------------------------------------------------------------------
+f9v14 - Building the search model
+	1. Search.js - I can read na ung laman. kaya no need to explain here
+
+------------------------------------------------------------------
+f9v15 - 15. Building the Search Controller
+		- learn the application state
+		- a simple way of implementing state
+
+1.

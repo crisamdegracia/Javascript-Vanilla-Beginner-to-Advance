@@ -2516,8 +2516,55 @@ async function getWeatherAW(woeid) {
 </div>
 
 
+<h3>f9v10 Planning our project architecure with MVC</h3>
+<div>
+	<pre>
+		<code>
+			- A widely used known architecture called 
+			- Model Controller View - MVC
+			- new model instead of what we used in budgety app
+			- controler - controls the entire app
+			- a real separation
+
+			- controller  - has own index.js
+			- model - 1 model for each diferent aspect of the app
+			- View - 1 file for each part of the app
+
+			example - search.js will handle ajax calls
+					- at ganun din sa ibang files each for model and view
+		</code>
+		<div>
+			<img src="./course-guide-assets/img/js-img-12.jpg" alt="">
+		</div>
+	</pre>
+</div>
 
 
+<h3> f9v11. How ES6 Modules Work</h3>
+<div>
+<pre>
+	<code>
+		index.js 
+	1stteknik -	import str from "./model/Search"    <- no need for .js
+	2ndteknik -	import {add, multiply} from "./views/searchView"    <-  {add, multiply} - we can choose what to pass
+	3rdteknik - import {add as a , multiply as m, ID} from "./views/searchView"  - pwede reng gawing iba ung variable by setting 'as'
+	4thteknik - import * as searchView = "./views/searchView"
+
+
+			console.log(`This what we imported from Search.js ${str} and this is from views  ${add(ID, 2)} and ${multiply(3,5)})
+		- to call the 4th teknik
+		searchView.add(4, 5)   searchView.multiply(1,3)
+
+		Search.js 
+		export default "What a value !"
+
+
+		searchView.js
+		export const  add = (a,b) => a+b;
+		export const multiply = (c,d)=> c*d;
+	</code>
+</pre>
+</div>
 </section>
 		</main>
 	</body>

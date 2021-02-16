@@ -1,4 +1,5 @@
-//global controller
-import num from './test';
+import Search from './model/Seach';
 
-console.log( `ss22dss ${num} verygood!`);
+const search = new Search('pizza');
+
+search.getResults() 
