@@ -26,6 +26,7 @@ export const renderLoader = parent => {
 };
 
 export const clearLoader = () => {
+    //  dot  .${elementStrings.loader}  my dot kasi class sya that needs  to be remove
     const loader = document.querySelector(`.${elementStrings.loader}`);
     if (loader) loader.parentElement.removeChild(loader);
 };

@@ -227,13 +227,16 @@ Person.prototype.myFriends5 = function(friends) {
 
 parsInt() - convert to number
 parseFloat() - convert string to float number with decimals
-reduce(calback(previous,current,index)) - reduce an array to a single value 
+reduce(calback(previous value,current,index)) - reduce an array to a single value 
 		 - similar to forEach() and Map(), because all of this loop through arrays.
 		 - the difference is this one loop through an array to acumulate all the values into a single value
 		 - perfect for adding all the elements in an array
 		 -the callback has access to current value, current index, and previous data 
 		 - another argument is the initial value of the accumulator, the number at which we want to start
 
+ join() - the oposite of split method.
+		- 
+Math.ceil() - round it to ceiling (example) 4.1  Math.ceil() = 5
  <code>
 	Reduce example
 	for the callback function -> (pre, cur, index) => pre + cur - plus can be times,divide, or minus

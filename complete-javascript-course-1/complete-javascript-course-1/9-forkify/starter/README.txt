@@ -230,4 +230,48 @@ f9v18 - Rendereing an AJAX loading spinner
 1. go to views/base.js
 	- create export const renderLoader = parent => {}
 	- pass the parent element
+2. 	renderLoader(elements.searchRes); in index.js 
+	- so after we create function in base.js we call it in index.js
+	- we pass the parent element
+3. remove the spinner
+	- 1st we create  
+			export const elementStrings = {
+    			loader: 'loader'
+				};
+	- kaya lang nya ginawa, kasi daw pangit.
+	- loader: with a class name 'loader' make sense ee?
+	- then we import and call it in index.js
+
+--------------------------------------------------------------------
+f9v19 - Pagination
+	- How to use the .closest method for easier event handling
+	- How and why to use data-* attributes in HTML5
+
+1. hutaena dko nagets! - we modify renderResults(recipes, page=1, resPerPage=10)
+
+2. we create const renderButtons = (page, numResults, resPerPage) => {}
+	- panuorin mo nalang cguro noh?
+
+3. we create const createButton = (page, type) => 
+	- to pass the mark-up to the UI
+4. daming hanash amfota. - not interested!
+	-  recipes.slice(start, end).forEach(renderRecipe);
+	-   renderButtons(page, recipes.length, resPerPage); final set nya para macall
+5. index.js - event delegation
+6. hindi ko na inintndi kasi sa WordPress meron ng Pagination
+
+--------------------------------------------------------------------
+f9v20 - Building Recipe model part 1
+
+1. we create Recipe.js in /model folder
+	- then we get all the api can return
+2.  we create calcTime() - to calculate cooking time and serving time
+	- for every 3 ing. we need 15 minutes
+		- numIng 
+	- num of ingredient / 3 = periods.
+3. and also calcServing() - no complex algo.
+
+
+
+	
 

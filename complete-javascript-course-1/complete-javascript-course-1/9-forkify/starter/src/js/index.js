@@ -1,5 +1,6 @@
 import Search from './model/Seach';
-import { elements } from './views/base';
+import Recipe from './model/Recipe';
+import { elements, renderLoader, clearLoader} from './views/base';
 import * as searchView from './views/searchViews';
 
 /** Global state of the app
@@ -10,7 +11,12 @@ import * as searchView from './views/searchViews';
  */
 const state = {};
 
+/* ------------------------------------------------------
+SEARCH CONTROLLER
+
+------------------------------------------------------ */
 const controlSearch = async () => {
+
 	//1) Get query from view
 const query = searchView.getInput()
 
@@ -25,14 +31,20 @@ if(query) {
 	//3. prepare UI for results
 	searchView.clearInput();
 	searchView.clearResults();
-	
+
+	renderLoader(elements.searchRes);
+
+
+
 	//4. search for recipes
 	// waiting for the result of our API
 	console.log(await state.search.getResults() )
 
 	//5. Render results on UI
-	// so ngayon we can use renderResults() and pass the new search result query
+	clearLoader();
 
+	// so ngayon we can use renderResults() and pass the new search result query
+	
 	searchView.renderResults(state.search.result);
 }
 
@@ -44,7 +56,23 @@ document.querySelector('.search').addEventListener('submit', e => {
 	
 
 	controlSearch();
-})
+});
 
 
+elements.searchResPages.addEventListener('click', e => {
+    const btn = e.target.closest('.btn-inline');
+    if (btn) {
+        const goToPage = parseInt(btn.dataset.goto, 10);
+        searchView.clearResults();
+        searchView.renderResults(state.search.result, goToPage);
+    }
+});
 
+
+/* ------------------------------------------------------
+RECIPE CONTROLLER
+------------------------------------------------------ */
+
+const r = new Recipe(46956);
+
+r.getRecipe();
