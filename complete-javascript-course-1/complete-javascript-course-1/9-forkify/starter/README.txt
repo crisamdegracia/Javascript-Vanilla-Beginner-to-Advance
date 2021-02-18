@@ -167,4 +167,67 @@ f9v15 - 15. Building the Search Controller
 		- learn the application state
 		- a simple way of implementing state
 
-1.
+1. State - Very important - what is the state of our app in any given moment
+	- what is the current search query
+	- what is the curremt recipe
+	- how many is being calculated
+	- what is currently is inthe shoppong list
+	- we want that on one simple place, like one central variable object
+	- all data that defines our app in any given moment
+	- in one place one object
+2. now we create const state = {} on index.js
+	- each time we load our app the state is empty
+	- we create document.querySelector('.search').addEventListener('submit', e => {
+	e.preventDefault(); 
+		- e.preventDefault() ; - to prevent browser from loading when clicking the search button
+		- then we create a function when we click the search button
+		- controlSearch() - to be called when search recipe btn clicks
+		- 
+3. await state.search.getResults()  - kaya nalagay ung await kasi hinihintay natin ung result from API call
+	- kaya need din natin mag lagay ng async dun sa pinaka function [  const controlSearch = async () ]
+	- 
+
+---------------------------------------------------------
+f6v16 - Building the search view
+		- advance DOM manipulation techniques
+		- How to use ES6 template string to render entire HTML components
+		- How to create loading spinner 
+	
+1. we create base.js on /views - it contains all elements that we selected in our DOM 
+	- we import elements from /views/base - so we can use it
+	- we also want everything from searchViews import * as searchView from './views/searchViews';
+	- const query = searchView.getInput() - we can now read the search input
+2. we create a function in searchView.js 
+	-  export const renderResults = (recipes, page = 1, resPerPage = 10) => {
+		- we create renderRecipe ( not exported--its a private function)
+		- this is where the render function is hapenning.
+		- we create const markup - where we will output the HTML
+		- recipe.recipe_id - recipe function argument. recipe_id - API variable 
+3. render it to the UI
+	- elements.searchResList.insertAdjacentHTML('beforeend', markup);
+	- 	searchView.renderResults(state.search.result); - call it finally in index.js
+4. we create export const clearInput = ()
+	- we will call it in index.js 
+5. we create export const clearResults = () => {} 
+	- then call it in index.js 
+
+---------------------------------------------------------------
+f9v17 - PART 2
+1. shorten the title of the output
+	- export const limitRecipeTitle  in searchViews.js
+	- we check 1st the limit.length
+	- if true - split() will create an array, then reduce() will sum them up
+	- if accumulator + current index.length is <= limit (17) - 
+	- then it will push in the newTitle array.
+	- then return the  newTitle.join(' ') - join is oposite of split. pag sasamahin naman nyan ung mga array.
+	- else { we just return the title}
+2. use the limitRecipeTitle() in renderRecipe
+	- ${limitRecipeTitle(recipe.title)}  pass the recipe title
+
+--------------------------------------------------------------
+f9v18 - Rendereing an AJAX loading spinner
+
+1. go to views/base.js
+	- create export const renderLoader = parent => {}
+	- pass the parent element
+
