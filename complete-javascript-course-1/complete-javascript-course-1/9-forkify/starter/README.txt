@@ -310,3 +310,52 @@ f9v22 - Building the recipe model part 2
 			- we will manipulate the ingredient - we will replace ng short unit 
 5. remove parenthesis . we google it. the we use regex
 6. then we return ingredient
+
+7. separate the unit from rest of the text
+	- 1st we are going to test if there is a unit in the string, if yes, where it is located
+	- 1st convert string to an array 
+	- find the index where the units is located
+		-   const unitIndex = arrIng.findIndex(el2 => unitsShort.includes(el2))
+		-  findIndex( callback ung el2 ) - for each elements it will make a test, and what we want to test is the units.includes(el2)
+		-  .includes - it returns true - if the element is in the array . else false
+8. if (unitIndex > -1) - kung my unit
+9. } else if (parseIntarrIng[0], 10){ - parse into int with a base of 10
+	- if the conversion is successful it will return into a number
+10. else if (unitIndex === -1 ){
+		- no unit and no number in 1st position
+		10a. create let not a const, becoz we need to define it outside the block
+				- then mutate them inside of one of these if else blocks
+				- this is the final object that we are gonna return
+				- whihc is the object ingredient - objIng
+
+		10b. ung objIng daw natin is always merong count=1, unit, ingredient
+		 else if (unitIndex === -1) {
+				// There is NO unit and NO number in 1st position
+				objIng = {
+					count: 1,
+					unit: "",
+					ingredient,
+				};
+			}
+				- unit is emty - we have to put something there
+				- kaya daw ganyan lang ung sa ingredient, kasi ung 
+				- ingredient: ingredient talga dapat sya,
+				- so, mainherit nya ung nasa taas
+					- ingredient = ingredient.replace(/ *\([^)]*\) */g, " ");
+11. else if (parseInt(arrIng[0], 10)) 
+	- ganon din gawa din tayong 
+		objIng = {
+					count: parseInt(arrIng[0], 10),
+					unit: "",
+					ingredient: arrIng.slice(1).join(" "),
+				};
+	- arrIng.slice(1).join(" "),
+		- slice(1) - kung hnd daw nag set ng 2nd arg, it will set to the end
+		- zero index - 
+		- the entire array except the 1st element
+			- 1st element is a number the rest is ingredient
+		- that is why we sliced it then we put it back into a string using join()
+
+12. if (unitIndex > -1) { 
+		- ang haba. dko na masundan. 
+		- bandang 32 minutes na

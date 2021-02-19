@@ -62,7 +62,7 @@ elements.searchForm.addEventListener('submit', e => {
 	controlSearch();
 });
 
-window.searchForm.addEventListener('load', e => {
+window.addEventListener('load', e => {
 	e.preventDefault(); // prevents reload when clicking search button
 	controlSearch();
 });
