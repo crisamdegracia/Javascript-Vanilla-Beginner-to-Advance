@@ -264,14 +264,49 @@ f9v19 - Pagination
 f9v20 - Building Recipe model part 1
 
 1. we create Recipe.js in /model folder
-	- then we get all the api can return
+	- then we get all the api can return 
 2.  we create calcTime() - to calculate cooking time and serving time
 	- for every 3 ing. we need 15 minutes
 		- numIng 
 	- num of ingredient / 3 = periods.
 3. and also calcServing() - no complex algo.
 
+--------------MAHUSAY TO  changes when click--------------------------------------
+f9v21 - Building the recipe Controller
+	- How to read data from the page url
+	- How to respond to hashchange event;
+	- How to add same event listener to multiple events.
 
+1. hashchange evenListener () - fired off each time that the hash that we have in the URL changes to something else
+	- add to global object
+	- window.location = is the entire URL adress
+	- tapos .hash - gives us the content of the #  - window.location.hash
+	- then replace the hash to nothing - window.location.hash.replace('#','')
+	- now we have the ID
+2. now we create object   	state.recipe = new Recipe(id)
+3. get the data from the server   -> await state.recipe.getRecipe();
+	- we add await so it will be asynchronous
+4.  this is How to add same event listener to multiple events
+// window.addEventListener('hashchange', controlRecipe );
+// window.addEventListener('load', controlRecipe );
 
-	
+['hashchange','load'].forEach(event => window.addEventListener(controlRecipe));
 
+5. we add try{} catch{} to handle the error
+--------------------------------------------------------------
+f9v22 - Building the recipe model part 2
+		- Use array methods like map, slice findIndex and includes
+		- How and why to use eval() 
+1. we add new method in Recipe.js  parseIngredients() {}
+	- we create new array  with some new ingredients based on the old ones.
+	- in each iteration we will return a value
+	- we create this.ingredients on the fly then store the newIngredients
+2. we create the units - unitsLong[], unitsShort[]
+3. we create let = ingredient  - will be base on the current element
+	- then to lowerCase() - becoz sometimes it will appear like with capital
+4. we are now going to loop over the unitsLong, so the ones that appearing in the ingredient
+	- unitsLong.forEach((unit,i))  - we need both current element (unit)  current index (i)
+	- ingredient = ingredient.replace(unit, unitShort[i])
+			- we will manipulate the ingredient - we will replace ng short unit 
+5. remove parenthesis . we google it. the we use regex
+6. then we return ingredient
