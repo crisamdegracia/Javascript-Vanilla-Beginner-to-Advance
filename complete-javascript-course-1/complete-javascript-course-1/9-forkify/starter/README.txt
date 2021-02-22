@@ -318,6 +318,9 @@ f9v22 - Building the recipe model part 2
 		-   const unitIndex = arrIng.findIndex(el2 => unitsShort.includes(el2))
 		-  findIndex( callback ung el2 ) - for each elements it will make a test, and what we want to test is the units.includes(el2)
 		-  .includes - it returns true - if the element is in the array . else false
+
+-- From here on, inisa isa nya ung IF - ELSE IF - para sa output ng Object Ingredient objng
+
 8. if (unitIndex > -1) - kung my unit
 9. } else if (parseIntarrIng[0], 10){ - parse into int with a base of 10
 	- if the conversion is successful it will return into a number
@@ -359,3 +362,80 @@ f9v22 - Building the recipe model part 2
 12. if (unitIndex > -1) { 
 		- ang haba. dko na masundan. 
 		- bandang 32 minutes na
+		- 
+
+------------------------------------------------------------------------
+f9v23. Building the Recipe View - Part 1
+1. we create export const renderRecipe = (recipe, isLiked)
+	- we paste the HTML na pinaka design sa frontend
+	- then we change the value na galing sa model
+2. elements.recipe.insertAdjacentHTML('afterbegin', markup); 
+	- to finally call and display on the UI
+3. we create ${recipe.ingredients.map(el => createIngredient(el)).join('')}
+	- to loop <i> </i> elements . we created separated function createIngredient(el)
+4. we create createIngredient() 
+	- that has the <i> </i> markup 
+5. then we add to the index.js
+	- recipe.renderRecipe()
+	- then we pass the state.recipe  -> recipeView.renderRecipe(state.recipe)
+
+6. if(id){
+		//prepare UI for changes
+		renderLoader()
+
+		- then we pass the parent, so the loader know where to display itself
+7. also call  state.recipe.parseIngredients(); in index.js
+8. create clearRecipe() in recipeViews.js then call it in index.js
+
+------------------------------------------------------------------
+f9v24 - Building Recipe view part 2 
+1. we npm install Fractional - 
+const formatCount = count => 
+	- para ung 0.26 cups daw is magiging 1/4 cup .
+
+	  example transformation
+         count = 2.5 --> 5/2 --> 2 1/2
+         count = 0.5 --> 1/2
+
+2. if(count) -  we are looking here -> ${formatCount(ingredient.count)}
+	- 1st is to separate the integer part from the decimal part
+
+	const [int, dec] = newCount.toString().split('.').map(el => parseInt(el, 10));
+		-  we use destructuring
+		- 1st we convert it to string   count.toString() then split('.') them by the dot
+		- now it will be an array for example 2.5 it wil be [2,5]
+		- so array na, then we do map(el => parseInt(el, 10)) - parse int daw with the base of 10
+
+3. in case there is no decimal  -  if(!dec) return count; 
+	- for example 2.5 my decimal sya, so kung 2 lang edi wala.
+4. if(int === 0 ) - example 0.5  
+	- we we will convert 0.5 to string 1/2
+	- now we will use the Fractional library
+		- 1st we create const fr = new Fraction( count )  - base on count
+		- from there we can read the numerator and denominator
+		- so we can return the ${fr.numerator}/${fr.denominator} 
+			- so incase we have 0.5, this will automatically calculate the numerator (0) is 1
+			- then denominator(5) is 2.
+	- done with the formatting incase on integer is zero
+5. else  example stil 2.5
+	- 1st again we create const fr = new Fraction()
+		- we just want to create the new fraction of the 0.5 
+		- we just want to create a fraction of the 0.5 part
+	- so Fraction(count - int) 
+		- return `${int} ${fr.numerator}/${fr.denominator}`;
+		- so the int is 2   and the fraction is 1/2
+6. was selected with gray background
+	- punta, searchView.js 
+		export const highlightSelected = id =>
+
+	- document.querySelector(`.results__link[href*="${id}"]`).classList.add('results__link--active');
+		- we want to select the href with the ID 
+		- then add a classList.add('.result__link--active)
+	- problem was, when we click ng marami, marami rin silang highlightSelected
+	 	- const resultsArr = Array.from(document.querySelectorAll('.results__link'));
+		- this is now an array.
+	- resultsArr.forEach(el => {
+        el.classList.remove('results__link--active');
+    });
+		- so remove ung class
+	

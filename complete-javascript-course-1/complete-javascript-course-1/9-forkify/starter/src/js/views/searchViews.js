@@ -22,11 +22,13 @@ export const highlightSelected = id => {
 
 /*
 // 'Pasta with tomato and spinach'
-acc: 0 / acc + cur.length = 5 / newTitle = ['Pasta']
+accumulator: 0 / acc + cur.length = 5 / newTitle = ['Pasta'] next 
 acc: 5 / acc + cur.length = 9 / newTitle = ['Pasta', 'with']
 acc: 9 / acc + cur.length = 15 / newTitle = ['Pasta', 'with', 'tomato']
 acc: 15 / acc + cur.length = 18 / newTitle = ['Pasta', 'with', 'tomato']
 acc: 18 / acc + cur.length = 24 / newTitle = ['Pasta', 'with', 'tomato']
+	- 5 iteration until it reached the limit (17) 
+
 */
 export const limitRecipeTitle = (title, limit = 17) => {
     const newTitle = [];
