@@ -1,10 +1,13 @@
 import Search from "./model/Seach";
 import Recipe from "./model/Recipe";
 import List from "./model/List";
+
+
 import { elements, renderLoader, clearLoader } from "./views/base";
 
 import * as searchView from "./views/searchViews";
 import * as recipeView from "./views/recipeViews";
+import * as listView from "./views/listView";
 
 /** Global state of the app
  * - Search object
@@ -119,6 +122,26 @@ const controlRecipe = async () => {
 );
 
 
+
+/*---------------------
+*  CONTROL LIST
+*---------------------*/
+
+const controlList = () =>{
+	// create a new list if there is none yet
+	if(!state.list) state.list = new List();
+
+	//add each ingredient to the list and UI
+	state.recipe.ingredients.forEach(el => {
+
+		const item = state.list.addItem(el.count, el.unit, el.ingredient);
+
+
+		listView.renderItem(item);
+	})
+}
+
+
 //buttons are not there by the time we load the page
 //the only thing that is there is the recipe elements
 // so we need to use event delegation
@@ -135,9 +158,9 @@ elements.recipe.addEventListener('click', e => {
 		//Increase btn is clicked
 		state.recipe.updateServings('inc');  // eto ung ginawa natin sa Recipe.js
 		recipeView.updateServingsIngredients(state.recipe)
+	} else if (e.target.matches('.recipe__btn--add, .recipe__btn--add *')) {
+		controlList();
 	}
-
-	console.log(state.recipe)
 
 });
 

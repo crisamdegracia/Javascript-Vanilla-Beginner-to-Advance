@@ -69,8 +69,10 @@ export default class Recipe {
 			//3 Parse ingredient into count, unit and ingredient
 			const arrIng = ingredient.split(' ');
 
+			//returns true - if it finds the index na merong units. ung una neto shortUnits
 			const unitIndex = arrIng.findIndex(el2 => units.includes(el2));
-
+			//after testing it if there is unit, we now check the units kung anong laman
+			
 			let objIng;
 			if (unitIndex > -1) {
                 // There is a unit

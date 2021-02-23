@@ -215,7 +215,12 @@ Person.prototype.myFriends5 = function(friends) {
 				<h3>Functions and Methods</h3>
 				<div>
 					<pre>
-
+.splice() -
+splice(start index, how many position we want to take) - then it will return these elements and delete from original array 		
+						- it mutate the original array
+// [2,4,8] splice(1, 2) -> returns [4, 8], original array is [2]					
+slice() - 1st args - start, 2nd end, - then return a new array - it does mutate original array
+// [2,4,8] slice(1, 2) -> returns 4, original array is [2,4,8]
 .push() - create at the end of an Arrays
 .unshift() - create at the beginning
 .pop() - removes at the end
@@ -250,9 +255,15 @@ startsWith() - return true or false - startsWith('S')
 endsWith() - returns true of false - endsWith('S');
 includes() - returns true or false - if the asking letter includes in a string
 repeat( count how many ) - returns how many string - 
-findIndex() - 
+findIndex() - return the index
+find() - return the element it self
 map(current Element, current index, array itself) - will loop the array, in each iteration we can save new item to he array
-	- array    - in each iteration it will return a value
+	- array 
+	- in each iteration it will return a value
+map(el => {
+	
+})
+
 <code>
 	.indexOf() - example var john = ['Mr','single', 1990,
 	'manila'] john.indexOf(1990); // now it will tell us
@@ -376,7 +387,20 @@ window.location = is the entire URL
 
 				<div>
 					<h5>Tricks</h5>
+					
 					<pre>
+						<code>
+<h4>f9v24 17:00 - Remove/toggle clicked or selected item. </h4>
+
+export const highlightSelected = id => {
+    const resultsArr = Array.from(document.querySelectorAll('.results__link'));
+    resultsArr.forEach(el => {
+        el.classList.remove('results__link--active');
+    });
+    document.querySelector(`.results__link[href*="${id}"]`).classList.add('results__link--active');
+};
+
+						</code>
 						<code>
 <h4>STATE VARIABLE</h4>
 //gamePlaying - is the state variable. it tells TRUE or FALSE
@@ -1744,6 +1768,7 @@ boxesArr5.forEach(function(cur) {
     cur.style.backgroundColor = 'dodgerblue';
 });
 
+
 //ES6
 const boxesArr6 = Array.from(boxes); // it will transform the nodelist  to an array
 Array.from(boxes).forEach(cur => cur.style.backgroundColor = 'dodgerblue');
@@ -2040,7 +2065,7 @@ if(question.has(4)) { <- has to check
 
 //question.clear();  // <- to clear all or make it empty
 
------ ForEach
+----- 
 //question.forEach((value, key) => console.log(`This is ${key}, and it's set to ${value}`));
 
 

@@ -484,3 +484,38 @@ f9v26 - Building the shopping list model
 8. window.l  = new List();
 	- so we have now access to the methods by attaching to the window object the list.
 
+---------------------------------------------------------------------
+f9v27 - Building Shopping List View
+
+1. create listView.js in view folder
+	- export const renderItem = item => 
+	- export const deleteItem = id => 
+	- declare the querySelector in base.js
+-----------------------------------------------------------------
+f9v28 - Building Shopping List Controller - 
+1. index.js - we add 
+		elements.recipe.addEventListener('click', e => 
+	- else if . when we click the add recipe button it will call controlList()
+
+2. we create controlList()
+	-if(!state.list) state.list = new List();
+		- kung walang List, then create 1
+	-from there we can now inherit the List class. 
+		- list class has addItem() method.
+	- so forEach ingredients that recipe has. 
+
+3. List class has addItem() method.
+	- thats why we can call it and pass the recipe.ingredients
+	- and now we can store it in the item to call the listView.renderItem() and pass the item in there so we can put value to the UI
+	state.recipe.ingredients.forEach(el => {
+		
+		const item = state.list.addItem(el.count, el.unit, el.ingredient);
+
+
+		listView.renderItem(item);
+	})
+4. at lumabas na nga ung shopping list!
+
+
+
+
