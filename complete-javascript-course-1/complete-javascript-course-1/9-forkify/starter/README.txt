@@ -389,6 +389,7 @@ f9v23. Building the Recipe View - Part 1
 
 ------------------------------------------------------------------
 f9v24 - Building Recipe view part 2 
+	 - remove clicked CSS action 
 1. we npm install Fractional - 
 const formatCount = count => 
 	- para ung 0.26 cups daw is magiging 1/4 cup .
@@ -439,3 +440,47 @@ const formatCount = count =>
     });
 		- so remove ung class
 	
+	
+-----------------------------------------------------------------
+f9v25 - Updating Recipe Serving - 
+		- Increase or Decrease the serving --
+		- ways of implementing delegation .matches
+
+1. we create function in Recipe.js 
+		- updateServings (type)  - type to pass a string which is the increase or decrease
+2. we create event delegation in index.js
+	elements.recipe.addEventListener('click', e => {
+			if (e.target.matches('.btn-decrease, btn-decrease *'))
+		});
+	- we want to do something if the target matches .btn-decrease[1st arg]
+	- , .btn-decrease * [2nd arg]  - [*] means -  and then any child.  
+		- [*] - is like a unversal selector inside the element
+3. now we implement it in our controller (index.js) 
+4. we create updateServingsIngredients() in recipeViews.js to display it in UI
+
+-----------------------------------------------------------
+f9v26 - Building the shopping list model
+	- How and why to create unique IDs using an external package
+	- Differece  between Array.slice and Array.splice
+	- More uses cases for Array.findIndex and Array.find
+
+1. we create List.js in model folder  - for our shopping list
+2. this.item = [] - all the item will be push here and stored
+3. now we create a method to add item in the this.item
+4. we create addItem(count, unit, ingredient) { 
+		- count, unit, ingredien  = is our list of ingredient - to add to the shopping list
+		- then push item
+5. deleteItem(id) - that accepts the id. 
+	- find index from the items 
+		- const index = this.items.findIndex(el => el.id === id);
+	- then splice(index, 1) - index is the position of the id, 1 to remove only 1.  
+6. then updateCount(id, newCount) - find() the element itself
+	- we want to find the element that has ID then look for item.count = newCount;
+	- we loop through all the elements in the items, then select the one
+		- that has the ID equal to the that we passed into the function
+		- then we return that object and change the count property on it
+7. now go to the controller (index.js) to call them
+
+8. window.l  = new List();
+	- so we have now access to the methods by attaching to the window object the list.
+

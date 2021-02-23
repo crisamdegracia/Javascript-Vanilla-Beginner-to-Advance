@@ -1,5 +1,6 @@
 import Search from "./model/Seach";
 import Recipe from "./model/Recipe";
+import List from "./model/List";
 import { elements, renderLoader, clearLoader } from "./views/base";
 
 import * as searchView from "./views/searchViews";
@@ -116,3 +117,29 @@ const controlRecipe = async () => {
 ["hashchange", "load"].forEach((event) =>
 	window.addEventListener(event, controlRecipe)
 );
+
+
+//buttons are not there by the time we load the page
+//the only thing that is there is the recipe elements
+// so we need to use event delegation
+
+//Handling recipe button clicks
+elements.recipe.addEventListener('click', e => {
+	if (e.target.matches('.btn-decrease, .btn-decrease *')) {
+		//Decrease btn is clicked
+		if(state.recipe.servings > 1 ) {
+		state.recipe.updateServings('dec');  // eto ung ginawa natin sa Recipe.js
+			recipeView.updateServingsIngredients(state.recipe)
+		}
+	} else if (e.target.matches('.btn-increase, .btn-increase *')) {
+		//Increase btn is clicked
+		state.recipe.updateServings('inc');  // eto ung ginawa natin sa Recipe.js
+		recipeView.updateServingsIngredients(state.recipe)
+	}
+
+	console.log(state.recipe)
+
+});
+
+window.l  = new List();
+

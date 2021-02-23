@@ -22,7 +22,7 @@ const formatCount = count => {
             return `${int} ${fr.numerator}/${fr.denominator}`;
         }
     }
-    return '?';
+    return '?'; //instead daw na ireturn na undefined
 };
 
 const createIngredient = (ingredient) => `
@@ -114,13 +114,13 @@ export const renderRecipe = (recipe) => {
     elements.recipe.insertAdjacentHTML('afterbegin', markup);
 };
 
-// export const updateServingsIngredients = recipe => {
-//     // Update servings
-//     document.querySelector('.recipe__info-data--people').textContent = recipe.servings;
+export const updateServingsIngredients = recipe => {
+    // Update servings
+    document.querySelector('.recipe__info-data--people').textContent = recipe.servings;
 
-//     // Update ingredeints
-//     const countElements = Array.from(document.querySelectorAll('.recipe__count'));
-//     countElements.forEach((el, i) => {
-//         el.textContent = formatCount(recipe.ingredients[i].count);
-//     });
-// };
+    // Update ingredeints
+    const countElements = Array.from(document.querySelectorAll('.recipe__count'));
+    countElements.forEach((el, i) => {
+        el.textContent = formatCount(recipe.ingredients[i].count);
+    });
+};

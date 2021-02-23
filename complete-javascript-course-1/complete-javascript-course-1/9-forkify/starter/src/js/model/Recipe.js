@@ -69,9 +69,7 @@ export default class Recipe {
 			//3 Parse ingredient into count, unit and ingredient
 			const arrIng = ingredient.split(' ');
 
-			const unitIndex = arrIng.findIndex(el2 =>
-				units.includes(el2)
-			);
+			const unitIndex = arrIng.findIndex(el2 => units.includes(el2));
 
 			let objIng;
 			if (unitIndex > -1) {
@@ -113,4 +111,18 @@ export default class Recipe {
         });
         this.ingredients = newIngredients;
 	}
+
+
+
+	updateServings (type) {
+        // Servings
+        const newServings = type === 'dec' ? this.servings - 1 : this.servings + 1;
+
+        // Ingredients
+        this.ingredients.forEach(ing => {
+            ing.count *= (newServings / this.servings);
+        });
+
+        this.servings = newServings;
+    }
 }
