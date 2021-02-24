@@ -516,6 +516,99 @@ f9v28 - Building Shopping List Controller -
 	})
 4. at lumabas na nga ung shopping list!
 
+5. event delegation - to update  the recipe in shopping list
 
 
+			elements.shopping.addEventListener('click', e =>{
+			const id = e.target.closest('.shopping__item, .btn-decrease*')
 
+			})
+	- closest() here - para mahanap natin ung ID sa pinaka closest element. whaaat?
+	- dataset - we call the data attribute then we set ung ipapasa natin saknya. 
+		- <i data-item=ID> - ung example dito keyword [data] [set] - 
+		- so ung pinaka closest na element na my data attribute, then we set the ID that we passed on
+
+6. 1st we find the ID in index.js 
+		const id = e.target.closest('.shopping__item, .btn-decrease*');
+
+	-then we check if the user clicks the delete btn
+
+		if(e.target.matches('.shopping__delete, .shopping_delete *')){
+					//Delete from state list
+					state.list.deleteItem(id);
+
+					//Delete from UI
+					listView.deleteItem(id);
+			}
+	- now it works. the shopping list Item each of the list deleted 1by1
+
+
+7. else if (e.target.matches('.shopping__count-value')) 
+	- Handle the count update
+
+--------------------------------------------------------------------------
+f9v29 - Building the likes Model
+1. first we create likes[]; where we store the likes
+	constructor() {
+        this.likes = [];
+    }
+2. then we create addlike method, that accepts id,title,author,img
+
+		addLike(id, title, author, img) {
+        	const like = { id, title, author, img };
+        	this.likes.push(like);
+
+			// Perist data in localStorage
+			this.persistData();
+
+			return like;
+    		}
+	- const like = { id, title, author, img };
+		- the object that will handle kung ano ung ipapasa natin sa method.
+		- after that  this.likes.push(like); lagay natin sya sa pinaka array
+
+2. delete like - that accepts only an ID 
+			deleteLike(id) 
+	- const index = this.likes.findIndex(el => el.id === id);
+		- hanaping ung element id - it returns the index - then we store it in index
+	- 
+
+3.	now if its already liked 
+
+isLiked(id) {
+        return this.likes.findIndex(el => el.id === id) !== -1;
+    }
+	- we find the index  - findIndex(el => el.id === id)
+	- then check it if the id is there so -1;
+
+4. get num of likes
+		
+    getNumLikes() {
+        return this.likes.length;
+    }
+----------------------------------------------
+f9v30 - Building likes Controller
+	- ang pektus pala. 
+	- gawa ng model, tapos click event. (index.js) tapos gawa ng controller function (index.js)
+
+	else if (e.target.matches('.recipe__love, recipe__love * ')) {
+	 
+	controlLike();
+
+	}	
+
+	- 1st we create click event to call the function controller
+	- next, in the controller, we test if there is no like
+				if(!state.likes) state.likes = new Likes();
+		- if there is no like then create one
+	- then we test if the recipe is like by the user from the currentID
+		if(!state.likes.isLiked(currentID)){
+	- if true then we create new like - then we pass recipe there to match the parameter
+		that we set in Likes.js
+						const newLike = state.likes.addLike(
+						curreID,
+						state.recipe.title,
+						state.recipe.author,
+						state.recipe.img )
+
+	- 

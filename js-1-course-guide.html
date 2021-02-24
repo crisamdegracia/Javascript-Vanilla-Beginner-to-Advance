@@ -249,6 +249,13 @@ Math.ceil() - round it to ceiling (example) 4.1  Math.ceil(4.1) = 5
 	const sum = arr.reduce((pre, cur, index) => pre + cur, 0)
 </code>   
 setTimeout(1. callback, 2.timer, 3.an argument we can pass to the callback ) - gets monaman dba? optional lang ung pang 3rd 
+- closest() here - para mahanap natin ung ID sa pinaka closest element. whaaat? kapartner nya ung dataset sa project example [f9v28: 09:02]
+- dataset - is ung kung anong attribute ung karugtong nya. [ex] data-itemID or data-listID or what eber 
+		- [i data-item=ID] - ung example dito keyword [data] [set] - 
+		- so ung pinaka closest na element na my data attribute, then we we look for the ID na meron sya. 
+		
+
+
 
 - ES6 - 
 startsWith() - return true or false - startsWith('S')  
@@ -389,6 +396,37 @@ window.location = is the entire URL
 					<h5>Tricks</h5>
 					
 					<pre>
+
+	<code>
+How to create new object kung wala pang object. [ex] likes
+const controlLike = () => {
+
+	if(!state.likes) state.likes = new Likes();
+
+}
+	</code>
+						<code>
+remove on the array
+
+const index = this.likes.findIndex(el => el.id === id);
+this.likes.splice(index, 1); 
+1st - we find index 
+2nd - from that index we remove only 1
+						</code>
+
+						<code>
+how to find index 
+const index = this.theArrayName.findIndex(el => el.id === id);
+						</code>
+						<code>
+how to select the elements 
+if(e.target.matches('.shopping__delete, .shopping_delete *')){}
+.shopping_delete *  - this part means, any of its child element
+						
+						</code>
+	<code> how to get the ID of the element
+const id = e.target.closest('.shopping__item, .btn-decrease*');
+						</code>
 						<code>
 <h4>f9v24 17:00 - Remove/toggle clicked or selected item. </h4>
 
