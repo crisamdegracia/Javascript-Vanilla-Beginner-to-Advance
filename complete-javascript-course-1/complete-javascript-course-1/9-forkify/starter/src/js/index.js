@@ -109,7 +109,10 @@ const controlRecipe = async () => {
 
 			clearLoader();
 
-			recipeView.renderRecipe(state.recipe);
+			recipeView.renderRecipe(
+				state.recipe,
+				state.likes.isLiked(id)
+				);
 		} catch {
 			alert("error processing recipe");
 		}
@@ -148,6 +151,11 @@ const controlList = () =>{
 /* ------------------------------------------------------
 Like CONTROLLER
 ------------------------------------------------------ */
+
+//TESTING, Will delete later // kasi my bug dun sa like button, 
+state.likes = new Likes();
+likesView.toggleLikeMenu(state.likes.getNumLikes());
+
 const controlLike = () => {
 	// Create new like if there is none yet
 	if(!state.likes) state.likes = new Likes();
@@ -164,7 +172,7 @@ const controlLike = () => {
 			state.recipe.img )
 
 		// Add like to the state. 
-	
+			likesView.toggleLikeBtn(true)
 
 		// Toggle the like button
 
@@ -178,10 +186,12 @@ console.log(state.likes)
 	console.log(state.likes)
 
 			// Toggle the like button
-	
+		likesView.toggleLikeBtn(false)
 			// remove like to the UI list
 	
 	}
+
+	likesView.toggleLikeMenu(state.likes.getNumLikes());
 }
 
 

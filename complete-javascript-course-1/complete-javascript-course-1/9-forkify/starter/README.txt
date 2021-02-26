@@ -611,4 +611,33 @@ f9v30 - Building likes Controller
 						state.recipe.author,
 						state.recipe.img )
 
-	- 
+ - gumana na sa console.log()
+ - next working on likeView.js
+---------------------------------------------------
+f9v31 - Building likes view
+
+1. create likesView.js, import all elements (DOM), export
+2. we create a function toggleLikeBtn = isLiked - this will check if the button is liked or not
+	- if its liked or not
+		const iconString = isLiked ? 'icon-heart' : 'icon-heart-outlined';
+3. now we select the button  then pass the iconString
+	 document.querySelector('.recipe__love use').setAttribute('href', `img/icons.svg#${iconString}`);
+ 4. punta na sa index.js 
+	- likesView.toggleLikeBtn(true) 
+	- else 	likesView.toggleLikeBtn(false);
+5. tapos punta recipeView.js iedit ung
+	use href="img/icons.svg#icon-heart${isLiked ? '' : '-outlined'}
+6. sa index.js
+
+ //TESTING, Will delete later // kasi my bug dun sa like button, 
+state.likes = new Likes();
+
+7. 
+export const toggleLikeMenu = numLikes => {
+    elements.likesMenu.style.visibility = numLikes > 0 ? 'visible' : 'hidden';
+};
+8. likesView.toggleLikeMenu(state.likes.getNumLikes()); nilabas din natin sa above controlLike()
+	kasi my bug, lumalabas ung heart  (favorites) kahit walang favorites na naset pag load ng page
+9. we create  renderLike() sa likesView.js
+10. we create deleteLike
+
