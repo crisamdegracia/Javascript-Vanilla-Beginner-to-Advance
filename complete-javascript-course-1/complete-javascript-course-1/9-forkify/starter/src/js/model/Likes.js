@@ -34,9 +34,15 @@ export default class Likes {
     }
 
     readStorage() {
+
+        // if there is nothing here in the local storage
+        //or the 'likes' here or if we never store any like
+        // it will return null
         const storage = JSON.parse(localStorage.getItem('likes'));
         
         // Restoring likes from the localStorage
+
+        // so we want to test, kung merong storage - so we will store it in storage
         if (storage) this.likes = storage;
     }
 }

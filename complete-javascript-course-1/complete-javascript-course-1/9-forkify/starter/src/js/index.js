@@ -152,9 +152,6 @@ const controlList = () =>{
 Like CONTROLLER
 ------------------------------------------------------ */
 
-//TESTING, Will delete later // kasi my bug dun sa like button, 
-state.likes = new Likes();
-likesView.toggleLikeMenu(state.likes.getNumLikes());
 
 const controlLike = () => {
 	// Create new like if there is none yet
@@ -172,12 +169,12 @@ const controlLike = () => {
 			state.recipe.img )
 
 		// Add like to the state. 
-			likesView.toggleLikeBtn(true)
-
+		
 		// Toggle the like button
+		likesView.toggleLikeBtn(true)
 
 		// add like to the UI list
-
+			likesView.renderLike(newLike);
 console.log(state.likes)
 //user has like current recipe
 } else {
@@ -186,9 +183,9 @@ console.log(state.likes)
 	console.log(state.likes)
 
 			// Toggle the like button
-		likesView.toggleLikeBtn(false)
+		likesView.toggleLikeBtn(false);
 			// remove like to the UI list
-	
+		likesView.deleteLike(currentID);
 	}
 
 	likesView.toggleLikeMenu(state.likes.getNumLikes());
@@ -222,7 +219,27 @@ if(e.target.matches('.shopping__delete, .shopping_delete *')){
 	recipeView.renderRecipe( state.recipe )
 }
 
-})
+});
+
+//restore liked recipe on page load
+window.addEventListener('load', () => {
+state.likes = new Likes();
+
+// read our storage
+//Restore Likes
+state.likes.readStorage();
+
+
+// Toggle like menu button
+likesView.toggleLikeMenu(state.likes.getNumLikes());
+
+// Render the existing recipe
+state.likes.likes.forEach( like => likesView.renderLike(like));
+
+});
+
+
+
 
 
 

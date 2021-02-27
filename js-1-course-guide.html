@@ -396,7 +396,15 @@ window.location = is the entire URL
 					<h5>Tricks</h5>
 					
 					<pre>
+<code>
+	remove child element
 
+export const deleteLike = id => {
+	const el = document.querySelector(`.likes__link[href*="${id}"]`).parentElement;
+	if (el) el.parentElement.removeChild(el);
+}
+
+</code>
 	<code>
 How to create new object kung wala pang object. [ex] likes
 const controlLike = () => {
@@ -2631,6 +2639,18 @@ async function getWeatherAW(woeid) {
 		export const multiply = (c,d)=> c*d;
 	</code>
 </pre>
+</div>
+
+
+<h3>Final</h3>
+<div>
+	<pre>
+		<code>
+		Goto forkify folder. readme.txt 
+
+		all the explaination is there.
+		</code>
+	</pre>
 </div>
 </section>
 		</main>

@@ -629,15 +629,74 @@ f9v31 - Building likes view
 	use href="img/icons.svg#icon-heart${isLiked ? '' : '-outlined'}
 6. sa index.js
 
- //TESTING, Will delete later // kasi my bug dun sa like button, 
+ //TESTING, Will delete later // kasi my bug dun sa like button, dun idedelete sa 
 state.likes = new Likes();
 
-7. 
+7. 		hides or show the menu on upper right corner on the UI
 export const toggleLikeMenu = numLikes => {
     elements.likesMenu.style.visibility = numLikes > 0 ? 'visible' : 'hidden';
 };
 8. likesView.toggleLikeMenu(state.likes.getNumLikes()); nilabas din natin sa above controlLike()
 	kasi my bug, lumalabas ung heart  (favorites) kahit walang favorites na naset pag load ng page
 9. we create  renderLike() sa likesView.js
-10. we create deleteLike
+	- tapos eto ung markup sa upper right UI, it will show all the liked recipe
 
+10. we create deleteLike that accepts the ID to find and delete
+	- likes__link[href*="${id}"] we select based on the ID
+	- we want to select like links but the one with the link class, that has the like ID 
+11. tapos punta index.js - likesView.renderLike(newLike);
+12. we add the limitRecipeTitle from searchViews
+	-  ${limitRecipeTitle(like.title)} - to limit the title and replaced with 3 dots
+----------------------------------------------------------------
+f9v32 -  Implementing Persistent Data with localStorage
+	- How to use the localStorage API
+	- How to set, get and delete item from local storage
+
+1. localStorage.setItem('id', '123asdasd') - we now have set the ID to the localStorage
+2. localStorage.removeItem('id') - it will remove the ID
+3. localStorage.getItem - will get the item
+4. localStorage.length 
+
+
+5. when we add like then we use addLike() - in this case we will store the
+	- data to the local storage
+6. now we create persistData()
+	- the localStorage.setItem('likes') - likes here is like a variable - ang ilalagay natin dito is
+	- ung entire this.like array
+	- we can only save string, so we need to convert array into string
+		- JSON.stringify(this.likes);
+7. now we can call persistData() in addLike() and deleteLike();
+8. then we want to read the localStorage 
+	- 1st we save it in variable - 
+	- const storage = JSON.parse(localStorage.getItem('likes'));
+		- getItem() = is to read the localStorage 
+		- we have to convert it back into Javascript array
+			- JSON.parse(localStorage.getItem('likes));
+				- we want to read a key, which is 'likes'
+
+				
+        // if there is nothing here in the local storage
+        //or the 'likes' here or if we never store any like
+        // it will return null
+        const storage = JSON.parse(localStorage.getItem('likes'));
+        
+        // Restoring likes from the localStorage
+        // so we want to test, kung merong storage - so we will store it in storage
+        if (storage) this.likes = storage;
+
+9. go to index.js add new eventHandler
+
+			//restore liked recipe on page load
+			window.addEventListener('load', () => {
+			state.likes = new Likes();
+			likesView.toggleLikeMenu(state.likes.getNumLikes());
+
+			})
+
+	- 
+
+
+10. // Render the existing recipe
+state.likes.likes.forEach( like => likesView.renderLike(like));
+	- ay deputa kagulo nento. 
+	- so ung heart meron nang mga naliked na mga recipe kahit ireload ung page.
